@@ -40,40 +40,37 @@ add the SDK's `bin` directory to your `PATH`.
 
 ## What's in the SDK
 
-The Dart SDK includes a `lib` directory for the
-[Dart libraries](/guides/libraries/library-tour)
-and a `bin` directory that has these command-line tools:
+The Dart SDK includes a `lib` directory for the [Dart libraries][] and a `bin`
+directory that has these command-line tools:
 
-<div class="row"><div class="col-md-6" markdown="1">
+<div class="row">
+  <div class="col-md-6" markdown="1">
+  [dart]({{site.dartlang}}/dart-vm)
+  : The standalone VM
 
-[dart](/dart-vm)
-: The standalone VM
+  [dart2js]({{site.webdev}}/tools/dart2js)
+  : The Dart-to-JavaScript compiler (used only for web development)
 
-[dart2js]({{site.webdev}}/tools/dart2js)
-: The Dart-to-JavaScript compiler (used only for web development)
+  [dartanalyzer](https://github.com/dart-lang/sdk/tree/master/pkg/analyzer_cli#dartanalyzer)
+  : The static analyzer
 
-[dartanalyzer](https://github.com/dart-lang/sdk/tree/master/pkg/analyzer_cli#dartanalyzer)
-: The static analyzer
+  [dartdevc]({{site.webdev}}/tools/dartdevc)
+  : The Dart development compiler
+  (used only for web development)
+  </div><div class="col-md-6" markdown="1">
+  [dartdoc](https://github.com/dart-lang/dartdoc#dartdoc)
+  : The API documentation generator
 
-[dartdevc]({{site.webdev}}/tools/dartdevc)
-: The Dart development compiler
-(used only for web development)
+  [dartfmt](https://github.com/dart-lang/dart_style#readme)
+  : The Dart code formatter
 
-</div> <div class="col-md-6" markdown="1">
-
-[dartdoc](https://github.com/dart-lang/dartdoc#dartdoc)
-: The API documentation generator
-
-[dartfmt](https://github.com/dart-lang/dart_style#readme)
-: The Dart code formatter
-
-[pub](/tools/pub)
-: The Dart package manager
-
-</div></div>
+  [pub]({{site.dartlang}}/tools/pub)
+  : The Dart package manager
+  </div>
+</div>
 
 For more information about the SDK, see its
-[README file](https://github.com/dart-lang/sdk/blob/master/README.dart-sdk).
+[README file.](https://github.com/dart-lang/sdk/blob/master/README.dart-sdk)
 
 ## About release channels and version strings
 
@@ -119,4 +116,5 @@ Here are some handy searches:
 * [issues for the SDK as a whole](https://github.com/dart-lang/sdk/issues)
 
 [building the SDK from source]: https://github.com/dart-lang/sdk/wiki/Building
+[Dart libraries]: {{site.dartlang}}/guides/libraries/library-tour
 [site SDK version]: {{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}}/{{site.data.pkg-vers.SDK.vers}}
