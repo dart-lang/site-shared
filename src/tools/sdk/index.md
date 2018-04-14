@@ -14,7 +14,7 @@ This site's documentation and examples use the
 [{{site.data.pkg-vers.SDK.vers}}][site SDK version]{:.no-automatic-external}
 release of the **Dart SDK**.
 
-## Install the SDK
+## Install the SDK {#install}
 
 A package manager can help you easily install and update the Dart SDK.
 Don’t want to use a package manager? Other options are
