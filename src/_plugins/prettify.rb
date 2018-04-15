@@ -14,8 +14,9 @@ module Prettify
   # - The first unnamed optional argument is the prettifier lang argument.
   #   Use 'nocode' or 'none' as the language to turn of prettifying.
   # - class="..."
-  # - tag="code|pre". The prettified code will be wrapped in this HTML tag.
-  #   Default is pre.
+  # - tag="pre|code|code+br". The HTML element used to wrap the prettified code.
+  #   Default is pre. The `code` element is used for `code+br`; in addition,
+  #   newlines in the code excerpt are reformatted at `<br>` elements.
   #
   # Example usage:
   #
@@ -30,6 +31,7 @@ module Prettify
       @args = Liquid::Tag::Parser.new(stringOfArgs).args
       @lang = @args[:argv1]
       @tag = @args[:tag] || 'pre'
+      @tag = 'code' if @tag == 'code+br';
       initCssClasses
     end
 
@@ -52,6 +54,12 @@ module Prettify
       # Strip excess whitespace at the end (which will be present if the code is indented)
       contents = super.gsub /(\s*\n\s*)+\z/, ''
       contents = CGI::escapeHTML(contents)
+
+      if @args[:tag] == 'code+br'
+        contents.gsub!(/\n[ \t]*/) { |s|
+          "<br>\n#{'&nbsp;' * (s.length - 1)}"
+        }
+    end
 
       contents.gsub!('[[strike]]', '<code class="nocode strike">')
       contents.gsub!('[[/strike]]', '</code>')
