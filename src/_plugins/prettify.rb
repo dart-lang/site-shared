@@ -51,34 +51,47 @@ module Prettify
     def render(context)
       out = "<#{@tag}#{classAttr}>"
 
-      # Strip excess whitespace at the end (which will be present if the code is indented)
-      contents = super.gsub /(\s*\n\s*)+\z/, ''
-      contents = CGI::escapeHTML(contents)
+      code = trimMinLeadingSpace(super)
+      code = CGI::escapeHTML(code)
 
       if @args[:tag] == 'code+br'
-        contents.gsub!(/\n[ \t]*/) { |s|
+        code.gsub!(/\n[ \t]*/) { |s|
           "<br>\n#{'&nbsp;' * (s.length - 1)}"
         }
+      end
+
+      code.gsub!('[[strike]]', '<code class="nocode strike">')
+      code.gsub!('[[/strike]]', '</code>')
+
+      code.gsub!('[[highlight]]', '<code class="nocode highlight">')
+      code.gsub!('[[/highlight]]', '</code>')
+
+      code.gsub!('[!', '<span class="highlight">')
+      code.gsub!('!]', '</span>')
+
+      code.gsub!('[[note]]', '<code class="nocode note">')
+      code.gsub!('[[/note]]', '</code>')
+
+      code.gsub!('[[red]]', '<code class="nocode red">')
+      code.gsub!('[[/red]]', '</code>')
+
+      out += code + "</#{@tag}>"
     end
 
-      contents.gsub!('[[strike]]', '<code class="nocode strike">')
-      contents.gsub!('[[/strike]]', '</code>')
+    def trimMinLeadingSpace(code)
+      lines = code.split(/\n/);
+      while lines.first =~ /^\s*$/ do lines.shift; end
+      while lines.last =~ /^\s*$/ do lines.pop; end
 
-      contents.gsub!('[[highlight]]', '<code class="nocode highlight">')
-      contents.gsub!('[[/highlight]]', '</code>')
+      nonblanklines = lines.reject { |s| s.match(/^\s*$/) }
+      # Length of leading spaces to be trimmed
+      len = nonblanklines.map{ |s|
+          matches = s.match(/^[ \t]*/)
+          matches ? matches[0].length : 0 }.min
 
-      contents.gsub!('[!', '<span class="highlight">')
-      contents.gsub!('!]', '</span>')
-
-      contents.gsub!('[[note]]', '<code class="nocode note">')
-      contents.gsub!('[[/note]]', '</code>')
-
-      contents.gsub!('[[red]]', '<code class="nocode red">')
-      contents.gsub!('[[/red]]', '</code>')
-
-      out += contents + "</#{@tag}>"
+      return len == 0 ? code :
+        lines.map{|s| s.length < len ? s : s[len..-1]}.join("\n")
     end
-
   end
 end
 
