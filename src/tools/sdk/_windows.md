@@ -14,22 +14,23 @@ supported by the community. You can use the wizard to install **stable** or
 #### Install using Chocolatey
 
 Alternatively, you can install using [Chocolatey][].
-To install a stable release, run:
+To install a stable release, run this command:
 
 ```terminal
 C:\> choco install dart-sdk
 ```
 
-To install a **dev** release, run:
+To install a **dev** release, run this command:
 
 ```terminal
-C:\> choco install dart-sdk-dev
+C:\> choco install dart-sdk --pre
 ```
 
-To **upgrade**, run the following command where \<package> is either `dart-sdk` or `dart-sdk-dev`:
+To **upgrade** the Dart SDK, run this command
+(add `--pre` to upgrade the dev release):
 
 ```terminal
-C:\> choco upgrade <package>
+C:\> choco upgrade dart-sdk
 ```
 
 [Chocolatey]: https://chocolatey.org
