@@ -1,0 +1,1 @@
+The og_image is under src/assets/dart-logo-for-shares.png.
