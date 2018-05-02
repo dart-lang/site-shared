@@ -36,4 +36,4 @@ You can use the wizard to install **stable** or
 
 [Chocolatey]: https://chocolatey.org
 [Dart SDK installer for Windows]: http://www.gekorm.com/dart-windows
-[Windows installer img]: {% asset_path 'installer-screenshot-no.png' %}
+[Windows installer img]: {% asset_path 'shared/dart/installer-screenshot-no.png' %}
