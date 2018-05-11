@@ -10,9 +10,12 @@ The Dart SDK has the libraries and command-line tools that you need to develop
 Dart apps. To learn about other tools you can use for Dart development, see
 [Dart Tools](/tools).
 
-This site's documentation and examples use the
-[{{site.data.pkg-vers.SDK.vers}}][site SDK version]{:.no-automatic-external}
-release of the **Dart SDK**.
+<aside class="alert alert-info" markdown="1">
+  **Note:** This site's documentation and examples use
+  {%if site.data.pkg-vers.SDK.channel == 'dev'%} the **dev channel** {%endif%}
+  version [{{site.data.pkg-vers.SDK.vers}}][site SDK version]{:.no-automatic-external}
+  of the **Dart SDK**.
+</aside>
 
 ## Install the SDK {#install}
 
@@ -22,6 +25,12 @@ Don’t want to use a package manager? Other options are
 [downloading the SDK as a zip file](/tools/sdk/archive).
 If you use either of these options, remember to
 add the SDK's `bin` directory to your `PATH`.
+
+{% if site.data.pkg-vers.SDK.channel == 'dev' -%}
+<aside class="alert alert-warning" markdown="1">
+  **Important:** The **Dart 2** SDK is available from the **dev channel** only.
+</aside>
+{% endif -%}
 
 <ul class="tabs__top-bar">
   <li class="tab-link current" data-tab="tab-sdk-install-windows">Windows</li>

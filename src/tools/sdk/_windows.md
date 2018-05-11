@@ -5,7 +5,8 @@ Choose one of these options:
 
 #### Install using Chocolatey
 
-To use Chocolatey to install a stable release of the Dart SDK, run this command:
+To use [Chocolatey][] to install a stable release of the Dart SDK, run this
+command:
 
 ```terminal
 C:\> choco install dart-sdk
