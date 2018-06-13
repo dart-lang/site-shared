@@ -20,7 +20,7 @@ SERVER_PID=$!
 sleep 4
 
 # Don't check for external links yet since it seems to cause problems on Travis: --external
-pub global run linkcheck \
+pub run linkcheck \
   --skip-file ./scripts/config/linkcheck-skip-list.txt \
   :$PORT \
   | tee $TMP/linkcheck-log.txt
