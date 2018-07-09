@@ -19,12 +19,12 @@ Dart apps. To learn about other tools you can use for Dart development, see
 
 ## Install the SDK {#install}
 
-A package manager can help you easily install and update the Dart SDK.
-Don’t want to use a package manager? Other options are
-[building the SDK from source][] and
-[downloading the SDK as a zip file](/tools/sdk/archive).
-If you use either of these options, remember to
-add the SDK's `bin` directory to your `PATH`.
+As the following instructions show,
+you can use a package manager
+to easily install and update the Dart SDK.
+Alternatively, you can
+[build the SDK from source][building the SDK from source] or
+[download the SDK as a zip file](/tools/sdk/archive).
 
 {% if site.data.pkg-vers.SDK.channel == 'dev' -%}
 <aside class="alert alert-warning" markdown="1">
@@ -98,6 +98,10 @@ The Dart SDK has two release channels:
 </aside>
 
 Most **alpha** releases of Flutter contain a **dev** channel release of Dart.
+
+{% comment %}
+update-for-dart-2
+{% endcomment %}
 
 **Stable** channel releases of the Dart SDK have version strings like `1.24.2` and `2.0.0`.
 They consist of dot-separated integers, with no hyphens or letters.
