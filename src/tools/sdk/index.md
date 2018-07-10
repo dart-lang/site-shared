@@ -23,8 +23,12 @@ As the following instructions show,
 you can use a package manager
 to easily install and update the Dart SDK.
 Alternatively, you can
-[build the SDK from source][building the SDK from source] or
+[build the SDK from source][] or
 [download the SDK as a zip file](/tools/sdk/archive).
+{% comment %}
+NOTE to editors: Keep the zip file link as the last thing in the paragraph,
+so it's easy to find (but not more tempting than package managers).
+{% endcomment %}
 
 {% if site.data.pkg-vers.SDK.channel == 'dev' -%}
 <aside class="alert alert-warning" markdown="1">
@@ -128,6 +132,6 @@ Here are some handy searches:
 * [pub issues](https://github.com/dart-lang/sdk/labels/Area-Pub)
 * [issues for the SDK as a whole](https://github.com/dart-lang/sdk/issues)
 
-[building the SDK from source]: https://github.com/dart-lang/sdk/wiki/Building
+[build the SDK from source]: https://github.com/dart-lang/sdk/wiki/Building
 [Dart libraries]: {{site.dartlang}}/guides/libraries/library-tour
 [site SDK version]: {{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}}/{{site.data.pkg-vers.SDK.vers}}
