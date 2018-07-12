@@ -17,6 +17,10 @@ and the [Dart API documentation.]({{site.dart_api}}/{{site.data.pkg-vers.SDK.cha
 Want to install Dart with your OS's package manager?
 Go to the [Dart SDK page](/tools/sdk).
 
+<aside class="alert alert-warning" markdown="1">
+  {% include_relative _sdk-terms.md %}
+</aside>
+
 <aside class="alert alert-info" markdown="1">
   **Note:** Many Dart 1.x releases include the Dartium browser
   as a downloadable item. Dartium is no longer supported.
