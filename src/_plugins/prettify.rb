@@ -52,6 +52,8 @@ module Prettify
       out = "<#{@tag}#{classAttr}>"
 
       code = trimMinLeadingSpace(super)
+      # Strip leading and trailing whitespace so that <pre> and </pre> tags wrap tightly
+      code.strip!
       code = CGI::escapeHTML(code)
 
       if @args[:tag] == 'code+br'
@@ -80,17 +82,32 @@ module Prettify
 
     def trimMinLeadingSpace(code)
       lines = code.split(/\n/);
+
+      # 1. Trim leading blank lines
       while lines.first =~ /^\s*$/ do lines.shift; end
-      while lines.last =~ /^\s*$/ do lines.pop; end
+
+      # 2. Trim trailing blank lines. Also determine minimal
+      # indentation for the entire code block.
+      # This is required for uses of prettify that are indented in
+      # markdown -- for example, when used in a list.
+
+      # Last line should consist of the indentation of the `endprettify`
+      # (when it is on a separate line).
+      last_line = lines.last =~ /^\s*$/ ? lines.pop : ''
+      while lines.last =~ /^\s*$/ do lines.pop end
+      min_len = last_line.length
 
       nonblanklines = lines.reject { |s| s.match(/^\s*$/) }
-      # Length of leading spaces to be trimmed
+
+      # 3. Determine length of leading spaces to be trimmed
       len = nonblanklines.map{ |s|
           matches = s.match(/^[ \t]*/)
           matches ? matches[0].length : 0 }.min
 
-      return len == 0 ? code :
-        lines.map{|s| s.length < len ? s : s[len..-1]}.join("\n")
+      # Only trim the excess relative to min_len
+      len = len < min_len ? min_len : len - min_len
+
+      len == 0 ? code : lines.map{|s| s.length < len ? s : s[len..-1]}.join("\n")
     end
   end
 end
