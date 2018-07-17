@@ -107,7 +107,7 @@ module Prettify
       # Only trim the excess relative to min_len
       len = len < min_len ? min_len : len - min_len
 
-      len == 0 ? code : lines.map{|s| s.length < len ? s : s[len..-1]}.join("\n")
+      len == 0 ? code : lines.map{|s| s.length < len ? s : s.sub(/^[ \t]{#{len}}/, '')}.join("\n")
     end
   end
 end
