@@ -34,7 +34,7 @@ so it's easy to find (but not more tempting than package managers).
   {% if site.data.pkg-vers.SDK.channel == 'dev' -%}
   **Important:**
   The **Dart 2** SDK is available from the **dev channel** only.
-  {% endif -%}
+  {% endif %}
 
   {% include_relative archive/_sdk-terms.md %}
 </aside>

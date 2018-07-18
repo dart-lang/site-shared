@@ -1,4 +1,3 @@
-
 Dart tools may send usage metrics and crash reports to Google.
 By downloading the Dart SDK, you agree to the
 [Google Terms of Service.](https://policies.google.com/terms)
