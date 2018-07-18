@@ -30,11 +30,14 @@ NOTE to editors: Keep the zip file link as the last thing in the paragraph,
 so it's easy to find (but not more tempting than package managers).
 {% endcomment %}
 
-{% if site.data.pkg-vers.SDK.channel == 'dev' -%}
 <aside class="alert alert-warning" markdown="1">
-  **Important:** The **Dart 2** SDK is available from the **dev channel** only.
+  {% if site.data.pkg-vers.SDK.channel == 'dev' -%}
+  **Important:**
+  The **Dart 2** SDK is available from the **dev channel** only.
+  {% endif %}
+
+  {% include_relative archive/_sdk-terms.md %}
 </aside>
-{% endif -%}
 
 <ul class="tabs__top-bar">
   <li class="tab-link current" data-tab="tab-sdk-install-windows">Windows</li>
