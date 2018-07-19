@@ -5,7 +5,28 @@ Choose one of these options:
 
 #### Install using Chocolatey
 
-To use [Chocolatey][] to install a stable release of the Dart SDK, run this
+{% if site.data.pkg-vers.SDK.channel == 'dev' %}
+To use [Chocolatey][] to install a **dev** release of the Dart SDK, run this
+command:
+
+```terminal
+C:\> choco install dart-sdk --pre
+```
+
+To install a **stable** release, run this command:
+
+```terminal
+C:\> choco install dart-sdk
+```
+
+To **upgrade** the dev release of the Dart SDK, run this command:
+(remove the `--pre` to upgrade the stable release):
+
+```terminal
+C:\> choco upgrade dart-sdk --pre
+```
+{% else %}
+To use [Chocolatey][] to install a **stable** release of the Dart SDK, run this
 command:
 
 ```terminal
@@ -24,6 +45,7 @@ To **upgrade** the Dart SDK, run this command
 ```terminal
 C:\> choco upgrade dart-sdk
 ```
+{% endif %}
 
 #### Install using a setup wizard
 

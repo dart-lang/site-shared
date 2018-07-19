@@ -21,27 +21,43 @@ Go to the [Dart SDK page](/tools/sdk).
   {% include_relative _sdk-terms.md %}
 </aside>
 
+
+## Stable channel
+
+{% if site.data.pkg-vers.SDK.channel == 'dev' %}
+The stable channel currently contains 1.x and earlier versions of Dart.
+We recommend using Dart 2 instead,
+which is available in the dev channel.
+{% else %}
+Stable channel builds are tested and approved for production use.
+{% endif %}
+
 <aside class="alert alert-info" markdown="1">
   **Note:** Many Dart 1.x releases include the Dartium browser
   as a downloadable item. Dartium is no longer supported.
   For more information, see the
-  [Dart 2 migration guide for web developers.]({{site.webdev}}/tools/dartium)
+  [Dart 2 migration guide for web developers.]({{site.webdev}}/dart-2#tools)
 {% comment %}
 update-for-dart-2
 {% endcomment %}
 </aside>
 
-## Stable channel
-
-Stable channel builds are tested and approved for production use.
-
 {% include_relative _archives_table.html channel="stable" %}
 
 ## Dev channel
 
+{% if site.data.pkg-vers.SDK.channel == 'dev' %}
+We strongly encourage you to use the most recent dev channel release,
+so that your code will work when Dart 2 is released to the stable channel.
+For more information, see the [Dart 2 page](/dart-2).
+{% comment %}
+update-for-dart-2
+{% endcomment %}
+{% else %}
 Dev channel builds may contain bugs and can provide early access
 to new features. We do not recommended dev channel builds for
 production use.
+{% endif %}
 
 {% include_relative _archives_table.html channel="dev" %}
 

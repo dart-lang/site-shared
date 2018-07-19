@@ -9,28 +9,54 @@ versions are released.
 
 Perform the following **one-time setup**:
 
+{% if site.data.pkg-vers.SDK.channel == 'dev' %}
+```terminal
+$ sudo apt-get update
+$ sudo apt-get install apt-transport-https
+$ sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+$ sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_unstable.list > /etc/apt/sources.list.d/dart_unstable.list'
+```
+{% else %}
 ```terminal
 $ sudo apt-get update
 $ sudo apt-get install apt-transport-https
 $ sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
 $ sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
 ```
+{% endif %}
 
-Then **install** the Dart SDK:
+Then install the
+**{{site.data.pkg-vers.SDK.channel}}**
+release of the Dart SDK:
 
 ```terminal
 $ sudo apt-get update
 $ sudo apt-get install dart
 ```
 
-To setup for a **dev channel** release, run the one-time setup commands
-followed by:
+Or, to install the
+{% if site.data.pkg-vers.SDK.channel == 'dev' -%}
+**stable**
+{% else -%}
+**dev**
+{% endif -%}
+release of the Dart SDK,
+run the one-time setup commands followed by:
 
+{% if site.data.pkg-vers.SDK.channel == 'dev' %}
+```terminal
+$ sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
+$ sudo apt-get update
+$ sudo apt-get install dart
+```
+{% else %}
 ```terminal
 $ sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_unstable.list > /etc/apt/sources.list.d/dart_unstable.list'
 $ sudo apt-get update
 $ sudo apt-get install dart
 ```
+{% endif %}
+
 
 #### Install a Debian package
 
