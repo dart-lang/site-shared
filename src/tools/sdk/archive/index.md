@@ -25,8 +25,8 @@ Go to the [Dart SDK page](/tools/sdk).
 ## Stable channel
 
 {% if site.data.pkg-vers.SDK.channel == 'dev' %}
-The stable channel contains 1.x and earlier versions of Dart.
-We strongly encourage you to use Dart 2 instead,
+The stable channel currently contains 1.x and earlier versions of Dart.
+We recommend using Dart 2 instead,
 which is available in the dev channel.
 {% else %}
 Stable channel builds are tested and approved for production use.
