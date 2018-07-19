@@ -26,11 +26,7 @@ $ sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/de
 {% endif %}
 
 Then install the
-{% if site.data.pkg-vers.SDK.channel == 'dev' -%}
-**dev**
-{% else -%}
-**stable**
-{% endif -%}
+**{{site.data.pkg-vers.SDK.channel}}**
 release of the Dart SDK:
 
 ```terminal
