@@ -2,6 +2,7 @@
 
 set -e -o pipefail
 
+# Assume that this script will be linked to ~/scripts/foo or ~/tool/foo in the parent repo.
 cd `dirname $0`/..
 
 if [[ "$1" == "--dev" && -e _config_dev.yml ]]; then
