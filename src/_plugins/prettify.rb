@@ -62,20 +62,16 @@ module Prettify
         }
       end
 
-      code.gsub!('[[strike]]', '<code class="nocode strike">')
-      code.gsub!('[[/strike]]', '</code>')
+      # Names of tags previously supported: highlight, note, red, strike.
+      code.gsub!(/\[\[(\w+)\]\]/, '<span class="\1">')
+      code.gsub!(/\[\[\/(\w+)\]\]/, '</span>')
 
-      code.gsub!('[[highlight]]', '<code class="nocode highlight">')
-      code.gsub!('[[/highlight]]', '</code>')
+      # Flutter tag syntax variant:
+      code.gsub!(/\/\*\*(\w+)\*\//, '<span class="\1">')
+      code.gsub!(/\/\*-(\w+)\*\//, '</span>')
 
       code.gsub!('[!', '<span class="highlight">')
       code.gsub!('!]', '</span>')
-
-      code.gsub!('[[note]]', '<code class="nocode note">')
-      code.gsub!('[[/note]]', '</code>')
-
-      code.gsub!('[[red]]', '<code class="nocode red">')
-      code.gsub!('[[/red]]', '</code>')
 
       out += code + "</#{@tag}>"
     end
@@ -101,8 +97,8 @@ module Prettify
 
       # 3. Determine length of leading spaces to be trimmed
       len = nonblanklines.map{ |s|
-          matches = s.match(/^[ \t]*/)
-          matches ? matches[0].length : 0 }.min
+        matches = s.match(/^[ \t]*/)
+        matches ? matches[0].length : 0 }.min
 
       # Only trim the excess relative to min_len
       len = len < min_len ? min_len : len - min_len
