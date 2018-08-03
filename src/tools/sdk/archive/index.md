@@ -75,5 +75,5 @@ Examples:
 {% prettify none %}
 https://storage.googleapis.com/dart-archive/channels/stable/release/1.24.0/sdk/dartsdk-windows-ia32-release.zip
 https://storage.googleapis.com/dart-archive/channels/stable/release/1.24.3/sdk/dartsdk-macos-x64-release.zip
-https://storage.googleapis.com/dart-archive/channels/dev/release/2.0.0-dev.44.0/sdk/dartsdk-linux-x64-release.zip
+https://storage.googleapis.com/dart-archive/channels/dev/release/2.0.0-dev.69.5/sdk/dartsdk-linux-x64-release.zip
 {% endprettify %}
