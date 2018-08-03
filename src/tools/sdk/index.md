@@ -12,7 +12,7 @@ Dart apps. To learn about other tools you can use for Dart development, see
 
 <aside class="alert alert-info" markdown="1">
   **Note:** This site's documentation and examples use
-  {%if site.data.pkg-vers.SDK.channel == 'dev'%} the **dev channel** {%endif%}
+  {% if site.data.pkg-vers.SDK.channel == 'dev' %} the **dev channel** {% endif -%}
   version [{{site.data.pkg-vers.SDK.vers}}][site SDK version]{:.no-automatic-external}
   of the **Dart SDK**.
 </aside>
@@ -104,19 +104,14 @@ The Dart SDK has two release channels:
   dev channel releases are not as heavily tested as the stable release.
 </aside>
 
-Most **alpha** releases of Flutter contain a **dev** channel release of Dart.
 
-{% comment %}
-update-for-dart-2
-{% endcomment %}
-
-**Stable** channel releases of the Dart SDK have version strings like `1.24.2` and `2.0.0`.
+**Stable** channel releases of the Dart SDK have version strings like `1.24.3` and `2.0.0`.
 They consist of dot-separated integers, with no hyphens or letters.
 
 **Dev** channel releases of the Dart SDK (pre-releases)
 have additional characters, starting with a hyphen (`-`).
-Dart 2 pre-releases have version numbers starting with
-`2.0.0-dev`—for example, `2.0.0-dev.42.0`.
+For example, Dart 2 pre-releases have version numbers starting with
+`2.0.0-dev` such as `2.0.0-dev.69.5`.
 
 For more information, see [Dart 2 Updates](/dart-2).
 
