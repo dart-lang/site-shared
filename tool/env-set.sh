@@ -41,9 +41,9 @@ elif [[ -z "$DART_SITE_ENV_DEFS" ]]; then
   echo -e "${ANSI_YELLOW}Setting environment variables from scripts/env-set.sh${ANSI_RESET}"
 
   if [[ "$_DART_SITE_ENV_SET_INSTALL_OPT" == "--install" ]]; then
-    nvm install 8
+    nvm install 10
   else
-    nvm use 8
+    nvm use 10
   fi
   source scripts/get-ruby.sh "$_DART_SITE_ENV_SET_INSTALL_OPT"
 
