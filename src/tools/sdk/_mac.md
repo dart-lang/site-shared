@@ -38,7 +38,7 @@ To install a stable channel release when a dev release is currently active,
 run:
 
 ```terminal
-$ brew uninstall dart
+$ brew unlink dart
 $ brew install dart
 ```
 
