@@ -34,20 +34,19 @@ To upgrade when a new release of Dart is available run:
 ```terminal
 $ brew upgrade dart
 ```
+To install a stable channel release when a dev release is currently active,
+run:
+
+```terminal
+$ brew unlink dart
+$ brew install dart
+```
 
 To upgrade to a dev channel release when a stable release is
 currently active, run:
 
 ```terminal
 $ brew upgrade dart --devel --force
-```
-
-To install the most recent stable channel release when
-a more recent dev release is currently active, run:
-
-```terminal
-$ brew uninstall dart
-$ brew install dart
 ```
 
 ### Switch release
