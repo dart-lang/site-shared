@@ -1,4 +1,10 @@
 # This bash file is meant to be source'd, not executed.
+#
+# Assumptions: let REPO_ROOT be the host repo's root.
+#
+# - This script will be sourced from the host repo's REPO_ROOT/scripts folder.
+# - REPO_ROOT/scripts/shared symlinks to site-shared/tool.
+# - REPO_ROOT contains `_config.yml` with a `port` field.
 
 _DART_SITE_ENV_SET_INSTALL_OPT="--install"
 
@@ -45,7 +51,7 @@ elif [[ -z "$DART_SITE_ENV_DEFS" ]]; then
   else
     nvm use 10
   fi
-  source scripts/get-ruby.sh "$_DART_SITE_ENV_SET_INSTALL_OPT"
+  source scripts/shared/get-ruby.sh "$_DART_SITE_ENV_SET_INSTALL_OPT"
 
   if [ ! $(type -t travis_fold) ]; then
       # In case this is being run locally. Turn travis_fold into a noop.
@@ -74,6 +80,16 @@ elif [[ -z "$DART_SITE_ENV_DEFS" ]]; then
         # Updating PATH to include access to Dart bin.
         export PATH="$PATH:$DART_SDK/bin"
         export PATH="$PATH:$HOME/.pub-cache/bin"
+    fi
+  fi
+
+  export SITE_LOCALHOST_PORT=5000
+  if [[ ! -e _config.yml ]]; then
+    echo "WARNING: '_config.yml' file not found; setting SITE_LOCALHOST_PORT to $SITE_LOCALHOST_PORT."
+  else
+    export SITE_LOCALHOST_PORT=$(grep '^port:' _config.yml | awk '{ print $2}')
+    if [[ -z $SITE_LOCALHOST_PORT ]]; then
+      echo "WARNING: '_config.yml' file has no 'port' field; setting SITE_LOCALHOST_PORT to $SITE_LOCALHOST_PORT.";
     fi
   fi
 

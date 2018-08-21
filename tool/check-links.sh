@@ -4,7 +4,7 @@ set -e -o pipefail
 
 [[ -z "$DART_SITE_ENV_DEFS" ]] && . ./scripts/env-set.sh
 
-PORT=$SITE_LOCALHOST_PORT
+PORT=${SITE_LOCALHOST_PORT:-5000}
 CHECK_EXIT_CODE=0
 
 if [ ! -e "publish" ]; then
