@@ -66,4 +66,15 @@ Alternatively, download Dart SDK as Debian package in the `.deb` package format.
 - [Stable channel](#){:.download-link #debian-link-stable
   data-bits="64" data-os="debian" data-tool="sdk"}
 - [Dev channel](#){:.download-link #debian-link-dev
-  data-bits="64" data-os="debian" data-tool="sdk"}
+  data-bits="64" data-os="debian" data-tool="sdk"**
+
+
+#### Modify PATH for access to all Dart binaries
+
+For various reasons, the PATH shell variable need modification. In the bash
+shell, one can modify the PATH variable as follows for login shells. Please
+refer to your distributions documentation for further details.
+
+```terminal
+$ echo 'export PATH="/usr/lib/dart/bin:$PATH"' >> $HOME/.profile
+```
