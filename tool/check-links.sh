@@ -16,19 +16,25 @@ if [ ! -e "./$SITE" ]; then
   exit 0
 fi
 
-if (set -x; superstatic --port $PORT > /dev/null 2>&1) then
-  SERVER_PID=$!
-  sleep 4
-else
-  echo "WARNING: Failed to launch superstatic server. I'll assume it is already running."
+set -x
+superstatic --port $PORT > /dev/null 2>&1 &
+set +x
+SERVER_PID=$!
+sleep 2
+
+if ! kill -0 $SERVER_PID > /dev/null 2>&1; then
+  echo; echo "WARNING: Failed to launch superstatic server. I'll assume it is already running."; echo
+  SERVER_PID=
+# else
+#     echo "Server PID: $SERVER_PID"
 fi
 
 # Don't check for external links yet since it seems to cause problems on Travis: --external
+set -x
 pub run linkcheck \
   --skip-file ./scripts/config/linkcheck-skip-list.txt \
   :$PORT \
-  | tee $TMP/linkcheck-log.txt
-
+    | tee $TMP/linkcheck-log.txt
 set +x
 
 if ! grep '^\s*0 errors' $TMP/linkcheck-log.txt | wc -l > /dev/null; then
