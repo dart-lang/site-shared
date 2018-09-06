@@ -22,7 +22,7 @@ while [[ "$1" == -* ]]; do
                 shift;;
     -h|--help)  echo "Usage: $(basename $0) [options]";
                 echo
-                echo "  --clean     Delete the content of site.g before building the site."
+                echo "  --clean     Delete generated site files before (re-)building the site."
                 echo "  --dev       Build using _config_dev.yml."
                 echo "  --firebase  Serve using firebase rather than superstatic."
                 echo "  --help      Print this usage text."
