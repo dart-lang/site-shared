@@ -3,14 +3,14 @@
 # Assumptions: let REPO_ROOT be the host repo's root.
 #
 # - This script will be sourced from the host repo's REPO_ROOT/scripts folder.
-# - REPO_ROOT/scripts/shared symlinks to site-shared/tool.
+# - REPO_ROOT/tool/shared symlinks to site-shared/tool.
 # - REPO_ROOT contains `_config.yml` with a `port` field.
 
 _DART_SITE_ENV_SET_INSTALL_OPT="--install"
 
 if [[ $# -gt 0 ]]; then
   case "$1" in
-    -h|--help)  echo "source scripts/env-set.sh [--quick|--no-install]"
+    -h|--help)  echo "source tool/env-set.sh [--quick|--no-install]"
                 echo
                 echo "  Runs nvm and rvm commands 'install' and 'use' to get required Node"
                 echo "  and Ruby versions; then sets other required environment variables."
@@ -44,14 +44,14 @@ elif [[ -z "$DART_SITE_ENV_DEFS" ]]; then
   export DART_SITE_ENV_DEFS=1
   export ANSI_YELLOW="\033[33;1m"
   export ANSI_RESET="\033[0m"
-  echo -e "${ANSI_YELLOW}Setting environment variables from scripts/env-set.sh${ANSI_RESET}"
+  echo -e "${ANSI_YELLOW}Setting environment variables from tool/env-set.sh${ANSI_RESET}"
 
   if [[ "$_DART_SITE_ENV_SET_INSTALL_OPT" == "--install" ]]; then
     nvm install 10
   else
     nvm use 10
   fi
-  source scripts/shared/get-ruby.sh "$_DART_SITE_ENV_SET_INSTALL_OPT"
+  source tool/shared/get-ruby.sh "$_DART_SITE_ENV_SET_INSTALL_OPT"
 
   if [ ! $(type -t travis_fold) ]; then
       # In case this is being run locally. Turn travis_fold into a noop.
