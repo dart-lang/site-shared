@@ -60,7 +60,7 @@ The Dart SDK includes a `lib` directory for the [Dart libraries][] and a `bin`
 directory that has these command-line tools:
 
 <div class="row">
-  <div class="col-md-6" markdown="1">
+  <div class="col-lg-6" markdown="1">
   [dart]({{site.dartlang}}/dart-vm)
   : The standalone VM
 
@@ -73,7 +73,7 @@ directory that has these command-line tools:
   [dartdevc]({{site.webdev}}/tools/dartdevc)
   : The Dart development compiler
   (used only for web development)
-  </div><div class="col-md-6" markdown="1">
+  </div><div class="col-lg-6" markdown="1">
   [dartdoc](https://github.com/dart-lang/dartdoc#dartdoc)
   : The API documentation generator
 
