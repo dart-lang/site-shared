@@ -2,10 +2,10 @@
 
 set -e -o pipefail
 
-# Assume that this script will be linked to ~/scripts/foo or ~/tool/foo in the parent repo.
+# Assume that this script will be linked to ~/tool/foo the parent repo.
 cd `dirname $0`/..
 
-SERVE=superstatic
+SERVE="npx superstatic"
 JEKYLL_OPTS="--incremental --watch "
 
 while [[ "$1" == -* ]]; do
@@ -18,7 +18,7 @@ while [[ "$1" == -* ]]; do
                   echo "Warning: $1 option ignored because $FILE not found"
                 fi
                 shift;;
-    --firebase) SERVE="firebase serve";
+    --firebase) SERVE="npx firebase serve";
                 shift;;
     -h|--help)  echo "Usage: $(basename $0) [options]";
                 echo
@@ -61,7 +61,7 @@ fi
 
 (set -x; bundle exec jekyll build $CONFIG $JEKYLL_OPTS) &
 j_pid=$!
-(set -x; $SERVE --port ${SITE_LOCALHOST_PORT:-5000}) &
+(set -x; $SERVE --version; $SERVE --port ${SITE_LOCALHOST_PORT:-5000}) &
 f_pid=$!
 echo "Cached PIDs for build and serve: $j_pid, $f_pid"
 trap "{ kill $j_pid; kill $f_pid; exit 0;}" SIGINT
