@@ -113,7 +113,7 @@ have additional characters, starting with a hyphen (`-`).
 For example, Dart 2 pre-releases have version numbers starting with
 `2.0.0-dev` such as `2.0.0-dev.69.5`.
 
-For more information, see [Dart 2 Updates](/dart-2).
+For more information, see the [Dart 2 page.][Dart 2]
 
 [SDK constraints]: /tools/pub/pubspec#sdk-constraints
 [semantic versioning]: http://semver.org/
@@ -130,6 +130,7 @@ Here are some handy searches:
 * [pub issues](https://github.com/dart-lang/sdk/labels/Area-Pub)
 * [issues for the SDK as a whole](https://github.com/dart-lang/sdk/issues)
 
+[Dart 2]: {{site.dartlang}}/dart-2
 [build the SDK from source]: https://github.com/dart-lang/sdk/wiki/Building
 [Dart libraries]: {{site.dartlang}}/guides/libraries/library-tour
 [site SDK version]: {{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}}/{{site.data.pkg-vers.SDK.vers}}/index.html
