@@ -1,6 +1,6 @@
 {% comment %}
 This include file requires fontawesome fonts.
-Style the button pair using the `.page-github-links-menu` class.
+Style the button pair using the `#page-github-links` selector.
 {% endcomment -%}
 
 {% assign repo = page.repo | default: site.repo.this -%}
@@ -10,7 +10,7 @@ Style the button pair using the `.page-github-links-menu` class.
 
 {% capture issueTitle -%} title='{{title}}' page issue {%- endcapture -%}
 
-{% assign nl = '%0D%0A' %}
+{% assign nl = '%0D%0A' -%}
 {% capture issueBody -%}body=
 Page URL: {{url}}{{nl}}
 Page source: {{path}}{{nl}}
@@ -18,18 +18,12 @@ Page source: {{path}}{{nl}}
 <!-- ADD YOUR DESCRIPTION OF THE PAGE ISSUE HERE: -->
 {%- endcapture -%}
 
-<ul class="page-github-links-menu" role="group">
-  <li>
-    <a href="{{path}}" class="no-automatic-external"
-      title="View page source" target="_blank" rel="noopener">
-      <i class="fab fa-github fa-sm"></i>
-    </a>
-  </li>
-  <li>
-    <a href="{{repo}}/issues/new?{{issueTitle}}&{{issueBody}}"
-      class="no-automatic-external"
-      title="Report a bug on this page" target="_blank" rel="noopener">
-      <i class="fas fa-bug fa-sm"></i>
-    </a>
-  </li>
-</ul>
+<div id="page-github-links" class="btn-group" aria-label="Page GitHub links" role="group">
+  <a href="{{path}}" class="btn no-automatic-external" title="View page source" target="_blank" rel="noopener">
+    <i class="fab fa-github fa-sm"></i>
+  </a>
+  <a href="{{repo}}/issues/new?{{issueTitle}}&{{issueBody}}" class="btn no-automatic-external" title="Report a issue with this page"
+    target="_blank" rel="noopener">
+    <i class="fas fa-bug fa-sm"></i>
+  </a>
+</div>
