@@ -1,0 +1,35 @@
+{% comment %}
+This include file requires fontawesome fonts.
+Style the button pair using the `.page-github-links-menu` class.
+{% endcomment -%}
+
+{% assign repo = page.repo | default: site.repo.this -%}
+{% capture path -%} {{repo}}/tree/{{site.branch}}/{{site.source}}/{{page.path}} {%- endcapture -%}
+{% assign title = page.title | default: page.url -%}
+{% assign url = site.url | append: page.url -%}
+
+{% capture issueTitle -%} title='{{title}}' page issue {%- endcapture -%}
+
+{% assign nl = '%0D%0A' %}
+{% capture issueBody -%}body=
+Page URL: {{url}}{{nl}}
+Page source: {{path}}{{nl}}
+{{nl}}
+<!-- ADD YOUR DESCRIPTION OF THE PAGE ISSUE HERE: -->
+{%- endcapture -%}
+
+<ul class="page-github-links-menu" role="group">
+  <li>
+    <a href="{{path}}" class="no-automatic-external"
+      title="View page source" target="_blank" rel="noopener">
+      <i class="fab fa-github fa-sm"></i>
+    </a>
+  </li>
+  <li>
+    <a href="{{repo}}/issues/new?{{issueTitle}}&{{issueBody}}"
+      class="no-automatic-external"
+      title="Report a bug on this page" target="_blank" rel="noopener">
+      <i class="fas fa-bug fa-sm"></i>
+    </a>
+  </li>
+</ul>
