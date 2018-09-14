@@ -2,7 +2,7 @@
 #
 # Assumptions: let REPO_ROOT be the host repo's root.
 #
-# - This script will be sourced from the host repo's REPO_ROOT/scripts folder.
+# - This script will be sourced from the host repo's REPO_ROOT/tool folder.
 # - REPO_ROOT/tool/shared symlinks to site-shared/tool.
 # - REPO_ROOT contains `_config.yml` with a `port` field.
 
