@@ -24,5 +24,3 @@ if [[ -z "$TRAVIS" || "$TASK" == *build* ]]; then
     (set -x; bundle install)
   travis_fold end install.bundle
 fi
-
-echo "Installation done"
