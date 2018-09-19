@@ -60,8 +60,6 @@ fi
 j_pid=$!
 (set -x; $SERVE --version; $SERVE --port ${SITE_LOCALHOST_PORT:-5000}) &
 f_pid=$!
-# TMP(chalin):
-ps aux | grep -iE "(jekyll|super|fireb|$j_pid|$f_pid)"
 echo "Cached PIDs for build and serve: $j_pid, $f_pid"
 trap "{ kill $j_pid; kill $f_pid; exit 0; }" SIGINT SIGTERM
 wait
