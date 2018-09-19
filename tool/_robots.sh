@@ -17,9 +17,9 @@ function robotsOptionsUsage() {
   echo "                 it is removed or replaced before $ACTION, and restored afterwards."
   echo
   echo "                 'ok': If $OK_ROBOTS_FILE exists it is copied to $ROBOTS_FILE;"
-  echo "                       otherwise, $ROBOTS_FILE is removed before $ACTION."
+  echo "                       otherwise, an empty config file is used."
   echo "                 'no': If $NO_ROBOTS_FILE exists it is copied to $ROBOTS_FILE;"
-  echo "                       otherwise, a standard configuration disallowing all agents is used."
+  echo "                       otherwise, a standard config disallowing all agents is used."
   echo
   echo "                  When --robots is omitted, then the site generated robots.txt is used."
   echo
@@ -60,8 +60,8 @@ function _setNoRobots() {
 function _setRobotsOk() {
   if [[ -e "$OK_ROBOTS_FILE" ]]; then
     ([[ -z $QUIET ]] && set -x; cp $OK_ROBOTS_FILE $ROBOTS_FILE)
-  # else
-  #   echo "# All robots welcome!" > $ROBOTS_FILE
+  else
+    echo "# All robots welcome!" > $ROBOTS_FILE
   fi
 }
 
