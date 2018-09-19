@@ -47,22 +47,21 @@ if [[ -n $CONFIG ]]; then
   CONFIG="--config _config.yml$CONFIG"
 fi
 
-set +e
-DEST=$(grep '^destination:' _config.yml | awk '{ print $2}')
-set -e
-SITE_PATH="./${DEST:-_site}"
 if [[ -n $CLEAN ]]; then
-  if [[ -e "$SITE_PATH" ]]; then
-    (set -x; rm -Rf "$SITE_PATH/*")
+  if [[ -e "$SITE_JEKYLL_DEST" ]]; then
+    (set -x; rm -Rf "$SITE_JEKYLL_DEST/*")
   else
-    echo "WARNING: $SITE_PATH doesn't exist, so there is nothing to clean."; echo
+    echo "WARNING: $SITE_JEKYLL_DEST doesn't exist, so there is nothing to clean."; echo
   fi
+  (set -x; rm -Rf "$SITE_JEKYLL_SRC/.jekyll-*")
 fi
 
 (set -x; bundle exec jekyll build $CONFIG $JEKYLL_OPTS) &
 j_pid=$!
 (set -x; $SERVE --version; $SERVE --port ${SITE_LOCALHOST_PORT:-5000}) &
 f_pid=$!
+# TMP(chalin):
+ps aux | grep -iE "(jekyll|super|fireb|$j_pid|$f_pid)"
 echo "Cached PIDs for build and serve: $j_pid, $f_pid"
-trap "{ kill $j_pid; kill $f_pid; exit 0;}" SIGINT
+trap "{ kill $j_pid; kill $f_pid; exit 0; }" SIGINT SIGTERM
 wait

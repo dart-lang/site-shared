@@ -77,13 +77,11 @@ elif [[ -z "$DART_SITE_ENV_DEFS" ]]; then
   if [[ -n "$TRAVIS" ]]; then
     [[ ! -d "$TMP" ]] && mkdir "$TMP"
     [[ ! -d "$PKG" ]] && mkdir "$PKG"
-  else
-    if [[ -z "$(__type_t dart)" && ! $PATH =~ \/dart-sdk ]]; then
-        export DART_SDK="$PKG/dart-sdk"
-        # Updating PATH to include access to Dart bin.
-        export PATH="$PATH:$DART_SDK/bin"
-        export PATH="$PATH:$HOME/.pub-cache/bin"
-    fi
+  elif [[ -z "$(__type_t dart)" && ! $PATH =~ \/dart-sdk ]]; then
+    export DART_SDK="$PKG/dart-sdk"
+    # Updating PATH to include access to Dart bin.
+    export PATH="$PATH:$DART_SDK/bin"
+    export PATH="$PATH:$HOME/.pub-cache/bin"
   fi
 
   export SITE_LOCALHOST_PORT=5000
@@ -94,6 +92,12 @@ elif [[ -z "$DART_SITE_ENV_DEFS" ]]; then
     if [[ -z $SITE_LOCALHOST_PORT ]]; then
       echo "WARNING: '_config.yml' file has no 'port' field; setting SITE_LOCALHOST_PORT to $SITE_LOCALHOST_PORT.";
     fi
+    SITE_JEKYLL_DEST=$(grep '^destination:' _config.yml | awk '{ print $2}')
+    : ${SITE_JEKYLL_DEST:=_site}
+    export SITE_JEKYLL_DEST
+    SITE_JEKYLL_SRC=$(grep '^source:' _config.yml | awk '{ print $2}')
+    : ${SITE_JEKYLL_SRC:=.}
+    export SITE_JEKYLL_SRC
   fi
 
   if [[ -z $(git config push.recurseSubmodules) ]]; then

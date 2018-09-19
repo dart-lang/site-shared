@@ -1,42 +1,67 @@
 #!/usr/bin/env bash
 
-if [ ! $(type -t travis_fold) ]; then travis_fold () { true; } fi
+set -e -o pipefail
 
-function _error() { echo "ERROR: $1"; exit 1; }
+source ./tool/shared/env-set-check.sh
+source ./tool/shared/_robots.sh
 
 function _usage() {
-  echo "Usage: $(basename $0) [--help] [--local] [--quiet] [firebase-project-name]";
+  echo "Usage: $(basename $0) [options] firebase-project-name";
   echo
-  echo "  If unspecified, default firebase project is 'default'."
+  echo "  --local|-l     Locally deploy from an interactive shell where you are"
+  echo "                 already logged in with firebase."
   echo
-  echo "  --local    Deploy locally from an interactive shell where you are"
-  echo "             already authenticated and logged in with firebase."
+  echo "  --quiet|-q     Generate no more output than what the firebase-tools generates on deploy."
   echo
+  robotsOptionsUsage
   exit 0
 }
 
 while [[ "$1" == -* ]]; do
   case "$1" in
-    -h|--help)     _usage;;
-    -l|--local)    LOCAL=1; shift;;
-    -q|--quiet)    QUIET=1; shift;;
-    *)             _error "Unrecognized option: $1. Use --help for details.";;
+    --firebase)   SERVE="npx firebase serve"; shift;;
+    --help|-h)    _usage;;
+    --local|-l)   LOCAL=1; shift;;
+    --quiet|-q)   QUIET=1; shift;;
+    --robots)     shift; ROBOTS="$1"; shift;;
+    *)            _error "Unrecognized option: $1. Use --help for details.";;
   esac
 done
 
 _ARGS=""
-_FB_PROJ=${1:-default}
+_FB_PROJ=$1
+
+if [[ -z $_FB_PROJ ]]; then
+  _error "No firebase project specified. Use --help for details?"
+fi
 
 if [[ -z $LOCAL && -z "$FIREBASE_TOKEN" ]]; then
-  _error "Cannot deploy, the FIREBASE_TOKEN environment variable isn't defined."
+  _error "Cannot deploy, the FIREBASE_TOKEN environment variable isn't defined. Did you mean to use --local? Use --help for details."
 elif [[ -z $LOCAL ]]; then
   _ARGS+=" --non-interactive --token $FIREBASE_TOKEN"
 fi
 
 _ARGS+=" --project $_FB_PROJ"
 
-if [[ -z $QUIET ]]; then
-  echo "Deploying to Firebase project: $_FB_PROJ"
-  set -x # Travis masks out secrets from logs so enabling command echo is safe.
+if [[ -z $ROBOTS && _FB_PROJ == default ]]; then
+  echo "When deploying to 'default' you must explicitly specify the robots"
+  echo "option: --robots <RS>. Use --help for details."
+  exit 1;
 fi
-npx firebase deploy $_ARGS
+
+function _cleanup() {
+  echo "Cleaning up:"
+  restoreRobotsTxt
+}
+
+trap "echo; echo 'Signal trapped.'; exit 130" SIGINT SIGTERM
+trap "_cleanup" EXIT # original exit code is preserved
+
+saveAndSetRobotsTxt $ROBOTS
+printRobotsTxt
+
+[[ -z $QUIET ]] && echo "Deploying to Firebase project: $_FB_PROJ"
+(
+  set -x # Travis masks out secrets from logs so enabling command echo is safe.
+  npx firebase deploy $_ARGS
+)

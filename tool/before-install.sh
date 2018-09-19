@@ -2,7 +2,7 @@
 
 set -e -o pipefail
 
-[[ -z "$DART_SITE_ENV_DEFS" ]] && . ./tool/env-set.sh
+source ./tool/shared/env-set-check.sh
 
 while [[ "$1" == -* ]]; do
   case "$1" in
@@ -35,7 +35,7 @@ travis_fold end before_install.ruby_bundler
 ./tool/shared/install-dart-sdk.sh
 
 if [[ -n "$FORCE" ]]; then
-  : ${PUB_CMD:-upgrade}
+  : ${PUB_CMD:=upgrade}
 fi
 
 travis_fold start before_install.pub
