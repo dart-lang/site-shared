@@ -2,20 +2,22 @@
 
 set -e -o pipefail
 
-[[ -z "$DART_SITE_ENV_DEFS" ]] && . ./tool/env-set.sh
+source ./tool/shared/env-set-check.sh
 
 if  [[ -z "$(type -t dart)" ]]; then
     travis_fold start install.dart
     echo INSTALLING Dart SDK ...
 
+    # URL for sdk:
     # https://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-x64-release.zip
 
-    : ${DART_CHANNEL:=$(node -p 'require("./src/_data/pkg-vers.json").SDK.channel')} # dev or stable
+    : ${DART_SDK_CHANNEL:=$(node -p 'require("./src/_data/pkg-vers.json").SDK.channel')} # dev or stable
+    : ${DART_SDK_CHANNEL:=stable}
+    : ${DART_SDK_VERS:=$(node -p 'require("./src/_data/pkg-vers.json").SDK.vers')}
+    : ${DART_SDK_VERS:=latest}
 
-    CHANNEL=$DART_CHANNEL
     DART_ARCHIVE=https://storage.googleapis.com/dart-archive/channels
-    VERS=$CHANNEL/release/latest
-    # VERS=$CHANNEL/release/1.24.0 # If necessary, pin a specific version like this
+    VERS=$DART_SDK_CHANNEL/release/$DART_SDK_VERS
 
     mkUrl() {
         local dir=$1
@@ -44,7 +46,7 @@ if  [[ -z "$(type -t dart)" ]]; then
         if [[ "1000" -lt "$(wc -c $TMP/$zip | awk '{print $1}')" ]]; then
             unzip "$TMP/$zip" -d "$PKG" > /dev/null
             rm -f "$TMP/$zip"
-            # PATH is set in ./tool/env-set.sh
+            # PATH is set in env-set.sh
         else
             echo FAILED to download Dart $pkg. Check URL.
             exitStatus=1;
@@ -59,6 +61,6 @@ if  [[ -z "$(type -t dart)" ]]; then
     travis_fold end install.dart
 else
     echo Dart SDK appears to be installed: `type dart`
-    # PATH is set in ./tool/env-set.sh
+    # PATH is set in env-set.sh
     dart --version
 fi
