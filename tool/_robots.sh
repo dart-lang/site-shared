@@ -20,8 +20,8 @@ function robotsOptionsUsage() {
   echo "                       otherwise, an empty config file is used."
   echo "                 'no': If $NO_ROBOTS_FILE exists it is copied to $ROBOTS_FILE;"
   echo "                       otherwise, a standard config disallowing all agents is used."
-  echo
-  echo "                  When --robots is omitted, then the site generated robots.txt is used."
+  echo "                 'site': Use the site generated robots file. You get the same effect"
+  echo "                       when you omit the --robots flag entirely."
   echo
 }
 
@@ -33,7 +33,7 @@ function saveAndSetRobotsTxt() {
   elif [[ $ROBOTS == "ok" ]]; then
     _saveRobotsTxt
     _setRobotsOk
-  elif [[ -n $ROBOTS ]]; then
+  elif [[ -n $ROBOTS && $ROBOTS != "site" ]]; then
     _error "Unrecognized value for --robots option: $ROBOTS"
   # else
   #   Use site-generated robots.txt file.
