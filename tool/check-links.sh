@@ -22,9 +22,11 @@ while [[ "$1" == -* ]]; do
                 echo "  --port P    Serve on port P."
                 echo "  --quiet"
                 echo
+                robotsOptionsUsage
                 exit 0;;
     --port)     shift; PORT=$1; shift;;
     --quiet|-q) QUIET=1; shift;;
+    --robots)   shift; ROBOTS="$1"; shift;;
     *)          _error "Unrecognized option: $1. Use --help for details.";
                 exit 1;;
   esac
@@ -49,7 +51,7 @@ function _cleanup() {
 trap "echo; echo 'Signal trapped.'; _cleanup" SIGINT SIGTERM
 trap "_cleanup" EXIT # original exit code is preserved
 
-saveAndSetRobotsTxt ok
+saveAndSetRobotsTxt $ROBOTS
 
 # Attempt to launch the server.
 #
@@ -73,6 +75,8 @@ if ! kill -0 $SERVER_PID > /dev/null 2>&1; then
   echo
   SERVER_PID=
 fi
+
+# printRobotsTxt
 
 # Don't check for external links yet since it seems to cause problems on Travis: --external
 CMD="pub run linkcheck --skip-file ./tool/config/linkcheck-skip-list.txt :$PORT"

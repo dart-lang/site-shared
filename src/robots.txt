@@ -9,7 +9,8 @@ Instructions for deploying to the site's official server are in the README.md.
 
 {% endcomment -%}
 
+User-agent: linkcheck
+Disallow:
+
 User-agent: *
 Disallow: /
-User-agent: linkcheck
-Allow: /
