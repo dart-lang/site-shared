@@ -54,6 +54,7 @@ if [[ -n $CLEAN ]]; then
     echo "WARNING: $SITE_JEKYLL_DEST doesn't exist, so there is nothing to clean."; echo
   fi
   (set -x; rm -Rf "$SITE_JEKYLL_SRC/.jekyll-*")
+  sleep 1
 fi
 
 (set -x; bundle exec jekyll build $CONFIG $JEKYLL_OPTS) &
