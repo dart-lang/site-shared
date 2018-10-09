@@ -7,6 +7,7 @@ source ./tool/shared/_robots.sh
 
 PORT=${SITE_LOCALHOST_PORT:-5000}
 SERVE_CMD="superstatic"
+ARGS=''
 
 if [ ! -e "./$SITE_JEKYLL_DEST" ]; then
   echo "INFO: $SITE_JEKYLL_DEST directory not found. Site not built? Skipping link checks."
@@ -15,9 +16,11 @@ fi
 
 while [[ "$1" == -* ]]; do
   case "$1" in
+    --external|-e) ARGS+="$1 "; shift;;
     --firebase) SERVE_CMD="firebase serve"; shift;;
     --help|-h)  echo "Usage: $(basename $0) [options]"
                 echo
+                echo "  --external  Also check external links."
                 echo "  --firebase  Use firebase instead of superstatic to serve the site."
                 echo "  --port P    Serve on port P."
                 echo "  --quiet"
@@ -79,7 +82,7 @@ fi
 # printRobotsTxt
 
 # Don't check for external links yet since it seems to cause problems on Travis: --external
-CMD="pub run linkcheck --skip-file ./tool/config/linkcheck-skip-list.txt :$PORT"
+CMD="pub run linkcheck $ARGS--skip-file ./tool/config/linkcheck-skip-list.txt :$PORT"
 echo "+ $CMD"
 $CMD | tee "$TMP/linkcheck-log.txt"
 
