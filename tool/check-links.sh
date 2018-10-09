@@ -16,6 +16,7 @@ fi
 
 while [[ "$1" == -* ]]; do
   case "$1" in
+    --debug|-d) ARGS+="$1 "; shift;;
     --external|-e) ARGS+="$1 "; shift;;
     --firebase) SERVE_CMD="firebase serve"; shift;;
     --help|-h)  echo "Usage: $(basename $0) [options]"
@@ -83,8 +84,8 @@ fi
 
 # Don't check for external links yet since it seems to cause problems on Travis: --external
 CMD="pub run linkcheck $ARGS--skip-file ./tool/config/linkcheck-skip-list.txt :$PORT"
-echo "+ $CMD"
-$CMD | tee "$TMP/linkcheck-log.txt"
+echo "+ $CMD (logging to $TMP/linkcheck-log.txt)"
+$CMD 2>&1 | tee "$TMP/linkcheck-log.txt"
 
 # Set this scripts exit code based on grep:
 grep -qe '^\s*0 errors' "$TMP/linkcheck-log.txt"
