@@ -14,7 +14,7 @@ module Prettify
   # - The first unnamed optional argument is the prettifier lang argument.
   #   Use 'nocode' or 'none' as the language to turn of prettifying.
   # - class="..."
-  # - tag="pre|code|code+br". The HTML element used to wrap the prettified code.
+  # - tag="pre|pre+code|code|code+br". The HTML element used to wrap the prettified code.
   #   Default is pre. The `code` element is used for `code+br`; in addition,
   #   newlines in the code excerpt are reformatted at `<br>` elements.
   #
@@ -50,6 +50,7 @@ module Prettify
 
     def render(context)
       out = "<#{@tag}#{classAttr}>"
+      out += '<code>' if @tag == 'pre+code'
 
       code = trimMinLeadingSpace(super)
       # Strip leading and trailing whitespace so that <pre> and </pre> tags wrap tightly
@@ -63,17 +64,19 @@ module Prettify
       end
 
       # Names of tags previously supported: highlight, note, red, strike.
-      code.gsub!(/\[\[(\w+)\]\]/, '<span class="\1">')
-      code.gsub!(/\[\[\/(\w+)\]\]/, '</span>')
+      code.gsub!(/\[\[([\w-]+)\]\]/, '<span class="\1">')
+      code.gsub!(/\[\[\/([\w-]*)\]\]/, '</span>')
 
       # Flutter tag syntax variant:
-      code.gsub!(/\/\*\*(\w+)\*\//, '<span class="\1">')
-      code.gsub!(/\/\*-(\w+)\*\//, '</span>')
+      code.gsub!(/\/\*\*([\w-]+)\*\//, '<span class="\1">')
+      code.gsub!(/\/\*-([\w-]*)\*\//, '</span>')
 
       code.gsub!('[!', '<span class="highlight">')
       code.gsub!('!]', '</span>')
 
-      out += code + "</#{@tag}>"
+      out += code
+      out += '</code>' if @tag == 'pre+code'
+      out += "</#{@tag}>"
     end
 
     def trimMinLeadingSpace(code)
