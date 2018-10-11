@@ -1,0 +1,71 @@
+@import 'vendor/code-prettify/_prettify';
+
+//
+// Code-prettyprint overrides
+//
+
+pre {
+  &.prettyprint {
+    @include pre-defaults;
+    background: #eee;
+    border: none;
+  }
+
+  .highlight {
+    background: #fffde7;
+    padding: 2px;
+  }
+}
+
+.pln { color: #222 }  /* plain text */
+
+@media screen {
+  .str { color: #1b87c9 }  /* string content */
+  .kwd { color: #1FBAAC }  /* a keyword */
+  .com { color: #999999 }  /* a comment */
+  /* punctuation, lisp open bracket, lisp close bracket */
+  .pun, .opn, .clo { color: #222 }
+}
+
+//
+// Rouge / pygments classes (https://github.com/jneen/rouge)
+//
+
+$generic-output-color: white;
+
+@mixin console-base($color: $light-green-A700) {
+  background: $grey-900;
+  color: $color;
+}
+
+.language-console .highlight {
+  @include console-base;
+  .go { color: $generic-output-color; } /* Generic.Output */
+}
+
+pre.console-output {
+  @include console-base($generic-output-color)
+}
+
+// `terminal` is like `console` with prompts and output colored differently
+.language-terminal .highlight {
+  @include console-base;
+  .gp { color: $grey-500; } /* Generic.Prompt */
+  .go { color: $generic-output-color; } /* Generic.Output */
+  .nb, .nt { color: #7CB342; } /* Name.Builtin */
+  .nv { color: #03bbbb; }
+  .o { color: $grey-500; font-weight: bold; } /* Operator */
+  .sb { color: #f56b78; }
+}
+
+// Match prettifier classes defined above.
+// TODO: complete this to get proper highlighting for Dart under Rouge.
+.highlight {
+  .s, .s1, .s2 { @extend .str; } /* Literal.String.* */
+  .k, .kc, .kd, .kn, .kp, .kr, .kt { @extend .kwd; } /* Keyword.* */
+  .p { @extend .pun; } /* Punctuation */
+  .c, .c1, .cm { @extend .com; } /* Comment */
+  .l { @extend .lit; } /* Literal */
+  .o { @extend .opn; } /* Operator */
+  .n { @extend .typ; } /* Name */
+}
