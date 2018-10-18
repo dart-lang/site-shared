@@ -21,7 +21,7 @@ Embeds breadcrumb RDFa, follows ARIA guidelines. References:
       property="itemListElement" typeof="ListItem"
       {%- if forloop.last %} aria-current="page"{% endif %}>
       {%- comment %}Avoid spaces here, it messes up formatting{% endcomment -%}
-      <a href="{{ crumb.url }}" property="item" typeof="WebPage">
+      <a href="{{ crumb.url | regex_replace: '/index$|/index.html$|/$' }}" property="item" typeof="WebPage">
         {%- comment %}Avoid spaces here, it messes up formatting{% endcomment -%}
         <span property="name">{{crumb.title}}</span>
       </a>
