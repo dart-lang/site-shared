@@ -17,7 +17,7 @@ fi
 while [[ "$1" == -* ]]; do
   case "$1" in
     --debug|-d) ARGS+="$1 "; shift;;
-    --external|-e) ARGS+="$1 "; shift;;
+    --external|-e) ARGS+="$1 --connection-failures-as-warnings "; shift;;
     --firebase) SERVE_CMD="firebase serve"; shift;;
     --help|-h)  echo "Usage: $(basename $0) [options]"
                 echo
