@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e -o pipefail
+set -o pipefail # Don't use -e since _cleanup can then cause the script to terminate prematurely.
 
 source ./tool/shared/env-set-check.sh
 source ./tool/shared/_robots.sh
@@ -17,7 +17,7 @@ fi
 while [[ "$1" == -* ]]; do
   case "$1" in
     --debug|-d) ARGS+="$1 "; shift;;
-    --external|-e) ARGS+="$1 --connection-failures-as-warnings "; shift;;
+    --external|-e) ARGS+="$1 --connection-failures-as-warnings "; EXTERNAL=1; shift;;
     --firebase) SERVE_CMD="firebase serve"; shift;;
     --help|-h)  echo "Usage: $(basename $0) [options]"
                 echo
@@ -86,6 +86,9 @@ fi
 CMD="pub run linkcheck $ARGS--skip-file ./tool/config/linkcheck-skip-list.txt :$PORT"
 echo "+ $CMD (logging to $TMP/linkcheck-log.txt)"
 $CMD 2>&1 | tee "$TMP/linkcheck-log.txt"
+
+# On Travis when checking external links, give linkcheck some time to finish dumping its report:
+if [[ -n "$EXTERNAL" && -n "$TRAVIS" ]]; then sleep 5; fi
 
 # Set this scripts exit code based on grep:
 grep -qe '^\s*0 errors' "$TMP/linkcheck-log.txt"
