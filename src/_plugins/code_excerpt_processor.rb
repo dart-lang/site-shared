@@ -48,26 +48,30 @@ module NgCodeExcerpt
         # w/o a code block assume it is a set cmd
         process_set_command(pi, args)
         return ''
-      elsif lang == 'diff'
-        code = match[7]
-        match = code.match(/^[ \t]*/)
-        leading_whitespace = match ? match[0] : nil
-        diff = _diff(trim_min_leading_space(code), args)
+      end
+
+      code = match[7]
+      leading_whitespace = get_indentation_string(code)
+      code = trim_min_leading_space(code)
+
+      if lang == 'diff'
+        diff = _diff(code, args)
         diff.indent!(leading_whitespace.length) if leading_whitespace
         return diff
       end
 
+      return match[0] # Patch to get flutter/web to work, until this plugin is refactored
+      
       title = args['title']
       classes = args['class']
-      code = match[7]
-
-      code = trim_min_leading_space(code)
 
       # We escape all code fragments (not just HTML fragments),
       # because we're rendering the code block as HTML.
       escaped_code = CGI.escapeHTML(code)
 
-      code_excerpt(title, classes, attrs, _process_highlight_markers(escaped_code), indent)
+      code = code_excerpt(title, classes, attrs, _process_highlight_markers(escaped_code), indent)
+      # code.indent!(leading_whitespace.length) if leading_whitespace
+      code
     end
 
     def code_excerpt(title, classes, attrs, escaped_code, indent)
@@ -325,6 +329,11 @@ module NgCodeExcerpt
       match = /^(.*)[._]\d(\.\w+)(\s+.+)?$/.match(s)
       s = "#{match[1]}#{match[2]}#{match[3]}" if match
       s
+    end
+
+    def get_indentation_string(s)
+      match = s.match(/^[ \t]*/)
+      match ? match[0] : nil
     end
 
   end
