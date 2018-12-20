@@ -56,7 +56,7 @@ To switch between locally installed dart releases run
 
 ```terminal
 $ brew switch dart 1.24.3
-$ brew switch dart 2.0.0
+$ brew switch dart 2.1.0
 ```
 
 If you aren't sure which versions of dart you have installed, then run:

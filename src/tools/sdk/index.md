@@ -105,7 +105,7 @@ The Dart SDK has two release channels:
 </aside>
 
 
-**Stable** channel releases of the Dart SDK have version strings like `1.24.3` and `2.0.0`.
+**Stable** channel releases of the Dart SDK have version strings like `1.24.3` and `2.1.0`.
 They consist of dot-separated integers, with no hyphens or letters.
 
 **Dev** channel releases of the Dart SDK (pre-releases)
