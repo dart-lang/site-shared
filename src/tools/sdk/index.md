@@ -61,7 +61,7 @@ directory that has these command-line tools:
 
 <div class="row">
   <div class="col-lg-6" markdown="1">
-  [dart]({{site.dartlang}}/dart-vm)
+  [dart]({{site.dartlang}}/server)
   : The standalone VM
 
   [dart2js]({{site.webdev}}/tools/dart2js)
