@@ -26,7 +26,7 @@ fi
 # Jekyll needs Ruby and the Ruby bundler
 travis_fold start before_install.ruby_bundler
   if [[ -n "$TRAVIS" || -n "$FORCE" || -z "$(type -t bundler)" ]]; then
-    (set -x; gem install bundler)
+    (set -x; gem install bundler -v 1.17.3)
   else
     echo "Bundler already installed. Use --force to reinstall/update."
   fi
