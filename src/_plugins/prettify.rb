@@ -4,6 +4,7 @@
 
 require 'cgi'
 require 'liquid/tag/parser' # https://github.com/envygeeks/liquid-tag-parser
+require_relative 'dart_site_util'
 
 module Prettify
 
@@ -26,9 +27,9 @@ module Prettify
 
   class Tag < Liquid::Block
 
-    def initialize(tag_name, stringOfArgs, tokens)
+    def initialize(tag_name, string_of_args, tokens)
       super
-      @args = Liquid::Tag::Parser.new(stringOfArgs).args
+      @args = Liquid::Tag::Parser.new(string_of_args).args
       @lang = @args[:argv1]
       @tag = @args[:tag] || 'pre'
       @tag = 'code' if @tag == 'code+br';
@@ -36,26 +37,26 @@ module Prettify
     end
 
     def initCssClasses
-      @cssClasses = []
+      @css_classes = []
       unless @lang == 'nocode' || @lang == 'none'
-        @cssClasses << 'prettyprint'
-        @cssClasses << "lang-#{@lang}" if @lang
+        @css_classes << 'prettyprint'
+        @css_classes << "lang-#{@lang}" if @lang
       end
-      @cssClasses << @args[:class] if @args[:class]
+      @css_classes << @args[:class] if @args[:class]
     end
 
     def classAttr
-      @cssClasses.empty? ? '' : " class=\"#{@cssClasses.join(' ')}\""
+      @css_classes.empty? ? '' : " class=\"#{@css_classes.join(' ')}\""
     end
 
     def render(context)
       out = "<#{@tag}#{classAttr}>"
       out += '<code>' if @tag == 'pre+code'
 
-      code = trimMinLeadingSpace(super)
+      code = block_trim_leading_whitespace(super.split(/\n/)).join("\n")
       # Strip leading and trailing whitespace so that <pre> and </pre> tags wrap tightly
       code.strip!
-      code = CGI::escapeHTML(code)
+      code = CGI.escapeHTML(code)
 
       if @args[:tag] == 'code+br'
         code.gsub!(/\n[ \t]*/) { |s|
@@ -79,35 +80,6 @@ module Prettify
       out += "</#{@tag}>"
     end
 
-    def trimMinLeadingSpace(code)
-      lines = code.split(/\n/);
-
-      # 1. Trim leading blank lines
-      while lines.first =~ /^\s*$/ do lines.shift; end
-
-      # 2. Trim trailing blank lines. Also determine minimal
-      # indentation for the entire code block.
-      # This is required for uses of prettify that are indented in
-      # markdown -- for example, when used in a list.
-
-      # Last line should consist of the indentation of the `endprettify`
-      # (when it is on a separate line).
-      last_line = lines.last =~ /^\s*$/ ? lines.pop : ''
-      while lines.last =~ /^\s*$/ do lines.pop end
-      min_len = last_line.length
-
-      nonblanklines = lines.reject { |s| s.match(/^\s*$/) }
-
-      # 3. Determine length of leading spaces to be trimmed
-      len = nonblanklines.map{ |s|
-        matches = s.match(/^[ \t]*/)
-        matches ? matches[0].length : 0 }.min
-
-      # Only trim the excess relative to min_len
-      len = len < min_len ? min_len : len - min_len
-
-      len == 0 ? code : lines.map{|s| s.length < len ? s : s.sub(/^[ \t]{#{len}}/, '')}.join("\n")
-    end
   end
 end
 
