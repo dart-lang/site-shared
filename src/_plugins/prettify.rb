@@ -4,111 +4,85 @@
 
 require 'cgi'
 require 'liquid/tag/parser' # https://github.com/envygeeks/liquid-tag-parser
+require_relative 'dart_site_util'
 
-module Prettify
+module Jekyll
 
-  # Wraps code with tags for Prettify.
-  #
-  # Arguments:
-  #
-  # - The first unnamed optional argument is the prettifier lang argument.
-  #   Use 'nocode' or 'none' as the language to turn of prettifying.
-  # - class="..."
-  # - tag="pre|pre+code|code|code+br". The HTML element used to wrap the prettified code.
-  #   Default is pre. The `code` element is used for `code+br`; in addition,
-  #   newlines in the code excerpt are reformatted at `<br>` elements.
-  #
-  # Example usage:
-  #
-  # {% prettify dart %}
-  # var hello = 'world';
-  # {% endprettify %}
+  module Tags
 
-  class Tag < Liquid::Block
+    # Wraps code with tags for Prettify.
+    #
+    # Arguments:
+    #
+    # - The first unnamed optional argument is the prettifier lang argument.
+    #   Use 'nocode' or 'none' as the language to turn of prettifying.
+    # - class="..."
+    # - tag="pre|pre+code|code|code+br". The HTML element used to wrap the prettified code.
+    #   Default is pre. The `code` element is used for `code+br`; in addition,
+    #   newlines in the code excerpt are reformatted at `<br>` elements.
+    #
+    # Example usage:
+    #
+    # {% prettify dart %}
+    # var hello = 'world';
+    # {% endprettify %}
+    #
+    class Prettify < Liquid::Block
 
-    def initialize(tag_name, stringOfArgs, tokens)
-      super
-      @args = Liquid::Tag::Parser.new(stringOfArgs).args
-      @lang = @args[:argv1]
-      @tag = @args[:tag] || 'pre'
-      @tag = 'code' if @tag == 'code+br';
-      initCssClasses
-    end
-
-    def initCssClasses
-      @cssClasses = []
-      unless @lang == 'nocode' || @lang == 'none'
-        @cssClasses << 'prettyprint'
-        @cssClasses << "lang-#{@lang}" if @lang
-      end
-      @cssClasses << @args[:class] if @args[:class]
-    end
-
-    def classAttr
-      @cssClasses.empty? ? '' : " class=\"#{@cssClasses.join(' ')}\""
-    end
-
-    def render(context)
-      out = "<#{@tag}#{classAttr}>"
-      out += '<code>' if @tag == 'pre+code'
-
-      code = trimMinLeadingSpace(super)
-      # Strip leading and trailing whitespace so that <pre> and </pre> tags wrap tightly
-      code.strip!
-      code = CGI::escapeHTML(code)
-
-      if @args[:tag] == 'code+br'
-        code.gsub!(/\n[ \t]*/) { |s|
-          "<br>\n#{'&nbsp;' * (s.length - 1)}"
-        }
+      def initialize(tag_name, string_of_args, tokens)
+        super
+        @args = Liquid::Tag::Parser.new(string_of_args).args
+        @lang = @args[:argv1]
+        @tag = @args[:tag] || 'pre'
+        @tag = 'code' if @tag == 'code+br'
+        init_css_classes
       end
 
-      # Names of tags previously supported: highlight, note, red, strike.
-      code.gsub!(/\[\[([\w-]+)\]\]/, '<span class="\1">')
-      code.gsub!(/\[\[\/([\w-]*)\]\]/, '</span>')
+      def init_css_classes
+        @css_classes = []
+        unless @lang == 'nocode' || @lang == 'none'
+          @css_classes << 'prettyprint'
+          @css_classes << "lang-#{@lang}" if @lang
+        end
+        @css_classes << @args[:class] if @args[:class]
+      end
 
-      # Flutter tag syntax variant:
-      code.gsub!(/\/\*\*([\w-]+)\*\//, '<span class="\1">')
-      code.gsub!(/\/\*-([\w-]*)\*\//, '</span>')
+      def class_attr
+        @css_classes.empty? ? '' : " class=\"#{@css_classes.join(' ')}\""
+      end
 
-      code.gsub!('[!', '<span class="highlight">')
-      code.gsub!('!]', '</span>')
+      def render(context)
+        out = "<#{@tag}#{class_attr}>"
+        out += '<code>' if @tag == 'pre+code'
 
-      out += code
-      out += '</code>' if @tag == 'pre+code'
-      out += "</#{@tag}>"
-    end
+        code = DartSite::Util.block_trim_leading_whitespace(super.split(/\n/)).join("\n")
+        # Strip leading and trailing whitespace so that <pre> and </pre> tags wrap tightly
+        code.strip!
+        code = CGI.escapeHTML(code)
 
-    def trimMinLeadingSpace(code)
-      lines = code.split(/\n/);
+        if @args[:tag] == 'code+br'
+          code.gsub!(/\n[ \t]*/) { |s|
+            "<br>\n#{'&nbsp;' * (s.length - 1)}"
+          }
+        end
 
-      # 1. Trim leading blank lines
-      while lines.first =~ /^\s*$/ do lines.shift; end
+        # Names of tags previously supported: highlight, note, red, strike.
+        code.gsub!(/\[\[([\w-]+)\]\]/, '<span class="\1">')
+        code.gsub!(/\[\[\/([\w-]*)\]\]/, '</span>')
 
-      # 2. Trim trailing blank lines. Also determine minimal
-      # indentation for the entire code block.
-      # This is required for uses of prettify that are indented in
-      # markdown -- for example, when used in a list.
+        # Flutter tag syntax variant:
+        code.gsub!(/\/\*\*([\w-]+)\*\//, '<span class="\1">')
+        code.gsub!(/\/\*-([\w-]*)\*\//, '</span>')
 
-      # Last line should consist of the indentation of the `endprettify`
-      # (when it is on a separate line).
-      last_line = lines.last =~ /^\s*$/ ? lines.pop : ''
-      while lines.last =~ /^\s*$/ do lines.pop end
-      min_len = last_line.length
+        code.gsub!('[!', '<span class="highlight">')
+        code.gsub!('!]', '</span>')
 
-      nonblanklines = lines.reject { |s| s.match(/^\s*$/) }
-
-      # 3. Determine length of leading spaces to be trimmed
-      len = nonblanklines.map{ |s|
-        matches = s.match(/^[ \t]*/)
-        matches ? matches[0].length : 0 }.min
-
-      # Only trim the excess relative to min_len
-      len = len < min_len ? min_len : len - min_len
-
-      len == 0 ? code : lines.map{|s| s.length < len ? s : s.sub(/^[ \t]{#{len}}/, '')}.join("\n")
+        out += code
+        out += '</code>' if @tag == 'pre+code'
+        out += "</#{@tag}>"
+      end
     end
   end
 end
 
-Liquid::Template.register_tag('prettify', Prettify::Tag)
+Liquid::Template.register_tag('prettify', Jekyll::Tags::Prettify)
