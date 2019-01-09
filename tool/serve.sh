@@ -48,13 +48,18 @@ if [[ -n $CONFIG ]]; then
 fi
 
 if [[ -n $CLEAN ]]; then
+  CLEAN_TARGETS=''
   if [[ -e "$SITE_JEKYLL_DEST" ]]; then
-    (set -x; rm -Rf "$SITE_JEKYLL_DEST/*")
+    # Clean out the folder w/o deleting it since in some setups it's a symlink
+    CLEAN_TARGETS+="$SITE_JEKYLL_DEST/* "
   else
     echo "WARNING: $SITE_JEKYLL_DEST doesn't exist, so there is nothing to clean."; echo
   fi
-  (set -x; rm -Rf "$SITE_JEKYLL_SRC/.jekyll-*")
-  sleep 1
+  CLEAN_TARGETS+="$SITE_JEKYLL_SRC/.jekyll-* "
+fi
+
+if [[ -n $CLEAN_TARGETS ]]; then
+  (set -x; rm -Rf $CLEAN_TARGETS)
 fi
 
 (set -x; bundle exec jekyll build $CONFIG $JEKYLL_OPTS) &
