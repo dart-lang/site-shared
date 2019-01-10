@@ -28,8 +28,8 @@ module Jekyll
       content.gsub!(/{!{/, '{{') # &#123;&#123;
       content.gsub!(/}!}/, '}}') # &#125;&#125;
 
-      @cep ||= NgCodeExcerpt::MarkdownProcessor.new()
-      @cep.code_excerpt_processing_init()
+      @cep ||= NgCodeExcerpt::MarkdownProcessor.new
+      @cep.code_excerpt_processing_init
       content.gsub!(@cep.code_excerpt_regex) {
         @cep.process_code_excerpt(Regexp.last_match)
       }

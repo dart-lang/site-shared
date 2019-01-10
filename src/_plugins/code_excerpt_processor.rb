@@ -7,18 +7,20 @@ require 'active_support/core_ext/string'
 require 'open3'
 require 'nokogiri'
 require 'yaml'
+require_relative 'code_diff_core'
 
 module NgCodeExcerpt
 
   class MarkdownProcessor
 
-    @@log_file_name = 'code-excerpt-log.txt'
-    @@log_entry_count = 0
-    @log_diffs = false
-
-    File.delete(@@log_file_name) if File.exist?(@@log_file_name)
-
     def initialize
+      @@log_file_name = 'code-excerpt-log.txt'
+      @@log_entry_count = 0
+      @log_diffs = false
+
+      File.delete(@@log_file_name) if File.exist?(@@log_file_name)
+
+      @code_differ = DartSite::CodeDiffCore.new
     end
 
     def code_excerpt_regex
@@ -55,7 +57,7 @@ module NgCodeExcerpt
       code = trim_min_leading_space(code)
 
       if lang == 'diff'
-        diff = _diff(code, args)
+        diff = @code_differ.render(args, code)
         diff.indent!(leading_whitespace.length) if leading_whitespace
         return diff
       end
@@ -81,48 +83,9 @@ module NgCodeExcerpt
       result
     end
 
-    def _diff(unified_diff_text, args)
-      log_puts "Diff input:\n#{unified_diff_text}" if @log_diffs
-      begin
-        o, e, _s = Open3.capture3('npx diff2html --su hidden -i stdin -o stdout', :stdin_data => unified_diff_text)
-        log_puts e if e.length > 0
-      rescue Errno::ENOENT => _e
-        raise "** ERROR: diff2html isn't installed or could not be found. " \
-              'To install with NPM run: npm install -g diff2html-cli'
-      end
-      doc = Nokogiri::HTML(o)
-      doc.css('div.d2h-file-header span.d2h-tag').remove
-      diff_html = doc.search('.d2h-wrapper')
-      _trim_diff(diff_html, args) if args['from'] || args['to']
-      log_puts "Diff output:\n#{diff_html.to_s[0, [diff_html.to_s.length, 100].min]}...\n" if @log_diffs
-      diff_html.to_s
-    end
-
     def _process_highlight_markers(s)
       s.gsub(/\[!/, '<span class="highlight">')
        .gsub(/!\]/, '</span>')
-    end
-
-    def _trim_diff(diff_html, args)
-      # The code updater truncates the diff after `to`. Only trim before `from` here.
-      # (We don't trim after `to` here because of an unwanted optimizing behavior of diff2html.)
-      log_puts ">>> from='#{args['from']}' to='#{args['to']}'" if @log_diffs
-      inside_matching_lines = done = false
-      diff_html.css('tbody.d2h-diff-tbody tr').each do |tr|
-        if tr.text.strip.start_with?('@')
-          tr.remove
-          next
-        end
-        code_line = tr.xpath('td[2]//span').text
-        inside_matching_lines = true if !done && !inside_matching_lines && code_line.match(args['from'] || '.')
-        saved_inside_matching_lines = inside_matching_lines
-        # if inside_matching_lines && args['to'] && code_line.match(args['to'])
-        #   inside_matching_lines = false
-        #   done = true;
-        # end
-        log_puts ">>> tr (#{saved_inside_matching_lines}) #{code_line} -> #{tr.text.gsub(/\s+/, ' ')}" if @log_diffs
-        tr.remove unless saved_inside_matching_lines
-      end
     end
 
     # @param [String] _div_classes, in the form "foo bar"
