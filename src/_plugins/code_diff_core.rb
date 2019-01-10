@@ -15,8 +15,10 @@ module DartSite
     end
 
     def render(args, diff)
+      return '' if diff.empty?
+
       # Get the indentation before the closing tag.
-      indentation = DartSite::Util.get_indentation_string(diff.split(/\n/, -1).last)
+      indentation = _get_indentation_string(diff)
 
       diff = DartSite::Util.trim_min_leading_space(diff)
       lines = _diff(diff, args).split(/\n/)
@@ -73,6 +75,16 @@ module DartSite
         _log_puts ">>> tr (#{saved_inside_matching_lines}) #{code_line} -> #{tr.text.gsub(/\s+/, ' ')}" if @log_diffs
         tr.remove unless saved_inside_matching_lines
       end
+    end
+
+    def _get_indentation_string(diff)
+      lines = diff.split(/\n/, -1)
+      # Try to figure out if the diff is part of a Jekyll block or a markdown block.
+      # For a Jekyll block, figure out the indentation from the whitespace before
+      # the block closing tag. Otherwise, look at the indentation before the first line
+      # (which should be a file specifier of the form '--- 1-base/lib/main.dart ...').
+      line = lines.last.match?(/^[ \t]*$/) ? lines.last : lines[0]
+      DartSite::Util.get_indentation_string(line)
     end
 
     def _log_puts(s)
