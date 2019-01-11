@@ -8,6 +8,7 @@ require 'open3'
 require 'nokogiri'
 require 'yaml'
 require_relative 'code_diff_core'
+require_relative 'dart_site_util'
 
 module DartSite
 
@@ -20,7 +21,7 @@ module DartSite
 
       File.delete(@@log_file_name) if File.exist?(@@log_file_name)
 
-      @site_title = Jekyll.configuration({})['title']
+      # @site_title = Jekyll.configuration({})['title']
       @code_differ = DartSite::CodeDiffCore.new
       @code_framer = code_framer
     end
@@ -55,8 +56,8 @@ module DartSite
       end
 
       code = match[7]
-      leading_whitespace = get_indentation_string(code)
-      code = trim_min_leading_space(code)
+      leading_whitespace = get_indentation_string(optional_code_block)
+      code = Util.trim_min_leading_space(code)
 
       if lang == 'diff'
         diff = @code_differ.render(args, code)
@@ -64,9 +65,6 @@ module DartSite
         return diff
       end
 
-      # We're not ready to process code excerpts on flutter/website yet
-      return match[0] if @site_title == 'Flutter'
-      
       title = args['title']
       classes = args['class']
 
@@ -75,13 +73,13 @@ module DartSite
       escaped_code = CGI.escapeHTML(code)
 
       code = @code_framer.frame_code(title, classes, attrs, _process_highlight_markers(escaped_code), indent)
-      # code.indent!(leading_whitespace.length) if leading_whitespace
+      code.indent!(leading_whitespace.length) if leading_whitespace
       code
     end
 
     def _process_highlight_markers(s)
       s.gsub(/\[!/, '<span class="highlight">')
-       .gsub(/!\]/, '</span>')
+          .gsub(/!\]/, '</span>')
     end
 
     def trim_min_leading_space(code)
@@ -90,8 +88,8 @@ module DartSite
 
       # Length of leading spaces to be trimmed
       len = non_blank_lines.map{ |s|
-          matches = s.match(/^[ \t]*/)
-          matches ? matches[0].length : 0 }.min
+        matches = s.match(/^[ \t]*/)
+        matches ? matches[0].length : 0 }.min
 
       len == 0 ? code : lines.map{|s| s.length < len ? s : s[len..-1]}.join("\n")
     end
