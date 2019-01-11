@@ -20,6 +20,7 @@ module NgCodeExcerpt
 
       File.delete(@@log_file_name) if File.exist?(@@log_file_name)
 
+      @site_title = Jekyll.configuration({})['title']
       @code_differ = DartSite::CodeDiffCore.new
     end
 
@@ -62,7 +63,8 @@ module NgCodeExcerpt
         return diff
       end
 
-      return match[0] # Patch to get flutter/web to work, until this plugin is refactored
+      # We're not ready to process code excerpts on flutter/website yet
+      return match[0] if @site_title == 'Flutter'
       
       title = args['title']
       classes = args['class']
