@@ -9,11 +9,11 @@ require 'nokogiri'
 require 'yaml'
 require_relative 'code_diff_core'
 
-module NgCodeExcerpt
+module DartSite
 
-  class MarkdownProcessor
+  class CodeExcerptProcessor
 
-    def initialize
+    def initialize(code_framer)
       @@log_file_name = 'code-excerpt-log.txt'
       @@log_entry_count = 0
       @log_diffs = false
@@ -22,6 +22,7 @@ module NgCodeExcerpt
 
       @site_title = Jekyll.configuration({})['title']
       @code_differ = DartSite::CodeDiffCore.new
+      @code_framer = code_framer
     end
 
     def code_excerpt_regex
@@ -73,47 +74,14 @@ module NgCodeExcerpt
       # because we're rendering the code block as HTML.
       escaped_code = CGI.escapeHTML(code)
 
-      code = code_excerpt(title, classes, attrs, _process_highlight_markers(escaped_code), indent)
+      code = @code_framer.frame_code(title, classes, attrs, _process_highlight_markers(escaped_code), indent)
       # code.indent!(leading_whitespace.length) if leading_whitespace
       code
-    end
-
-    def code_excerpt(title, classes, attrs, escaped_code, indent)
-      result = _unindented_template(title, classes, attrs, escaped_code)
-      # For markdown, indent at most the first line (in particular, we don't want to indent the code)
-      result.sub!(/^/, indent) if indent
-      result
     end
 
     def _process_highlight_markers(s)
       s.gsub(/\[!/, '<span class="highlight">')
        .gsub(/!\]/, '</span>')
-    end
-
-    # @param [String] _div_classes, in the form "foo bar"
-    # @param [Hash] attrs: attributes as attribute-name/value pairs.
-    def _unindented_template(title, _div_classes, attrs, escaped_code)
-      div_classes = ['code-example']
-      div_classes << _div_classes if _div_classes
-
-      pre_classes = attrs[:class] || []
-      pre_classes.unshift("lang-#{attrs[:lang]}") if attrs[:lang]
-      pre_classes.unshift('prettyprint')
-
-      # <code-example data-webdev-raw #{attr_str attrs}>#{
-      # escaped_code
-      # }</code-example>
-
-      <<~TEMPLATE.gsub(/!n\s*/,'').sub(/\bescaped_code\b/,escaped_code)
-        <div class="#{div_classes * ' '}">
-        #{title ? "<header><h4>#{title}</h4></header>" : '!n'}
-        <copy-container>!n
-          <pre class="#{pre_classes * ' '}">!n
-            <code ng-non-bindable>escaped_code</code>!n
-          </pre>!n
-        </copy-container>
-        </div>
-      TEMPLATE
     end
 
     def trim_min_leading_space(code)
@@ -230,7 +198,7 @@ module NgCodeExcerpt
       path_base = args['path-base']
       return unless path_base
       @path_base = path_base.sub(/\/$/, '')
-      # puts ">> path base set to #{@@path_base}"
+      # puts ">> path base set to '#{@path_base}'"
     end
 
     def get_code_frag(proj_rel_path, _frag_path, src_path, region)
