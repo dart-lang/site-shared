@@ -40,7 +40,7 @@ module Jekyll
         helper = DartSite::PrettifyCore.new
         helper.code2html(super,
                          lang: @args[:argv1],
-                         context: @args[:context],
+                         context: @args[:context] || 'markdown',
                          tag_specifier: @args[:tag],
                          user_classes: @args[:class])
       end
