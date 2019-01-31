@@ -23,7 +23,7 @@ module DartSite
     #
     # @return a copy of the input lines array, with lines unindented by the
     # maximal amount of whitespace possible without affecting relative
-    # (non-whitespace) line indentation. Also trime off leading and trailing blank lines.
+    # (non-whitespace) line indentation. Also trim off leading and trailing blank lines.
     def self.block_trim_leading_whitespace(lines)
       # 1. Trim leading blank lines
       while lines.first =~ /^\s*$/ do lines.shift; end
