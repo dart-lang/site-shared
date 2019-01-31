@@ -15,7 +15,10 @@ module DartSite
     #   code. The `code` element is used for `code+br`; in addition,
     #   newlines in the code excerpt are reformatted at `<br>` elements.
     # @param user_classes [String] zero or more space separated CSS class names
-    def code2html(code, lang: nil, tag_specifier: 'pre', user_classes: nil)
+    # @param context [String] 'html' or 'markdown' (default), represents whether
+    #   the tag is being rendered in an HTML or a markdown document. Indentation
+    #   must be preserved in markdown and not in HTML.
+    def code2html(code, lang: nil, context: 'markdown', tag_specifier: 'pre', user_classes: nil)
       tag = _get_real_tag(tag_specifier || 'pre')
       css_classes = _css_classes(lang, user_classes)
       class_attr = css_classes.empty? ? '' : " class=\"#{css_classes.join(' ')}\""
@@ -23,7 +26,9 @@ module DartSite
       out = "<#{tag}#{class_attr}>"
       out += '<code>' if tag_specifier == 'pre+code'
 
-      code = Util.block_trim_leading_whitespace(code.split(/\n/)).join("\n")
+      code = context == 'markdown' ?
+                 Util.block_trim_leading_whitespace(code.split(/\n/)).join("\n") :
+                 Util.trim_min_leading_space(code)
       # Strip leading and trailing whitespace so that <pre> and </pre> tags wrap tightly
       code.strip!
       code = CGI.escapeHTML(code)

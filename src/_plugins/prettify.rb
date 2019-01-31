@@ -17,6 +17,9 @@ module Jekyll
     # - The first unnamed optional argument is the prettifier lang argument.
     #   Use 'nocode' or 'none' as the language to turn off prettifying.
     # - class="..."
+    # - context="html". When unspecified, the context is assumed to be markdown.
+    #   In markdown indentation of the block is preserved, in HTML the block
+    #   isn't indented.
     # - tag="...". See [PrettifyCore.code2html()] for a description of
     #   accepted tag specifiers. Defaults to 'pre'.
     #
@@ -37,6 +40,7 @@ module Jekyll
         helper = DartSite::PrettifyCore.new
         helper.code2html(super,
                          lang: @args[:argv1],
+                         context: @args[:context],
                          tag_specifier: @args[:tag],
                          user_classes: @args[:class])
       end
