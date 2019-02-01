@@ -4,4 +4,7 @@ Content and infrastructure shared across Dart and Flutter websites. The followin
 * https://github.com/dart-lang/site-webdev
 * https://github.com/dart-lang/site-www
 
-[This repo's wiki](https://github.com/dart-lang/site-shared/wiki) contains information that's handy for contributors to flutter.io, dartlang.org, and webdev.dartlang.org.
+Handy information for contributors to these repos can be found in the [doc](doc)
+pages as well as [this repo's wiki][wiki].
+
+[wiki]: https://github.com/dart-lang/site-shared/wiki
