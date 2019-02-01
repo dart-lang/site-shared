@@ -55,7 +55,7 @@ then use relative file paths in subsequent instructions, like this:
 
     <?code-excerpt path-base="layout/lakes/interactive"?>
     ...
-    <?code-excerpt "layout/lakes/interactive/lib/main.dart (FavoriteWidget)"?>
+    <?code-excerpt "lib/main.dart (FavoriteWidget)"?>
     ```dart
     // Some code
     ```
