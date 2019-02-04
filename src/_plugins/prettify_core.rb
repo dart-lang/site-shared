@@ -5,19 +5,32 @@ module DartSite
 
   # Base class used by some Liquid Block plugins to render code that gets
   # prettified by https://github.com/google/code-prettify.
+  #
+  # The following markup syntax can be used to apply a CSS class to a span
+  # of code:
+  #
+  #   `[[foo]]some code[[/foo]]`
+  #
+  # will render as
+  #
+  #   `<span class="foo">some code</span>`
+  #
+  # Note that `[[highlight]]...[[/highlight]]` can be abbreviated using the
+  # following shorthand: `[!...!]`.
+  #
   class PrettifyCore
 
     # @param code [String], raw code to be converted to HTML.
-    #   TODO: describe highlight processing.
     # @param lang [String], e.g., 'dart', 'json' or 'yaml'
     # @param tag_specifier [String] matching "pre|pre+code|code|code+br".
     #   This is the HTML element used to wrap the prettified
     #   code. The `code` element is used for `code+br`; in addition,
     #   newlines in the code excerpt are reformatted at `<br>` elements.
     # @param user_classes [String] zero or more space separated CSS class names
+    #   to be applied to the outter-most enclosing tag.
     # @param context [String] 'html' or 'markdown' (default), represents whether
     #   the tag is being rendered in an HTML or a markdown document. Indentation
-    #   must be preserved in markdown and not in HTML.
+    #   is preserved for markdown but not for HTML.
     def code2html(code, lang: nil, context: 'markdown', tag_specifier: 'pre', user_classes: nil)
       tag = _get_real_tag(tag_specifier || 'pre')
       css_classes = _css_classes(lang, user_classes)

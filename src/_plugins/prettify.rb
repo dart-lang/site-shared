@@ -10,18 +10,21 @@ module Jekyll
 
   module Tags
 
-    # Wraps code with tags for Prettify.
+    # Liquid Block plugin to render code that gets
+    # prettified by https://github.com/google/code-prettify.
     #
     # Arguments:
     #
     # - The first unnamed optional argument is the prettifier lang argument.
     #   Use 'nocode' or 'none' as the language to turn off prettifying.
-    # - class="..."
+    # - class="...". CSS classes to be added to the opening <pre> tag.
     # - context="html". When unspecified, the context is assumed to be markdown.
-    #   In markdown indentation of the block is preserved, in HTML the block
+    #   In markdown, indentation of the block is preserved, in HTML the block
     #   isn't indented.
     # - tag="...". See [PrettifyCore.code2html()] for a description of
     #   accepted tag specifiers. Defaults to 'pre'.
+    #
+    # Code highlighting is supported; see see [PrettifyCore] for details.
     #
     # Example usage:
     #
