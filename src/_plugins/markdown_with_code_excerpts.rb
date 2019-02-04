@@ -2,6 +2,13 @@ require_relative 'code_excerpt_processor'
 
 module Jekyll
   module Converters
+
+    # This converter does some markdown preprocessing before using [Kramdown] to
+    # do the full markdown conversion (to HTML).
+    #
+    # Currently, the only preprocessing that is done is for code-excerpt
+    # instructions. See [code_excerpt_processor.rb] for details.
+    #
     module MarkdownWithCodeExcerptsConverterMixin
       # Ensure subclass sets the following property:
       #

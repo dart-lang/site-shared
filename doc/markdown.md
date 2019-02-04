@@ -9,13 +9,14 @@ description: Markdown
 
 There are two ways to document code blocks on our sites:
 
- 1. Standard markdown syntax using ``` fenced code like this:
+ 1. Use standard markdown syntax for fenced code like this:
 
         ```dart
         class C { ... }
         ```
 
- 1. [prettify][] Jekyll block tag, a custom plugin designed for use on our sites.
+ 1. Use the [prettify][] Jekyll block tag, supported via a custom plugin
+    designed for use on our sites:
 
     ```
     {% prettify dart %}
@@ -34,7 +35,7 @@ For these reasons, prefer standard markdown code-block syntax over use of the
 Jekyll prettify block tag.
 
 Use the `prettify` block tag if you need support for code highlighting, and your
-site isn't using the [code_excerpt_processor.rb][].
+site isn't using the [markdown_with_code_excerpts.rb][] plugin.
 
 ## **AVOID** using HTML when markdown syntax will do
 
@@ -56,7 +57,8 @@ than the first line like this (`|` represents the left margin):
     |  // Some code
     |  ```
 
-Start **_ordered lists_ one space** from the left margin, and indent all content by **four spaces**:
+Start **_ordered lists_ one space** from the left margin, and indent all content
+by **four spaces**:
 
     | 1. First line of bulleted list.
     |    Second line is indented to match.
@@ -86,5 +88,5 @@ once, at the end of the page:
     [Tab]: https://docs.flutter.io/flutter/material/Tab-class.html
     [TabBar]: https://docs.flutter.io/flutter/material/TabController-class.html
 
-[code_excerpt_processor.rb]: src/_plugins/code_excerpt_processor.rb
+[markdown_with_code_excerpts.rb]: src/_plugins/markdown_with_code_excerpts.rb
 [prettify]: src/_plugins/prettify.rb

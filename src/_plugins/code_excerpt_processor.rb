@@ -14,6 +14,8 @@ module DartSite
 
   class CodeExcerptProcessor
 
+    # @param code_framer is used to wrap code blocks with HTML that provides
+    # features like code block headers and a copy-code button.
     def initialize(code_framer)
       @@log_file_name = 'code-excerpt-log.txt'
       @@log_entry_count = 0
