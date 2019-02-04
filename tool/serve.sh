@@ -43,6 +43,9 @@ while [[ "$1" == -* ]]; do
   esac
 done
 
+echo "$0: for details about command-line options, use --help"
+echo
+
 if [[ -n $CONFIG ]]; then
   CONFIG="--config _config.yml$CONFIG"
 fi
