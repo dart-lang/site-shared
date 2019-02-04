@@ -72,9 +72,9 @@ by **four spaces**:
 Embedding link URLs inside text makes the text difficult to read, for example:
 
     Now that we have a `TabController` to work with, we can create our
-    tabs using the [`TabBar`](https://docs.flutter.io/flutter/material/TabController-class.html) widget.
-    In this example, we'll create a `TabBar` with 3 [`Tab`](https://docs.flutter.io/flutter/material/Tab-class.html)
-    widgets and place it within an [`AppBar`](https://docs.flutter.io/flutter/material/AppBar-class.html).
+    tabs using the [TabBar](https://docs.flutter.io/flutter/material/TabController-class.html) widget.
+    In this example, we'll create a `TabBar` with 3 [Tab](https://docs.flutter.io/flutter/material/Tab-class.html)
+    widgets and place it within an [AppBar](https://docs.flutter.io/flutter/material/AppBar-class.html).
 
 Instead, place link definitions after the paragraph, or if it is used more than
 once, at the end of the page:
