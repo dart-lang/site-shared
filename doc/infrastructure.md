@@ -70,7 +70,7 @@ $ ln -s ../site-shared/src _shared
 ```
 
 Once this is setup, then you can simply "include" `site-shared` assets like CSS
-files (such as [[src/_assets/css/_code_pre.scss]][]) like this:
+files (such as [src/_assets/css/_code_pre.scss][]) like this:
 
 ```scss
 @import '_code_pre';
