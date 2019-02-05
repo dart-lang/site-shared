@@ -90,6 +90,7 @@ JavaScript can be similarly imported:
 [Jekyll]: https://jekyllrb.com
 [jekyll-assets]: https://github.com/envygeeks/jekyll-assets
 [jekyll-toc]: https://github.com/toshimaru/jekyll-toc
-[src/_assets]: src/_assets
-[src/_plugins]: src/_plugins
-[src/_assets/css/_code_pre.scss]: src/_assets/css/_code_pre.scss
+[src/_assets]: https://github.com/dart-lang/site-shared/tree/master/src/_assets
+[src/_plugins]: https://github.com/dart-lang/site-shared/tree/master/src/_plugins
+[src/_assets/css/_code_pre.scss]: https://github.com/dart-lang/site-shared/tree/master/src/_assets/css/_code_pre.scss
+[tool/before-install.sh]: https://github.com/dart-lang/site-shared/tree/master/tool/before-install.sh
