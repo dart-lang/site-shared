@@ -12,10 +12,15 @@ Style the button pair using the `#page-github-links` selector.
 
 {% assign nl = '%0D%0A' -%}
 {% capture issueBody -%}body=
+Found a typo? You can [fix it yourself][]!{{nl}}
+{{nl}}
 Page URL: {{url}}{{nl}}
 Page source: {{path}}{{nl}}
 {{nl}}
 Description:
+
+[fix it yourself]: {{repo}}/edit/{{site.branch}}/{{site.source}}/{{page.path}}
+https://github.com/dart-lang/site-www/edit/master/src/tools/index.md
 {%- endcapture -%}
 
 <div id="page-github-links" class="btn-group" aria-label="Page GitHub links" role="group">
