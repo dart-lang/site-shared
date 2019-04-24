@@ -17,6 +17,40 @@ Dart apps. To learn about other tools you can use for Dart development, see
   of the **Dart SDK**.
 </aside>
 
+## What's in the SDK
+
+The Dart SDK includes a `lib` directory for the [Dart libraries][] and a `bin`
+directory that has these command-line tools:
+
+<div class="row">
+  <div class="col-lg-6" markdown="1">
+  [dart]({{site.dartlang}}/server)
+  : The standalone VM
+
+  [dart2js]({{site.webdev}}/tools/dart2js)
+  : The Dart-to-JavaScript compiler (used only for web development)
+
+  [dartanalyzer](https://github.com/dart-lang/sdk/tree/master/pkg/analyzer_cli#dartanalyzer)
+  : The static analyzer
+
+  [dartdevc]({{site.webdev}}/tools/dartdevc)
+  : The Dart development compiler
+  (used only for web development)
+  </div><div class="col-lg-6" markdown="1">
+  [dartdoc](https://github.com/dart-lang/dartdoc#dartdoc)
+  : The API documentation generator
+
+  [dartfmt](https://github.com/dart-lang/dart_style#readme)
+  : The Dart code formatter
+
+  [pub]({{site.dartlang}}/tools/pub)
+  : The Dart package manager
+  </div>
+</div>
+
+For more information about the SDK, see its
+[README file.](https://github.com/dart-lang/sdk/blob/master/README.dart-sdk)
+
 ## Install the SDK {#install}
 
 As the following instructions show,
@@ -53,40 +87,6 @@ so it's easy to find (but not more tempting than package managers).
 <div id="tab-sdk-install-mac" class="tabs__content" markdown="1">
 {% include_relative _mac.md %}
 </div>
-
-## What's in the SDK
-
-The Dart SDK includes a `lib` directory for the [Dart libraries][] and a `bin`
-directory that has these command-line tools:
-
-<div class="row">
-  <div class="col-lg-6" markdown="1">
-  [dart]({{site.dartlang}}/server)
-  : The standalone VM
-
-  [dart2js]({{site.webdev}}/tools/dart2js)
-  : The Dart-to-JavaScript compiler (used only for web development)
-
-  [dartanalyzer](https://github.com/dart-lang/sdk/tree/master/pkg/analyzer_cli#dartanalyzer)
-  : The static analyzer
-
-  [dartdevc]({{site.webdev}}/tools/dartdevc)
-  : The Dart development compiler
-  (used only for web development)
-  </div><div class="col-lg-6" markdown="1">
-  [dartdoc](https://github.com/dart-lang/dartdoc#dartdoc)
-  : The API documentation generator
-
-  [dartfmt](https://github.com/dart-lang/dart_style#readme)
-  : The Dart code formatter
-
-  [pub]({{site.dartlang}}/tools/pub)
-  : The Dart package manager
-  </div>
-</div>
-
-For more information about the SDK, see its
-[README file.](https://github.com/dart-lang/sdk/blob/master/README.dart-sdk)
 
 ## About release channels and version strings
 
