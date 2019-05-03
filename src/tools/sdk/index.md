@@ -8,7 +8,7 @@ js:
 
 The Dart SDK has the libraries and command-line tools that you need to develop
 Dart apps. To learn about other tools you can use for Dart development, see
-[Dart Tools](/tools).
+[Dart Tools]({{site.dartlang}}/tools).
 
 <aside class="alert alert-info" markdown="1">
   **Note:** This site's documentation and examples use
@@ -27,20 +27,20 @@ directory that has these command-line tools:
   [dart]({{site.dartlang}}/server)
   : The standalone VM
 
-  [dart2js]({{site.webdev}}/tools/dart2js)
+  [dart2js]({{site.dartlang}}/tools/dart2js)
   : The Dart-to-JavaScript compiler (used only for web development)
 
-  [dartanalyzer](https://github.com/dart-lang/sdk/tree/master/pkg/analyzer_cli#dartanalyzer)
+  [dartanalyzer]({{site.dartlang}}/dartanalyzer)
   : The static analyzer
 
-  [dartdevc]({{site.webdev}}/tools/dartdevc)
+  [dartdevc]({{site.dartlang}}/tools/dartdevc)
   : The Dart development compiler
   (used only for web development)
   </div><div class="col-lg-6" markdown="1">
-  [dartdoc](https://github.com/dart-lang/dartdoc#dartdoc)
+  [dartdoc]({{site.dartlang}}/tools/dartdoc)
   : The API documentation generator
 
-  [dartfmt](https://github.com/dart-lang/dart_style#readme)
+  [dartfmt]({{site.dartlang}}/tools/dartfmt)
   : The Dart code formatter
 
   [pub]({{site.dartlang}}/tools/pub)
@@ -58,7 +58,7 @@ you can use a package manager
 to easily install and update the Dart SDK.
 Alternatively, you can
 [build the SDK from source][] or
-[download the SDK as a zip file](/tools/sdk/archive).
+[download the SDK as a zip file]({{site.dartlang}}/tools/sdk/archive).
 {% comment %}
 NOTE to editors: Keep the zip file link as the last thing in the paragraph,
 so it's easy to find (but not more tempting than package managers).
