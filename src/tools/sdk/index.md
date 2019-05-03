@@ -8,7 +8,7 @@ js:
 
 The Dart SDK has the libraries and command-line tools that you need to develop
 Dart apps. To learn about other tools you can use for Dart development, see
-[Dart Tools]({{site.dartlang}}/tools).
+the [Dart tools]({{site.dartlang}}/tools) page.
 
 <aside class="alert alert-info" markdown="1">
   **Note:** This site's documentation and examples use
@@ -30,7 +30,7 @@ directory that has these command-line tools:
   [dart2js]({{site.dartlang}}/tools/dart2js)
   : The Dart-to-JavaScript compiler (used only for web development)
 
-  [dartanalyzer]({{site.dartlang}}/dartanalyzer)
+  [dartanalyzer]({{site.dartlang}}/tools/dartanalyzer)
   : The static analyzer
 
   [dartdevc]({{site.dartlang}}/tools/dartdevc)
