@@ -7,7 +7,11 @@ js:
 ---
 
 The Dart SDK has the libraries and command-line tools that you need to develop
-Dart apps. To learn about other tools you can use for Dart development, see
+Dart web, command-line, and server apps.
+If you're developing only mobile apps,
+then you don't need the Dart SDK; just [install Flutter.][flutter]
+
+To learn about other tools you can use for Dart development, see
 the [Dart tools]({{site.dartlang}}/tools) page.
 
 <aside class="alert alert-info" markdown="1">
@@ -17,7 +21,7 @@ the [Dart tools]({{site.dartlang}}/tools) page.
   of the **Dart SDK**.
 </aside>
 
-## What's in the SDK
+## What's in the Dart SDK
 
 The Dart SDK includes a `lib` directory for the [Dart libraries][] and a `bin`
 directory that has these command-line tools:
@@ -51,7 +55,7 @@ directory that has these command-line tools:
 For more information about the SDK, see its
 [README file.](https://github.com/dart-lang/sdk/blob/master/README.dart-sdk)
 
-## Install the SDK {#install}
+## Install the Dart SDK {#install}
 
 As the following instructions show,
 you can use a package manager
@@ -65,11 +69,6 @@ so it's easy to find (but not more tempting than package managers).
 {% endcomment %}
 
 <aside class="alert alert-warning" markdown="1">
-  {% if site.data.pkg-vers.SDK.channel == 'dev' -%}
-  **Important:**
-  The **Dart 2** SDK is available from the **dev channel** only.
-  {% endif %}
-
   {% include_relative archive/_sdk-terms.md %}
 </aside>
 
@@ -133,4 +132,5 @@ Here are some handy searches:
 [Dart 2]: {{site.dartlang}}/dart-2
 [build the SDK from source]: https://github.com/dart-lang/sdk/wiki/Building
 [Dart libraries]: {{site.dartlang}}/guides/libraries/library-tour
+[flutter]: https://flutter.dev/docs/get-started/install
 [site SDK version]: {{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}}/{{site.data.pkg-vers.SDK.vers}}/index.html
