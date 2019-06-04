@@ -21,13 +21,13 @@ Map<String, SelectElement> osSelectors = {
 };
 
 void main() {
-  HttpRequest
-      .getString("$storageApiBase?prefix=channels/stable/release/&delimiter=/")
+  HttpRequest.getString(
+          "$storageApiBase?prefix=channels/stable/release/&delimiter=/")
       .then((resp) {
     getListing('stable', resp);
   });
-  HttpRequest
-      .getString("$storageApiBase?prefix=channels/dev/release/&delimiter=/")
+  HttpRequest.getString(
+          "$storageApiBase?prefix=channels/dev/release/&delimiter=/")
       .then((resp) {
     getListing('dev', resp);
   });
@@ -90,15 +90,16 @@ DateTime parseDateTime(String date) {
 }
 
 Future getListing(String channel, String respString) async {
-  Map<String, Object> resp = json.decode(respString);
-  List<String> versions = (resp["prefixes"] as List<String>);
+  var resp = json.decode(respString) as Map<String, dynamic>;
+  var versions = resp["prefixes"] as List;
   versions.removeWhere((e) => e.contains('latest'));
 
   // Format is lines of "channels/stable/release/\d+/".
-  Iterable<Future> versionRequests = versions.map((String path) async {
+  Iterable<Future> versionRequests = versions.map((dynamic path) async {
     try {
       // XXX: We get 403/404s for dev/release/1.XY.0 where XY > 16.
-      return await HttpRequest.getString("$storageBase/${path}VERSION");
+      return await HttpRequest.getString(
+          "$storageBase/${path.toString()}VERSION");
     } catch (error) {
       // Some directories seem to not be valid. If that happens, just ignore
       // them. (We'll filter out the null entries below).
@@ -106,14 +107,14 @@ Future getListing(String channel, String respString) async {
     }
   });
 
-  List<Map<String, String>> versionStrings =
-      (await Future.wait(versionRequests))
-          .where((version) => version != null)
-          .map((e) => json.decode(e))
-          .toList();
+  var versionStrings = (await Future.wait(versionRequests))
+      .where((version) => version != null)
+      .map((e) => json.decode(e))
+      .toList();
 
   versionStrings.sort(
       (a, b) => parseDateTime(b['date']).compareTo(parseDateTime(a['date'])));
+
   for (var version in versionStrings) {
     addVersion(channel, version);
   }
@@ -145,22 +146,19 @@ const Map<String, String> suffixMap = const {
 };
 
 const Map<String, List<PlatformVariant>> platforms = const {
-  'Mac':
-    const [
-      const PlatformVariant('32-bit', const ['Dart SDK', 'Dartium']),
-      const PlatformVariant('64-bit', const ['Dart SDK', 'Dartium']),
-    ],
-  'Linux':
-    const [
-      const PlatformVariant('ARMv7', const ['Dart SDK']),
-      const PlatformVariant('ARMv8 (ARM64)', const ['Dart SDK']),
-      const PlatformVariant('32-bit', const ['Dart SDK', 'Dartium']),
-      const PlatformVariant('64-bit', const ['Dart SDK', 'Dartium']),
+  'Mac': const [
+    const PlatformVariant('32-bit', const ['Dart SDK', 'Dartium']),
+    const PlatformVariant('64-bit', const ['Dart SDK', 'Dartium']),
   ],
-  'Windows':
-    const [
-      const PlatformVariant('32-bit', const ['Dart SDK', 'Dartium']),
-      const PlatformVariant('64-bit', const ['Dart SDK']),
+  'Linux': const [
+    const PlatformVariant('ARMv7', const ['Dart SDK']),
+    const PlatformVariant('ARMv8 (ARM64)', const ['Dart SDK']),
+    const PlatformVariant('32-bit', const ['Dart SDK', 'Dartium']),
+    const PlatformVariant('64-bit', const ['Dart SDK', 'Dartium']),
+  ],
+  'Windows': const [
+    const PlatformVariant('32-bit', const ['Dart SDK', 'Dartium']),
+    const PlatformVariant('64-bit', const ['Dart SDK']),
   ],
 };
 
@@ -171,15 +169,15 @@ class PlatformVariant {
   final List<String> archives;
 }
 
-void addVersion(String channel, Map<String, String> version) {
-  OptionElement o = new OptionElement()
+void addVersion(String channel, Map<String, dynamic> version) {
+  var o = new OptionElement()
     ..text = version['version']
     ..attributes['value'] = version['version'];
   versionSelectors[channel].children.add(o);
 
   // Attempt to parse the revision number, this only works for
   // pre-github revisions.
-  int parsedRevision = int.parse(version['revision'], onError: (_) => null);
+  var parsedRevision = int.tryParse(version['revision']);
 
   /// Use the revision number for anything <= 1.11.0-dev.0.0 (rev 45519)
   /// and the version string for later ones.
@@ -203,8 +201,8 @@ void addVersion(String channel, Map<String, String> version) {
       // ARMv7 builds only available later in 2015, ARMv8 in 03-2017
       if (archiveMap[name] == 'linux') {
         if (platformVariant.architecture == 'ARMv7' &&
-            parseDateTime(version['date']).isBefore(DateTime
-                .parse((channel == "dev") ? '2015-10-21' : '2015-08-31'))) {
+            parseDateTime(version['date']).isBefore(DateTime.parse(
+                (channel == "dev") ? '2015-10-21' : '2015-08-31'))) {
           return;
         } else if (platformVariant.architecture == 'ARMv8 (ARM64)' &&
             parseDateTime(version['date'])
@@ -213,7 +211,7 @@ void addVersion(String channel, Map<String, String> version) {
         }
       }
 
-      TableRowElement row = tables[channel].addRow()
+      var row = tables[channel].addRow()
         ..attributes['data-version'] = version['version']
         ..attributes['data-os'] = archiveMap[name];
 
@@ -223,12 +221,12 @@ void addVersion(String channel, Map<String, String> version) {
         ..text = '  (${prettyRevRef})'
         ..classes.add('muted'));
 
-      row.addCell()..text = name;
+      row.addCell()..text = archiveMap[name];
       row.addCell()
         ..classes.add('nowrap')
         ..text = platformVariant.architecture;
-      List<String> possibleArchives = ['Dart SDK', 'Dartium'];
-      TableCellElement c = row.addCell()..classes.add('archives');
+      var possibleArchives = <String>['Dart SDK', 'Dartium'];
+      var c = row.addCell()..classes.add('archives');
       possibleArchives.forEach((String pa) {
         if (platformVariant.archives.contains(pa)) {
           // We had no editor downloads after the move to GitHub.
