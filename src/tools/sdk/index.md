@@ -32,16 +32,19 @@ directory that has these command-line tools:
   [dart]({{site.dartlang}}/server)
   : The standalone VM
 
+  [dart2aot & dartaotruntime]({{site.dartlang}}/tools/dart2aot)
+  : Tools for compiling Dart code to native x64 machine code
+
   [dart2js]({{site.dartlang}}/tools/dart2js)
   : The Dart-to-JavaScript compiler (used only for web development)
 
   [dartanalyzer]({{site.dartlang}}/tools/dartanalyzer)
   : The static analyzer
-
+  </div><div class="col-lg-6" markdown="1">
   [dartdevc]({{site.dartlang}}/tools/dartdevc)
   : The Dart development compiler
   (used only for web development)
-  </div><div class="col-lg-6" markdown="1">
+
   [dartdoc]({{site.dartlang}}/tools/dartdoc)
   : The API documentation generator
 
