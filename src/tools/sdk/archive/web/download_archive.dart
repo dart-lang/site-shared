@@ -7,6 +7,7 @@ import 'package:pub_semver/pub_semver.dart';
 const String storageApiBase =
     "https://www.googleapis.com/storage/v1/b/dart-archive/o";
 const String storageBase = "https://storage.googleapis.com/dart-archive";
+
 Map<String, TableElement> tables = {
   'stable': querySelector("#stable"),
   'dev': querySelector('#dev')
@@ -120,10 +121,10 @@ Future getListing(String channel, String respString) async {
   }
 
   versionSelectors[channel].options[1].selected = true;
-  versionSelectors[channel].dispatchEvent(new Event("change"));
+  versionSelectors[channel].dispatchEvent(Event("change"));
 }
 
-const Map<String, String> archiveMap = const {
+const Map<String, String> archiveMap = {
   'Mac': 'macos',
   'Linux': 'linux',
   'Windows': 'windows',
@@ -135,30 +136,30 @@ const Map<String, String> archiveMap = const {
   'Dartium': 'dartium'
 };
 
-const Map<String, String> directoryMap = const {
+const Map<String, String> directoryMap = {
   'Dart SDK': 'sdk',
   'Dartium': 'dartium'
 };
 
-const Map<String, String> suffixMap = const {
+const Map<String, String> suffixMap = {
   'Dart SDK': '-release.zip',
   'Dartium': '-release.zip'
 };
 
 const Map<String, List<PlatformVariant>> platforms = const {
-  'Mac': const [
-    const PlatformVariant('32-bit', const ['Dart SDK', 'Dartium']),
-    const PlatformVariant('64-bit', const ['Dart SDK', 'Dartium']),
+  'Mac': [
+    const PlatformVariant('32-bit', ['Dart SDK', 'Dartium']),
+    const PlatformVariant('64-bit', ['Dart SDK', 'Dartium']),
   ],
-  'Linux': const [
-    const PlatformVariant('ARMv7', const ['Dart SDK']),
-    const PlatformVariant('ARMv8 (ARM64)', const ['Dart SDK']),
-    const PlatformVariant('32-bit', const ['Dart SDK', 'Dartium']),
-    const PlatformVariant('64-bit', const ['Dart SDK', 'Dartium']),
+  'Linux': [
+    const PlatformVariant('ARMv7', ['Dart SDK']),
+    const PlatformVariant('ARMv8 (ARM64)', ['Dart SDK']),
+    const PlatformVariant('32-bit', ['Dart SDK', 'Dartium']),
+    const PlatformVariant('64-bit', ['Dart SDK', 'Dartium']),
   ],
   'Windows': const [
-    const PlatformVariant('32-bit', const ['Dart SDK', 'Dartium']),
-    const PlatformVariant('64-bit', const ['Dart SDK']),
+    const PlatformVariant('32-bit', ['Dart SDK', 'Dartium']),
+    const PlatformVariant('64-bit', ['Dart SDK']),
   ],
 };
 
@@ -170,7 +171,7 @@ class PlatformVariant {
 }
 
 void addVersion(String channel, Map<String, dynamic> version) {
-  var o = new OptionElement()
+  var o = OptionElement()
     ..text = version['version']
     ..attributes['value'] = version['version'];
   versionSelectors[channel].children.add(o);
@@ -217,7 +218,7 @@ void addVersion(String channel, Map<String, dynamic> version) {
 
       var versionCell = row.addCell()..text = version['version'];
 
-      versionCell.append(new SpanElement()
+      versionCell.append(SpanElement()
         ..text = '  (${prettyRevRef})'
         ..classes.add('muted'));
 
@@ -225,7 +226,7 @@ void addVersion(String channel, Map<String, dynamic> version) {
       row.addCell()
         ..classes.add('nowrap')
         ..text = platformVariant.architecture;
-      var possibleArchives = <String>['Dart SDK', 'Dartium'];
+      var possibleArchives = ['Dart SDK', 'Dartium'];
       var c = row.addCell()..classes.add('archives');
       possibleArchives.forEach((String pa) {
         if (platformVariant.archives.contains(pa)) {
@@ -258,18 +259,18 @@ void addVersion(String channel, Map<String, dynamic> version) {
           String uri = '$storageBase/channels/$channel/release/$versionString'
               '/${directoryMap[pa]}/${archiveMap[pa]}-${archiveMap[name]}-'
               '${archiveMap[platformVariant.architecture]}${suffixMap[pa]}';
-          c.append(new AnchorElement()
+          c.append(AnchorElement()
             ..text = pa
             ..attributes['href'] = uri);
           if (pa != 'Dart Editor' &&
               (parsedRevision == null || parsedRevision > 38976)) {
             c.appendText(' ');
-            c.append(new AnchorElement()
+            c.append(AnchorElement()
               ..text = "(SHA-256)"
               ..attributes['href'] = '$uri.sha256sum'
               ..classes.add('sha'));
           }
-          c.append(new Element.br());
+          c.append(Element.br());
         }
       });
     });
@@ -278,7 +279,7 @@ void addVersion(String channel, Map<String, dynamic> version) {
   TableRowElement row = tables[channel].addRow()
     ..attributes['data-version'] = version['version']
     ..attributes['data-os'] = 'api';
-  var rev = new SpanElement()
+  var rev = SpanElement()
     ..text = '  (${prettyRevRef})'
     ..classes.add('muted');
   row.addCell()
@@ -289,7 +290,7 @@ void addVersion(String channel, Map<String, dynamic> version) {
   TableCellElement c = row.addCell()..classes.add('archives');
   String uri = '$storageBase/channels/$channel/release/${versionString}/' +
       'api-docs/dartdocs-gen-api.zip';
-  c.append(new AnchorElement()
+  c.append(AnchorElement()
     ..text = 'API docs'
     ..attributes['href'] = uri);
 
@@ -301,12 +302,12 @@ void addVersion(String channel, Map<String, dynamic> version) {
   }
 }
 
-final RegExp regexpVersion = new RegExp(r'^(\d+)\.(\d+)\.');
+final RegExp regexpVersion = RegExp(r'^(\d+)\.(\d+)\.');
 
 bool isGreaterThanOneDot(int minor, String versionString) {
   if (regexpVersion.firstMatch(versionString) != null) {
     // If the version string is formatted correctly, see if it's >= 1.minor.
-    var version = new Version.parse(versionString);
+    var version = Version.parse(versionString);
     if (version.major > 1) {
       return true;
     } else if (version.major == 1 && version.minor > minor) {
