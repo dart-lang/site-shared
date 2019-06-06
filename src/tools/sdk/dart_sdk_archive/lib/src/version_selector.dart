@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:dart_sdk_archive/src/util.dart';
+import 'package:platform_detect/platform_detect.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:sdk_builds/sdk_builds.dart';
 
@@ -12,6 +13,7 @@ class VersionSelector {
   final TableElement _table;
   final SelectElement _versionSelector;
   final SelectElement _osSelector;
+  bool _hasPopulatedTable = false;
 
   VersionSelector(this.channel, this._client, this._table,
       this._versionSelector, this._osSelector);
@@ -21,7 +23,7 @@ class VersionSelector {
       populateTable();
     });
     _osSelector.onChange.listen((Event event) {
-      filterTable(event);
+      filterTable();
     });
     var versions = (await getSdkVersions(channel)
           ..sort())
@@ -35,6 +37,17 @@ class VersionSelector {
     _versionSelector.dispatchEvent(Event("change"));
   }
 
+  void _selectOsDropdown() {
+    if (operatingSystem.isMac) {
+      _osSelector.options[1].selected = true;
+    } else if (operatingSystem.isLinux || operatingSystem.isUnix) {
+      _osSelector.options[2].selected = true;
+    } else if (operatingSystem.isWindows) {
+      _osSelector.options[3].selected = true;
+    }
+    _osSelector.dispatchEvent(Event("change"));
+  }
+
   Future populateTable() async {
     clearTable();
     var selectedVersion =
@@ -43,6 +56,11 @@ class VersionSelector {
     var versionInfo =
         await _client.getVersion(channel, svnRevision ?? selectedVersion);
     updateTable(versionInfo);
+    if (!_hasPopulatedTable) {
+      _selectOsDropdown();
+    }
+    _hasPopulatedTable = true;
+    filterTable();
   }
 
   void clearTable() {
@@ -54,7 +72,7 @@ class VersionSelector {
     }
   }
 
-  void filterTable(Event event) {
+  void filterTable() {
     var selectedVersion =
         _versionSelector.selectedOptions[0].attributes['value'];
     var selectedOs = _osSelector.selectedOptions[0].attributes['value'];
@@ -125,7 +143,7 @@ class VersionSelector {
           }
         }
 
-        var row = _table.addRow()
+        var row = _table.tBodies.first.addRow()
           ..attributes['data-version'] = versionInfo.version.toString()
           ..attributes['data-os'] = archiveMap[name];
         var versionCell = row.addCell()..text = versionInfo.version.toString();
@@ -191,7 +209,7 @@ class VersionSelector {
       }
     }
 
-    var row = _table.addRow()
+    var row = _table.tBodies.first.addRow()
       ..attributes['data-version'] = versionInfo.version.toString()
       ..attributes['data-os'] = 'api';
     var rev = SpanElement()
