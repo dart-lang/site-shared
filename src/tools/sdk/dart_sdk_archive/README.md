@@ -11,5 +11,6 @@ pub global activate webdev
 Serve:
 
 ```
+cd site-shared/src/tools/sdk/dart_sdk_archive/
 webdev serve
 ```
