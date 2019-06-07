@@ -8,10 +8,7 @@ dependencies:
   quiver: ^2.0.0
   platform_detect: ^1.3.5
   sdk_builds:
-    # todo (ryjohn): use published version when https://github.com/kevmoo/sdk_builds.dart/pull/1 is merged
-    git:
-      url: https://github.com/johnpryan/sdk_builds.dart.git
-      ref: 46a742dae8b4ee5c1fb523cd8c3ef16325cdd8c8
+    path: ../sdk_builds.dart
 
 dev_dependencies:
   build_runner: ^1.1.2
