@@ -25,7 +25,7 @@ while [[ "$1" == -* ]]; do
                 echo "  --external          Also check external links."
                 echo "  --firebase          Use firebase instead of superstatic to serve the site."
                 echo "  --port P            Serve on port P."
-                echo "  --fail-no-warnings  Set exit code to failure if the link checker reports warnings."
+                echo "  --fail-on-warnings  Set exit code to failure if the link checker reports warnings."
                 echo ""
                 echo "  --quiet"
                 echo
