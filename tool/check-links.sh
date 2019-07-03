@@ -19,11 +19,14 @@ while [[ "$1" == -* ]]; do
     --debug|-d) ARGS+="$1 "; shift;;
     --external|-e) ARGS+="$1 --connection-failures-as-warnings "; EXTERNAL=1; shift;;
     --firebase) SERVE_CMD="firebase serve"; shift;;
+    --fail-on-warnings) FAILWARN=1; shift;;
     --help|-h)  echo "Usage: $(basename $0) [options]"
                 echo
-                echo "  --external  Also check external links."
-                echo "  --firebase  Use firebase instead of superstatic to serve the site."
-                echo "  --port P    Serve on port P."
+                echo "  --external          Also check external links."
+                echo "  --firebase          Use firebase instead of superstatic to serve the site."
+                echo "  --port P            Serve on port P."
+                echo "  --fail-on-warnings  Set exit code to failure if the link checker reports warnings."
+                echo ""
                 echo "  --quiet"
                 echo
                 robotsOptionsUsage
@@ -86,9 +89,15 @@ fi
 CMD="pub run linkcheck $ARGS--skip-file ./tool/config/linkcheck-skip-list.txt :$PORT"
 echo "+ $CMD (logging to $TMP/linkcheck-log.txt)"
 $CMD 2>&1 | tee "$TMP/linkcheck-log.txt"
+STATUS=$?
 
 # On Travis when checking external links, give linkcheck some time to finish dumping its report:
 if [[ -n "$EXTERNAL" && -n "$TRAVIS" ]]; then sleep 5; fi
 
-# Set this scripts exit code based on grep:
-grep -qe '^\s*0 errors' "$TMP/linkcheck-log.txt"
+# Set this scripts exit code:
+echo "'pub run linkcheck' status: $STATUS"
+if [[ $FAILWARN ]]; then
+  exit $STATUS
+else
+  grep -qe '^\s*0 errors' "$TMP/linkcheck-log.txt"
+fi
