@@ -10,7 +10,7 @@ js:
 ---
 
 Use this archive to download
-[specific versions](/tools/sdk#about-release-channels-and-version-strings) of the
+[specific versions](/get-dart#about-release-channels-and-version-strings) of the
 [Dart SDK](/tools/sdk)
 and the [Dart API documentation.]({{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}})
 
