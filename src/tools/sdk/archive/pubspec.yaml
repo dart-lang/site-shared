@@ -1,5 +1,5 @@
 name: download_archive
-description: Display a list of downloads for www.dartlang.org.
+description: Display a list of downloads for dart.dev.
 dependencies:
   pedantic: ^1.7.0
   dart_sdk_archive:
