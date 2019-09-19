@@ -28,7 +28,12 @@ pre {
 }
 
 //
-// Rouge / pygments classes (https://github.com/jneen/rouge)
+// Rouge / pygments classes -- https://github.com/jneen/rouge
+//
+// For CSS class names, see
+// - https://github.com/rouge-ruby/rouge/blob/master/lib/rouge/token.rb
+// - https://github.com/rouge-ruby/rouge/wiki/List-of-tokens, doc page,
+//   but doesn't seem to be as complete as token.rb.
 //
 
 $generic-output-color: white;
@@ -58,8 +63,7 @@ pre.console-output {
   .sb { color: #f56b78; }
 }
 
-// Match prettifier classes defined above.
-// TODO: complete this to get proper highlighting for Dart under Rouge.
+// Match code-prettify classes to the extent possible.
 .highlight {
   .s, .s1, .s2 { @extend .str; } /* Literal.String.* */
   .k, .kc, .kd, .kn, .kp, .kr, .kt { @extend .kwd; } /* Keyword.* */
@@ -68,4 +72,6 @@ pre.console-output {
   .l { @extend .lit; } /* Literal */
   .o { @extend .opn; } /* Operator */
   .n { @extend .typ; } /* Name */
+  .na { @extend .kwd; } /* Name.Attribute */
+  .no { @extend .lit; } /* Name.Constant */
 }
