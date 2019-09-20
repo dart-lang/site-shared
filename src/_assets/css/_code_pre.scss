@@ -57,7 +57,7 @@ pre.console-output {
   @include console-base;
   .gp { color: $grey-500; } /* Generic.Prompt */
   .go { color: $generic-output-color; } /* Generic.Output */
-  .nb, .nt { color: #88CC44; } /* Name.Builtin, Name.Tag */
+  .nb, .nt { color: #99BB00; } /* Name.Builtin, Name.Tag */
   .nv { color: #03bbbb; }
   .o { color: $grey-500; font-weight: bold; } /* Operator */
   .s, .s1, .s2 { color: #00CCEE; } /* String, .Single, .Double quotes */
