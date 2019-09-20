@@ -57,10 +57,11 @@ pre.console-output {
   @include console-base;
   .gp { color: $grey-500; } /* Generic.Prompt */
   .go { color: $generic-output-color; } /* Generic.Output */
-  .nb, .nt { color: #7CB342; } /* Name.Builtin */
+  .nb, .nt { color: #88CC44; } /* Name.Builtin, Name.Tag */
   .nv { color: #03bbbb; }
   .o { color: $grey-500; font-weight: bold; } /* Operator */
-  .sb { color: #f56b78; }
+  .s, .s1, .s2 { color: #00CCEE; } /* String, .Single, .Double quotes */
+  .sb { color: #f56b78; } /* String.Backtick */
 }
 
 // Match code-prettify classes to the extent possible.
