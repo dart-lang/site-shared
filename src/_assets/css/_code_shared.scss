@@ -7,7 +7,6 @@
 pre {
   &.prettyprint {
     @include pre-defaults;
-    background: #eee;
     border: none;
   }
 
