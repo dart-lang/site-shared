@@ -23,14 +23,16 @@ if [[ -n "$TRAVIS" && -e ./tool/env-info-and-check.sh ]]; then
   ./tool/env-info-and-check.sh
 fi
 
-# Jekyll needs Ruby and the Ruby bundler
-travis_fold start before_install.ruby_bundler
-  if [[ -n "$TRAVIS" || -n "$FORCE" || -z "$(type -t bundler)" ]]; then
+# Ruby-2.6.x comes with bundler version 1.17.3.
+# For earlier versions of ruby, get the bundler gem v1.17.3.
+# Once all sites have migrated to the use of ruby 2.6,
+# then the if statement and the bundle --version can be deleted
+if [[ -z "$(type -t bundle)" || "$(bundle --version)" < 'Bundler version 1.17.3' ]]; then
+  travis_fold start before_install.ruby_bundler
     (set -x; gem install bundler -v 1.17.3)
-  else
-    echo "Bundler already installed. Use --force to reinstall/update."
-  fi
-travis_fold end before_install.ruby_bundler
+  travis_fold end before_install.ruby_bundler
+fi
+bundle --version
 
 ./tool/shared/install-dart-sdk.sh
 
