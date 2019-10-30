@@ -7,6 +7,7 @@
 # - REPO_ROOT contains `_config.yml` with a `port` field.
 
 _DART_SITE_ENV_SET_INSTALL_OPT="--install"
+: ${_DART_SITE_NODE_VERS:=10}
 
 if [[ $# -gt 0 ]]; then
   case "$1" in
@@ -50,9 +51,9 @@ elif [[ -z "$DART_SITE_ENV_DEFS" ]]; then
   echo -e "${ANSI_YELLOW}Setting environment variables from tool/env-set.sh${ANSI_RESET}"
 
   if [[ "$_DART_SITE_ENV_SET_INSTALL_OPT" == "--install" ]]; then
-    nvm install 10
+    nvm install $_DART_SITE_NODE_VERS
   else
-    nvm use 10
+    nvm use $_DART_SITE_NODE_VERS
   fi
   source tool/shared/get-ruby.sh "$_DART_SITE_ENV_SET_INSTALL_OPT"
 
