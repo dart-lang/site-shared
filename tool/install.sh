@@ -16,11 +16,12 @@ else
 fi
 
 travis_fold start install.npm_install
-  (set -x; npm install --no-optional)
+  (set -x; npm install)
 travis_fold end install.npm_install
 
 if [[ -z "$TRAVIS" || "$TASK" == *build* ]]; then
   travis_fold start install.bundle
+    bundle --version
     (set -x; bundle install)
   travis_fold end install.bundle
 fi

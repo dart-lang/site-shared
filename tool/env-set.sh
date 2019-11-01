@@ -7,7 +7,7 @@
 # - REPO_ROOT contains `_config.yml` with a `port` field.
 
 _DART_SITE_ENV_SET_INSTALL_OPT="--install"
-: ${_DART_SITE_NODE_VERS:=10}
+: ${_DART_SITE_NODE_VERS:=12}
 
 if [[ $# -gt 0 ]]; then
   case "$1" in

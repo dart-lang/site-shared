@@ -63,5 +63,6 @@ printRobotsTxt
 [[ -z $QUIET ]] && echo "Deploying to Firebase project: $_FB_PROJ"
 (
   set -x # Travis masks out secrets from logs so enabling command echo is safe.
+  npx firebase --version
   npx firebase deploy $_ARGS
 )
