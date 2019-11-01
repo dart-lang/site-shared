@@ -1,7 +1,7 @@
 # This bash file is meant to be source'd, not executed. It is a bit non-DRY
 # because we can't define local variables, nor can we use functions.
 
-: ${_DART_SITE_RUBY_VERS:=ruby-2.4.3}
+: ${_DART_SITE_RUBY_VERS:=ruby-2.6.5}
 
 if ! rvm version | grep -q '(latest)'; then
   rvm get stable
