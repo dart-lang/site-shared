@@ -15,6 +15,8 @@ else
     echo "Node version: $(node --version)"
 fi
 
+travis_fold() { true; }
+
 travis_fold start install.npm_install
   (set -x; npm install)
 travis_fold end install.npm_install
