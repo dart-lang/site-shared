@@ -15,7 +15,13 @@ else
     echo "Node version: $(node --version)"
 fi
 
-travis_fold() { true; }
+__type_t() { if [[ -n "$ZSH_VERSION" ]]; then whence -w $*; else type -t $*; fi }
+export -f __type_t > /dev/null
+
+if ! __type_t travis_fold > /dev/null; then
+  # In case this is being run locally. Turn travis_fold into a noop.
+  function travis_fold() { true; }
+fi
 
 travis_fold start install.npm_install
   (set -x; npm install)
