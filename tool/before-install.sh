@@ -23,14 +23,6 @@ fi
 
 ./tool/shared/install-dart-sdk.sh
 
-__type_t() { if [[ -n "$ZSH_VERSION" ]]; then whence -w $*; else type -t $*; fi }
-export -f __type_t > /dev/null
-
-if ! __type_t travis_fold > /dev/null; then
-  # In case this is being run locally. Turn travis_fold into a noop.
-  function travis_fold() { true; }
-fi
-
 travis_fold start before_install.pub
   # For now favor running pub upgrade so that we can get the latest code_* packages
   # (which are specified in the pubspec via overrides):
