@@ -57,6 +57,12 @@ elif [[ -z "$DART_SITE_ENV_DEFS" ]]; then
   fi
   source tool/shared/get-ruby.sh "$_DART_SITE_ENV_SET_INSTALL_OPT"
 
+  if ! __type_t travis_fold > /dev/null; then
+    # In case this is being run locally. Turn travis_fold into a noop.
+    travis_fold() { true; }
+  fi
+  export -f travis_fold > /dev/null
+
   case "$(uname -a)" in
       Darwin\ *) _OS_NAME=macos ;;
       Linux\ *) _OS_NAME=linux ;;
