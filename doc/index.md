@@ -9,7 +9,7 @@ description: Site-shared docs
 - [Examples](examples.md): how to organize site example code.
 - [Code excerpts](code-excerpts.md): how to use the code-excerpt feature
   and its associated tooling.
-- [Markdown](markdown.md) is an _Effective markdown_ guide.
-- [Wiki][wiki]. : this repo's wiki
+- [Markdown](markdown.md): is an _Effective markdown_ guide.
+- [Wiki][wiki]: this repo's wiki
 
 [wiki]: https://github.com/dart-lang/site-shared/wiki
