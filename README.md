@@ -3,7 +3,4 @@ Content and infrastructure shared across Dart and Flutter websites. The followin
 * https://github.com/flutter/website
 * https://github.com/dart-lang/site-www
 
-Handy information for contributors to these repos can be found in the [doc](doc)
-pages as well as [this repo's wiki][wiki].
-
-[wiki]: https://github.com/dart-lang/site-shared/wiki
+Handy information for contributors to these repos can be found in the [doc](doc).
