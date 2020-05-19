@@ -11,5 +11,5 @@ description: Site-shared docs
   and its associated tooling.
 - [Markdown](markdown.md) is an _Effective markdown_ guide.
 - [images](images.md) 
-- [mobile friendly pages](mobile-friendly-pages-tips-&-tricks.md)
+- [mobile friendly pages](mobile-friendly-pages.md)
 - [writing for dart and flutter websites](writing-for-dart-and-flutter-websites.md)
