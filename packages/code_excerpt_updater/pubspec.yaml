@@ -1,0 +1,20 @@
+name: code_excerpt_updater
+version: 1.1.1
+
+description: Updates code excerpts inside markdown code blocks.
+
+author: Patrice Chalin <pchalin@gmail.com>
+homepage: https://github.com/chalin/code_excerpt_updater
+
+environment:
+  sdk: '>=2.3.0 <3.0.0'
+
+dependencies:
+  args: ^1.5.3
+  logging: ^0.11.3+1
+  path: ^1.4.0
+  yaml: ^2.1.0
+
+dev_dependencies:
+  test: ^1.14.1
+  mockito: ^4.0.0

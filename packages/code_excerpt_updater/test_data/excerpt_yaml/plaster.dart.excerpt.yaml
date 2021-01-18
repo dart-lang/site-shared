@@ -1,0 +1,8 @@
+'': |+
+  var greeting = 'hello';
+  ···
+  var scope = 'world';
+'html': |+
+  <p>
+  ···
+  </p>

@@ -1,0 +1,6 @@
+'trailing blank lines': |+
+  var greeting = 'hello';
+  
+  
+'main': |+
+  void main() => print('$greeting $scope');

@@ -1,0 +1,10 @@
+'': |+
+  var greeting = 'hello';
+  var scope = 'world';
+
+  void main() => print('$greeting $scope');
+'var': |+
+  var greeting = 'hello';
+  var scope = 'world';
+'main': |+
+  void main() => print('$greeting $scope');

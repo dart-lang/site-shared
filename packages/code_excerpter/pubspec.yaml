@@ -1,0 +1,19 @@
+name: code_excerpter
+version: 1.1.2
+description: A line-based utility for extracting code regions.
+
+author: Patrice Chalin <pchalin@gmail.com>
+homepage: https://github.com/chalin/code_excerpter
+
+environment:
+  sdk: '>=2.0.0 <3.0.0'
+
+dependencies:
+  build: ^1.2.2
+  logging: ^0.11.3+1
+  path: ^1.6.0
+  yaml: ^2.1.0
+
+dev_dependencies:
+  build_runner: ^1.8.0
+  test: ^1.0.0

@@ -1,0 +1,11 @@
+builders:
+  code_excerpter:
+    import: 'package:code_excerpter/builder.dart'
+    builder_factories: [builder]
+    build_extensions: {'': [.excerpt.yaml]}
+#   defaults:
+#     generate_for:
+#       include:
+#         - ...
+#       exclude:
+#         - ...

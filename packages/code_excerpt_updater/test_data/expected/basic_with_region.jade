@@ -1,0 +1,30 @@
+:marked
+  Test:
+  - Jade file
+  - Global indentation setting
+  - Valueless instruction argument (`title`).
+
+  <?code-excerpt "basic.dart (greeting)" title?>
+  ```dart
+    var greeting = 'hello';
+    var scope = 'world';
+  ```
+
+  Test that region argument takes precedence over string in parentheses:
+  <?code-excerpt "basic.dart (excerpt)" region="greeting" title?>
+  ```
+    var greeting = 'hello';
+    var scope = 'world';
+  ```
+
+  <?code-excerpt "basic.dart (greeting)" title indent-by="2"?>
+  ```
+    var greeting = 'hello';
+    var scope = 'world';
+  ```
+
+  <?code-excerpt "basic.dart (greeting)" indent-by="0"?>
+  ```
+  var greeting = 'hello';
+  var scope = 'world';
+  ```
