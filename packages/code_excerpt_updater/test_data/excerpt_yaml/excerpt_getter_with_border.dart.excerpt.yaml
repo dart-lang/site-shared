@@ -1,0 +1,7 @@
+'#border': '|'
+'main': |+
+  |void main() => print('$greeting $scope');
+'trailing blank lines': |+
+  |var greeting = 'hello';
+  |
+  |

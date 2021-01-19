@@ -1,0 +1,32 @@
+builders:
+  code_excerpter:
+    import: 'package:code_excerpter/builder.dart'
+    auto_apply: all_packages
+    builder_factories: [builder]
+    build_extensions: {'': [.excerpt.yaml]}
+    # TODO(redbrogdon): Consider removing this if not used elsewhere.
+    defaults:
+      generate_for:
+        include:
+          - example/**
+          - examples/**
+          - null_safety_examples/**
+          - lib/**
+          - test/**
+          - web/**
+        exclude:
+          - '**/.*'
+          - '**/.*/**'
+          - '**/.DS_Store'
+          - '**/build/**'
+          - '**/node_modules/**'
+          - '**/*.bmp'
+          - '**/*.cur'
+          - '**/*.ico'
+          - '**/*.jpg'
+          - '**/*.jpeg'
+          - '**/*.png'
+          - '**/*.sum'
+          - '**/*.tiff'
+          - '**/*.zip'
+          - '**/*.gzip'
