@@ -11,7 +11,7 @@ echo "RVM current: $(rvm current)"
 if rvm current | grep -Fq $_DART_SITE_RUBY_VERS; then
   echo "  Using $(rvm current) (rvm $(rvm version | awk '{print $2}'))"
 elif rvm list | grep -Fq $_DART_SITE_RUBY_VERS; then
-  if [[ -n "$TRAVIS" ]]; then DEFAULT="--default "; fi
+  if [[ -n "$CI" ]]; then DEFAULT="--default "; fi
   echo "Running: rvm ${DEFAULT}use $_DART_SITE_RUBY_VERS"
   rvm ${DEFAULT}use $_DART_SITE_RUBY_VERS
 elif [[ -z "$1" || "$1" == "--install" ]]; then

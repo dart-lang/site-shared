@@ -38,7 +38,7 @@ fi
 if [[ -z $LOCAL && -z "$FIREBASE_TOKEN" ]]; then
   _error "Cannot deploy, the FIREBASE_TOKEN environment variable isn't defined. Did you mean to use --local? Use --help for details."
 elif [[ -z $LOCAL ]]; then
-  _ARGS+=" --non-interactive --token $FIREBASE_TOKEN"
+  _ARGS+=" --non-interactive"
 fi
 
 _ARGS+=" --project $_FB_PROJ"
@@ -62,7 +62,7 @@ printRobotsTxt
 
 [[ -z $QUIET ]] && echo "Deploying to Firebase project: $_FB_PROJ"
 (
-  set -x # Travis masks out secrets from logs so enabling command echo is safe.
+  set -x
   npx firebase --version
   npx firebase deploy $_ARGS
 )
