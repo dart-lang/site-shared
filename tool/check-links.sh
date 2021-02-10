@@ -71,11 +71,11 @@ $CMD > "$TMP/linkcheck-server-log.txt" 2>&1 &
 SERVER_PID=$!
 echo "  Server PID: $SERVER_PID"
 
-sleep 2; [[ -z "$TRAVIS" ]] && sleep 2
+sleep 2; [[ -z "$CI" ]] && sleep 2
 
 if ! kill -0 $SERVER_PID > /dev/null 2>&1; then
   echo; echo "WARNING: Failed to launch '$SERVE_CMD' (output is in $TMP/linkcheck-server-log.txt). I'll assume it is already running."
-  if [[ -n "$TRAVIS" ]]; then
+  if [[ -n "$CI" ]]; then
     echo "Here's the log with errors (that we're ignoring):"; echo
     cat "$TMP/linkcheck-server-log.txt"
   fi
@@ -85,14 +85,14 @@ fi
 
 # printRobotsTxt
 
-# Don't check for external links yet since it seems to cause problems on Travis: --external
+# Don't check for external links yet since it seems to cause problems on CI: --external
 CMD="pub run linkcheck $ARGS--skip-file ./tool/config/linkcheck-skip-list.txt :$PORT"
 echo "+ $CMD (logging to $TMP/linkcheck-log.txt)"
 $CMD 2>&1 | tee "$TMP/linkcheck-log.txt"
 STATUS=$?
 
-# On Travis when checking external links, give linkcheck some time to finish dumping its report:
-if [[ -n "$EXTERNAL" && -n "$TRAVIS" ]]; then sleep 5; fi
+# On CI when checking external links, give linkcheck some time to finish dumping its report:
+if [[ -n "$EXTERNAL" && -n "$CI" ]]; then sleep 5; fi
 
 # Set this scripts exit code:
 echo "'pub run linkcheck' status: $STATUS"

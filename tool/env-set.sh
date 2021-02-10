@@ -75,7 +75,7 @@ elif [[ -z "$DART_SITE_ENV_DEFS" ]]; then
   export TMP
   export PKG
 
-  if [[ -n "$TRAVIS" ]]; then
+  if [[ -n "$CI" ]]; then
     [[ ! -d "$TMP" ]] && mkdir "$TMP"
     [[ ! -d "$PKG" ]] && mkdir "$PKG"
   elif [[ -z "$(__type_t dart)" && ! $PATH =~ \/dart-sdk ]]; then

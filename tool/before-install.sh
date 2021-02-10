@@ -17,7 +17,7 @@ while [[ "$1" == -* ]]; do
   esac
 done
 
-if [[ -n "$TRAVIS" && -e ./tool/env-info-and-check.sh ]]; then
+if [[ -n "$CI" && -e ./tool/env-info-and-check.sh ]]; then
   ./tool/env-info-and-check.sh
 fi
 
