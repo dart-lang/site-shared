@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-if [[ $TASK != *build* ]]; then exit; fi
-
 FILE=src/_data/ci.yaml
 
 echo "# WARNING: the values in this file get regenerated at build time.
