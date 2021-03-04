@@ -87,6 +87,6 @@ PR['registerLangHandler'](
       [PR['PR_LITERAL'], /^\b\.\d+(?:e[+-]?\d+)?/i],
 
       // Punctuation.
-      [PR['PR_PUNCTUATION'], /^[(){}\[\],.;?]/]
+      [PR['PR_PUNCTUATION'], /^[(){}\[\],.;?!]/]
     ]),
   ['dart']);
