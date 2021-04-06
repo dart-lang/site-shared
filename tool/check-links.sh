@@ -86,7 +86,7 @@ fi
 # printRobotsTxt
 
 # Don't check for external links yet since it seems to cause problems on CI: --external
-CMD="pub run linkcheck $ARGS--skip-file ./tool/config/linkcheck-skip-list.txt :$PORT"
+CMD="dart pub run linkcheck $ARGS--skip-file ./tool/config/linkcheck-skip-list.txt :$PORT"
 echo "+ $CMD (logging to $TMP/linkcheck-log.txt)"
 $CMD 2>&1 | tee "$TMP/linkcheck-log.txt"
 STATUS=$?
@@ -95,7 +95,7 @@ STATUS=$?
 if [[ -n "$EXTERNAL" && -n "$CI" ]]; then sleep 5; fi
 
 # Set this scripts exit code:
-echo "'pub run linkcheck' status: $STATUS"
+echo "'dart pub run linkcheck' status: $STATUS"
 if [[ $FAILWARN ]]; then
   exit $STATUS
 else

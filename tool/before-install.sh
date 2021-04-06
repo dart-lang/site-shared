@@ -9,7 +9,7 @@ while [[ "$1" == -* ]]; do
     --get)      PUB_CMD=get; shift;;
     -h|--help)  echo "Usage: $(basename $0) [options]";
                 echo
-                echo "  --get       Run pub get for the current repo. Default is pub upgrade."
+                echo "  --get       Run `dart pub get` for the current repo. Default is pub upgrade."
                 echo "  --help      Print this usage text."
                 exit 0;;
     *)          echo "ERROR: Unrecognized option: $1. Use --help for details.";
@@ -26,5 +26,5 @@ fi
 travis_fold start before_install.pub
   # For now favor running pub upgrade so that we can get the latest code_* packages
   # (which are specified in the pubspec via overrides):
-  pub ${PUB_CMD:-upgrade}
+  dart pub ${PUB_CMD:-upgrade}
 travis_fold end before_install.pub
