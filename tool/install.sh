@@ -15,13 +15,13 @@ else
     echo "Node version: $(node --version)"
 fi
 
-travis_fold start install.npm_install
+echo "::group::install.npm_install"
   (set -x; npm install)
-travis_fold end install.npm_install
+echo "::endgroup::"
 
 if [[ -z "$CI" || "$TASK" == *build* ]]; then
-  travis_fold start install.bundle
+  echo "::group::install.bundle"
     bundle --version
     (set -x; bundle install)
-  travis_fold end install.bundle
+  echo "::endgroup::"
 fi
