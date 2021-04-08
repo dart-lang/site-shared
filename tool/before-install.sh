@@ -23,8 +23,6 @@ fi
 
 ./tool/shared/install-dart-sdk.sh
 
-travis_fold start before_install.pub
-  # For now favor running pub upgrade so that we can get the latest code_* packages
-  # (which are specified in the pubspec via overrides):
-  dart pub ${PUB_CMD:-upgrade}
-travis_fold end before_install.pub
+# For now favor running pub upgrade so that we can get the latest code_* packages
+# (which are specified in the pubspec via overrides):
+dart pub ${PUB_CMD:-upgrade}
