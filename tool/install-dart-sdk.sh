@@ -5,6 +5,7 @@ set -e -o pipefail
 source ./tool/shared/env-set-check.sh
 
 if  [[ -z "$(type -t dart)" ]]; then
+    echo "::group::install.dart"
     echo INSTALLING Dart SDK ...
 
     # URL for sdk:
@@ -57,6 +58,7 @@ if  [[ -z "$(type -t dart)" ]]; then
         dart --version
     fi
     ls -l $PKG
+    echo "::endgroup::"
 else
     echo Dart SDK appears to be installed: `type dart`
     # PATH is set in env-set.sh

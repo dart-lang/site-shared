@@ -15,9 +15,13 @@ else
     echo "Node version: $(node --version)"
 fi
 
-(set -x; npm install)
+echo "::group::install.npm_install"
+  (set -x; npm install)
+echo "::endgroup::"
 
 if [[ -z "$CI" || "$TASK" == *build* ]]; then
+  echo "::group::install.bundle"
     bundle --version
     (set -x; bundle install)
+  echo "::endgroup::"
 fi
