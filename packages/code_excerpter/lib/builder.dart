@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:build/build.dart';
 
-import 'package:code_excerpter/src/util/line.dart';
-import 'package:code_excerpter/src/excerpter.dart';
+import 'src/excerpter.dart';
+import 'src/util/line.dart';
 
 const excerptLineLeftBorderChar = '|';
 
@@ -18,7 +18,7 @@ class CodeExcerptBuilder implements Builder {
 
   @override
   Future<void> build(BuildStep buildStep) async {
-    AssetId assetId = buildStep.inputId;
+    final assetId = buildStep.inputId;
     if (assetId.package.startsWith(r'$') || assetId.path.endsWith(r'$')) return;
 
     final content = await buildStep.readAsString(assetId);
@@ -43,7 +43,7 @@ class CodeExcerptBuilder implements Builder {
     if (excerpts.isEmpty) return '';
 
     const yamlExcerptLeftBorderCharKey = '#border';
-    final StringBuffer s = StringBuffer();
+    final s = StringBuffer();
 
     s.writeln("'$yamlExcerptLeftBorderCharKey': '$excerptLineLeftBorderChar'");
     excerpts.forEach((name, lines) {

@@ -3,7 +3,7 @@ import 'dart:async';
 // #enddocregion imports
 
 // #docregion main, main-stub
-void main() async {
+Future<void> main() async {
   // #enddocregion main-stub
   print('Compute π using the Monte Carlo method.');
   await for (var estimate in computePi().take(500)) {

@@ -14,7 +14,7 @@ final _argSeparator = RegExp(r'\s*,\s*');
 
 /// Represents a code-excerpter directive (both the model and lexical elements)
 class Directive {
-  static final int _lexemeIndex = 3;
+  static const int _lexemeIndex = 3;
 
   final Match _match;
   final Kind kind;
@@ -57,7 +57,7 @@ class Directive {
   /// Pushes 'repeated argument' issues to [issues].
   List<String> _uniqueArgs() {
     final argsMaybeWithDups = _parseArgs();
-    final argCount = Map<String, int>();
+    final argCount = <String, int>{};
     for (var arg in argsMaybeWithDups) {
       if (arg.isEmpty) {
         issues.add('unquoted default region name is deprecated');

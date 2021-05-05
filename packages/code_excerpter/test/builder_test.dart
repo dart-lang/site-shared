@@ -1,20 +1,20 @@
 import 'dart:io';
 
-import 'package:test/test.dart';
 import 'package:code_excerpter/builder.dart';
+import 'package:test/test.dart';
 import 'package:yaml/yaml.dart';
 
 void main() {
   test('build.yaml build_extensions matches Builder', () {
     final buildYamlFile = File('build.yaml');
     final content = buildYamlFile.readAsStringSync();
-    Map yaml = loadYaml(content);
-    Map builders = yaml['builders'];
+    final yaml = loadYaml(content) as YamlMap;
+    final builders = yaml['builders'] as Map;
     expect(builders, isNotNull);
-    Map code_excerpter = builders['code_excerpter'];
-    expect(code_excerpter, isNotNull);
-    Map build_extensions = code_excerpter['build_extensions'];
-    expect(build_extensions, isNotNull);
-    expect(build_extensions, builder(null).buildExtensions);
+    final codeExcerpter = builders['code_excerpter'] as Map;
+    expect(codeExcerpter, isNotNull);
+    final buildExtensions = codeExcerpter['build_extensions'] as Map;
+    expect(buildExtensions, isNotNull);
+    expect(buildExtensions, builder(null).buildExtensions);
   });
 }

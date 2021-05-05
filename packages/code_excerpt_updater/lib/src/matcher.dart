@@ -16,7 +16,7 @@ Matcher patternArgToMatcher(String arg, [String cmd = '']) {
   if (arg.startsWith('/') && arg.endsWith('/')) {
     final re = RegExp(arg.substring(1, arg.length - 1));
     _log.finest(' >> $cmd arg: "$arg" used as regexp $re');
-    matcher = (s) => re.hasMatch(s);
+    matcher = re.hasMatch;
   } else {
     final stringToMatch = arg.startsWith(r'\/')
         ? arg.substring(1) // TODO: process other escaped characters

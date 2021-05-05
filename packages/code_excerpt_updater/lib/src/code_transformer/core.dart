@@ -1,8 +1,7 @@
 /// Collected code transformer and predicate declarations
-
 import '../constants.dart';
-import '../nullable.dart';
 import '../matcher.dart';
+import '../nullable.dart';
 import '../util.dart';
 
 typedef CodeTransformer = String Function(String code);

@@ -71,7 +71,7 @@ class Diff {
     hunks = [];
     while (i < lines.length) {
       if (!lines[i].startsWith('@@')) throw _invalidHunk(i);
-      var start = i++;
+      final start = i++;
       // Look for the start of the next hunk or the end of the diff
       while (i < lines.length && !lines[i].startsWith('@@')) {
         i++;

@@ -1,15 +1,14 @@
-import 'package:code_excerpter/src/util/line.dart';
-
 import 'directive.dart';
-import 'util/logging.dart';
 import 'nullable.dart';
+import 'util/line.dart';
+import 'util/logging.dart';
 
 /// Key used for excerpt representing the entire file w/o directives
 const fullFileKey = '\u0000';
 const defaultRegionKey = '';
 const defaultPlaster = '···';
 
-Map<String, List<String>> newExcerptsMap() => Map();
+Map<String, List<String>> newExcerptsMap() => {};
 
 class Excerpter {
   final String uri;
@@ -30,7 +29,7 @@ class Excerpter {
         _lineIdx = 0;
 
   final Map<String, List<String>> excerpts = newExcerptsMap();
-  final Set<String> _openExcerpts = Set();
+  final Set<String> _openExcerpts = {};
 
   Excerpter weave() {
     final lines = content.split(eol);
@@ -38,7 +37,9 @@ class Excerpter {
     // Collect the full file in case we need it.
     _excerptStart(fullFileKey);
 
-    for (_lineIdx = 0; _lineIdx < lines.length; _lineIdx++) _processLine();
+    for (_lineIdx = 0; _lineIdx < lines.length; _lineIdx++) {
+      _processLine();
+    }
 
     // Drop trailing blank lines for all excerpts.
     // Normalize indentation for all but the full file.
@@ -73,7 +74,7 @@ class Excerpter {
       return;
     }
 
-    directive.issues.forEach((issue) => _warn(issue));
+    directive.issues.forEach(_warn);
 
     switch (directive.kind) {
       case Kind.startRegion:
@@ -93,7 +94,7 @@ class Excerpter {
     @nullable
     List<String> regionAlreadyStarted;
 
-    var regionNames = directive.args;
+    final regionNames = directive.args;
     log.finer('_startRegion(regionNames = $regionNames)');
 
     if (regionNames.isEmpty) regionNames.add(defaultRegionKey);
@@ -111,7 +112,7 @@ class Excerpter {
   void _endRegion(Directive directive) {
     @nullable
     List<String> regionsWithoutStart;
-    var regionNames = directive.args;
+    final regionNames = directive.args;
     log.finer('_endRegion(regionNames = $regionNames)');
 
     if (regionNames.isEmpty) {

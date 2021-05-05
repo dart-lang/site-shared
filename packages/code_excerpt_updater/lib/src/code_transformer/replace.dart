@@ -1,10 +1,9 @@
-import 'package:code_excerpt_updater/src/issue_reporter.dart';
-
-import 'core.dart';
 import '../constants.dart';
+import '../issue_reporter.dart';
 import '../logger.dart';
 import '../nullable.dart';
 import '../util.dart';
+import 'core.dart';
 
 class ReplaceCodeTransformer {
   ReplaceCodeTransformer(this._reporter);
@@ -16,11 +15,12 @@ class ReplaceCodeTransformer {
 
   @nullable
   CodeTransformer codeTransformer(String replaceExp) {
-    Null _reportErr([String extraInfo = '']) {
-      _reporter.error('invalid replace attribute ("$replaceExp"); ' +
-          (extraInfo.isEmpty ? '' : '$extraInfo; ') +
-          'supported syntax is 1 or more semi-colon-separated: /regexp/replacement/g');
-      return null;
+    void _reportErr([String extraInfo = '']) {
+      _reporter.error(
+        '${'invalid replace attribute ("$replaceExp"); '}'
+        '${extraInfo.isEmpty ? '' : '$extraInfo; '}'
+        'supported syntax is 1 or more semi-colon-separated: /regexp/replacement/g',
+      );
     }
 
     if (replaceExp == null) return null;
@@ -36,10 +36,12 @@ class ReplaceCodeTransformer {
     final start = replaceExpParts[0];
     final len = replaceExpParts.length;
     if (len < 4 || len % 3 != 1) {
-      return _reportErr('argument has missing parts ($len)');
+      _reportErr('argument has missing parts ($len)');
+      return null;
     }
     if (start != '') {
-      return _reportErr('argument should start with "/", not  "$start"');
+      _reportErr('argument should start with "/", not  "$start"');
+      return null;
     }
     final transformers = <CodeTransformer>[];
     for (var i = 1; i < replaceExpParts.length; i += 3) {

@@ -1,5 +1,6 @@
-import 'constants.dart';
 import 'dart:math';
+
+import 'constants.dart';
 
 // ignore_for_file: type_annotate_public_apis
 
@@ -40,15 +41,13 @@ final _slashHexCharRE = RegExp(r'\\x(..)');
 final _slashLetterRE = RegExp(r'\\([\\nt])');
 
 /// Encode special characters: '\t', `\n`, and `\xHH` where `HH` are hex digits.
-String encodeSlashChar(String s) {
-  return s
-      .replaceAllMapped(_slashLetterRE, (Match m) => _slashCharToChar(m[1]))
-      // At this point, escaped `\` is encoded as [zeroChar].
-      .replaceAllMapped(_slashHexCharRE,
-          (Match m) => _hexToChar(m[1], errorValue: '\\x${m[1]}'))
-      // Recover `\` characters.
-      .replaceAll(zeroChar, backslash);
-}
+String encodeSlashChar(String s) => s
+    .replaceAllMapped(_slashLetterRE, (Match m) => _slashCharToChar(m[1]))
+    // At this point, escaped `\` is encoded as [zeroChar].
+    .replaceAllMapped(_slashHexCharRE,
+        (Match m) => _hexToChar(m[1], errorValue: '\\x${m[1]}'))
+    // Recover `\` characters.
+    .replaceAll(zeroChar, backslash);
 
 String _hexToChar(String hexDigits, {String errorValue}) {
   final charCode = toInt(hexDigits, radix: 16);
