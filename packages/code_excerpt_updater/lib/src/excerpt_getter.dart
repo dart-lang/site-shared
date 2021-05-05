@@ -66,13 +66,14 @@ class ExcerptGetter {
   /// value of the YAML [_yamlExcerptLeftBorderCharKey] key.
   @nullable
   String _getExcerptAsStringFromYaml(String relativePath, String region) {
-    final ext = '.excerpt.yaml';
+    const ext = '.excerpt.yaml';
     final excerptYamlPath =
         p.join(fragmentDirPath, pathBase, relativePath + ext);
     YamlMap excerptsYaml;
     try {
       final contents = File(excerptYamlPath).readAsStringSync();
-      excerptsYaml = loadYaml(contents, sourceUrl: excerptYamlPath) as YamlMap;
+      excerptsYaml =
+          loadYaml(contents, sourceUrl: Uri.file(excerptYamlPath)) as YamlMap;
       _yamlExcerptLeftBorderChar =
           (excerptsYaml[_yamlExcerptLeftBorderCharKey] ?? '') as String;
     } on FileSystemException {
@@ -102,7 +103,7 @@ class ExcerptGetter {
 
   @nullable
   String _getExcerptAsStringLegacy(String relativePath, String region) {
-    final fragExtension = '.txt';
+    const fragExtension = '.txt';
     var file = relativePath + fragExtension;
     if (region.isNotEmpty) {
       final dir = p.dirname(relativePath);

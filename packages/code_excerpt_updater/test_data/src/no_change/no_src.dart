@@ -1,2 +1,2 @@
 /// A file with no PIs
-Null noApiDoc0;
+int noApiDoc0;

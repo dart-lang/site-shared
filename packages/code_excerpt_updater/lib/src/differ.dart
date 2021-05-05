@@ -79,7 +79,7 @@ class Differ {
     final result = diffText.split(eol);
 
     // Fix file id lines by removing:
-    // - [pathPrefix] from the start of the file paths so that paths are relative
+    // - [pathPrefix] from the start of the file path so that paths are relative
     // - timestamp (because file timestamps are not relevant in the git world)
     result[0] = _adjustDiffFileIdLine(
         relativeSrcPath1 + (region.isEmpty ? '' : ' ($region)'), result[0]);
@@ -98,7 +98,7 @@ class Differ {
     final file = File(filePath);
     final src = file.readAsStringSync();
     final lines = src.split(eol);
-    lines.removeWhere((line) => docregionRe.hasMatch(line));
+    lines.removeWhere(docregionRe.hasMatch);
 
     return _writeTmp(filePath, lines.join(eol));
   }

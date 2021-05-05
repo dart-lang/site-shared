@@ -29,7 +29,9 @@ class ArgProcessor {
   }
 
   RegExp supportedArgs = RegExp(
-      r'^(class|diff-with|diff-u|from|indent-by|path-base|plaster|region|replace|remove|retain|skip|take|title|to)$');
+    r'^(class|diff-with|diff-u|from|indent-by|path-base|plaster|region|replace|'
+    r'remove|retain|skip|take|title|to)$',
+  );
   RegExp argRegExp = RegExp(r'^([-\w]+)\s*(=\s*"(.*?)"\s*|\b)\s*');
 
   void _extractAndNormalizeNamedArgs(InstrInfo info, String argsAsString) {
@@ -47,7 +49,8 @@ class ArgProcessor {
       final argValue = match[3];
       info.args[argName] = argValue;
       log.finer(
-          '  >> arg: $argName = ${argValue == null ? argValue : '"$argValue"'}');
+        '  >> arg: $argName = ${argValue == null ? argValue : '"$argValue"'}',
+      );
       restOfArgs = restOfArgs.substring(match[0].length);
     }
     _processPathAndRegionArgs(info);
@@ -61,7 +64,7 @@ class ArgProcessor {
     final match = pathBraces.firstMatch(info.path);
     if (match == null) return;
     if (info.args['diff-with'] != null) {
-      final msg = "You can't use both the brace syntax and the diff-with "
+      const msg = "You can't use both the brace syntax and the diff-with "
           'argument; choose one or the other.';
       _reporter.error(msg);
     }
@@ -92,7 +95,9 @@ class ArgProcessor {
   }
 
   final isNumericRegExp = RegExp(r'^[-+]?\d+$');
+
   bool _isInt(String value) => isNumericRegExp.hasMatch(value);
+
   bool _isNullOr(String value, Predicate<String> test) =>
       value == null || test(value);
 }

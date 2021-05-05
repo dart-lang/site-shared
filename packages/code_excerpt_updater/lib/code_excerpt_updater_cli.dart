@@ -5,11 +5,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:code_excerpt_updater/src/code_excerpt_updater.dart';
-import 'package:code_excerpt_updater/src/nullable.dart';
 import 'package:logging/logging.dart';
 
+import 'src/code_excerpt_updater.dart';
 import 'src/logger.dart';
+import 'src/nullable.dart';
 
 const _commandName = 'code_excerpt_updater';
 final _validExt = RegExp(r'\.(dart|jade|md)$');
@@ -18,20 +18,20 @@ final _dotPathRe = RegExp(r'(^|/)\..*($|/)');
 /// Processes `.dart` and `.md` files, recursively traverses directories
 /// using [Updater]. See this command's help for CLI argument details.
 class UpdaterCLI {
-  static final _logFineFlagName = 'log-fine';
-  static final _escapeNgInterpolationFlagName = 'escape-ng-interpolation';
-  static final _excludeFlagName = 'exclude';
-  static final _failOnRefresh = 'fail-on-refresh';
-  static final _fragmentDirPathFlagName = 'fragment-dir-path';
-  static final _inPlaceFlagName = 'write-in-place';
-  static final _indentFlagName = 'indentation';
-  static final _plasterFlagName = 'plaster';
-  static final _srcDirPathFlagName = 'src-dir-path';
-  static final _yamlFlagName = 'yaml';
+  static const _logFineFlagName = 'log-fine';
+  static const _escapeNgInterpolationFlagName = 'escape-ng-interpolation';
+  static const _excludeFlagName = 'exclude';
+  static const _failOnRefresh = 'fail-on-refresh';
+  static const _fragmentDirPathFlagName = 'fragment-dir-path';
+  static const _inPlaceFlagName = 'write-in-place';
+  static const _indentFlagName = 'indentation';
+  static const _plasterFlagName = 'plaster';
+  static const _srcDirPathFlagName = 'src-dir-path';
+  static const _yamlFlagName = 'yaml';
 
-  static final _defaultPath =
+  static const _defaultPath =
       '(defaults to "", that is, the current working directory)';
-  static final _replaceName = 'replace';
+  static const _replaceName = 'replace';
 
   final _parser = ArgParser()
     ..addFlag(_logFineFlagName)
@@ -48,11 +48,13 @@ class UpdaterCLI {
         help:
             'PATH to directory containing code fragment files\n$_defaultPath.')
     ..addFlag('help', abbr: 'h', negatable: false, help: 'Show command help.')
-    ..addOption(_indentFlagName,
-        abbr: 'i',
-        defaultsTo: '0',
-        help:
-            'NUMBER. Default number of spaces to use as indentation for code inside code blocks.')
+    ..addOption(
+      _indentFlagName,
+      abbr: 'i',
+      defaultsTo: '0',
+      help: 'NUMBER. Default number of spaces to use as indentation for code '
+          'inside code blocks.',
+    )
     ..addOption(_srcDirPathFlagName,
         abbr: 'q',
         help: 'PATH to directory containing code used in diffs\n$_defaultPath.')
@@ -64,12 +66,16 @@ class UpdaterCLI {
     ..addFlag(_escapeNgInterpolationFlagName,
         defaultsTo: true,
         help: 'Escape Angular interpolation syntax {{...}} as {!{...}!}.')
-    ..addOption(_plasterFlagName,
-        help: 'TEMPLATE. Default plaster template to use for all files.\n'
-            'For example, "// Insert your code here"; use "none" to remove plasters.')
-    ..addOption(_replaceName,
-        help:
-            'REPLACE-EXPRESSIONs. Global replace argument. See README for syntax.')
+    ..addOption(
+      _plasterFlagName,
+      help: 'TEMPLATE. Default plaster template to use for all files.\n'
+          'For example, "// Insert your code here"; use "none" to remove plasters.',
+    )
+    ..addOption(
+      _replaceName,
+      help: 'REPLACE-EXPRESSIONs. Global replace argument. '
+          'See README for syntax.',
+    )
     ..addFlag(_yamlFlagName,
         negatable: false, help: 'Read excerpts from *.excerpt.yaml files.');
 
@@ -96,8 +102,8 @@ class UpdaterCLI {
   void setArgs(List<String> argsAsStrings) {
     ArgResults args;
 
-    final flag = (String name) => (args[name] ?? false) as bool;
-    final str = (String name) => (args[name] ?? '') as String;
+    bool flag(String name) => (args[name] ?? false) as bool;
+    String str(String name) => (args[name] ?? '') as String;
 
     try {
       args = _parser.parse(argsAsStrings);
@@ -145,7 +151,7 @@ class UpdaterCLI {
   }
 
   /// Process files/directories given as CLI arguments.
-  Future<Null> processArgs() async {
+  Future<void> processArgs() async {
     if (!argsAreValid) {
       throw Exception('Cannot proceed without valid arguments');
     }

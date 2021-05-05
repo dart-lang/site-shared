@@ -4,7 +4,7 @@ import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
 // Mock URI used for all content origins.
-final uri = 'foo';
+const uri = 'foo';
 
 List<String> contentGeneratingNoExcerpts = [
   '',
@@ -22,17 +22,17 @@ void _expectNoLogs() => expect(logs, []);
 void main() {
   setUpAll(() {
     logListeners.clear(); // Don't print during tests
-    logListeners.add((r) => logs.add(r));
+    logListeners.add(logs.add);
   });
 
-  setUp(() => logs.clear());
+  setUp(logs.clear);
 
   // Each individual test must check [logs], and then clear them.
   // This will catch situations where this is not done.
   tearDown(_expectNoLogs);
 
   test('helper sanity:', () {
-    var content = '''
+    const content = '''
       #docregion a
         abc
       #enddocregion a
@@ -84,7 +84,7 @@ void main() {
     });
 
     test('region a', () {
-      var content = '''
+      const content = '''
         #docregion a
           abc
         #enddocregion a
@@ -99,7 +99,7 @@ void main() {
   });
 
   test('two disjoint regions', () {
-    var content = '''
+    const content = '''
       #docregion a
         abc
       #enddocregion a
@@ -264,7 +264,7 @@ void problemCases() {
 
 void plasterCases() {
   test('region a with 1 plaster', () {
-    var content = '''
+    const content = '''
       #docregion a
       abc
       #enddocregion a
@@ -282,7 +282,7 @@ void plasterCases() {
   });
 
   test('overlapping regions', () {
-    var content = '''
+    const content = '''
       #docregion a,b,c
       abc
       #enddocregion b, c
@@ -301,7 +301,7 @@ void plasterCases() {
   });
 
   test('plaster with different indentations', () {
-    var content = '''
+    const content = '''
       #docregion a,b,c
       abc
         #enddocregion b, c

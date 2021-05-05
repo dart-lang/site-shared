@@ -2,7 +2,7 @@ import 'package:code_excerpt_updater/src/diff/hunk.dart';
 import 'package:code_excerpt_updater/src/matcher.dart';
 import 'package:test/test.dart';
 
-final hunk0 = '''
+const hunk0 = '''
 @@ -1,10 +1,12 @@
  import 'package:flutter/material.dart';
 +import 'package:english_words/english_words.dart';

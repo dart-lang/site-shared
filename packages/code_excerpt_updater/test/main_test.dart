@@ -4,14 +4,15 @@
 import 'dart:io';
 
 import 'package:code_excerpt_updater/src/code_excerpt_updater.dart';
-import 'package:path/path.dart' as p;
 import 'package:mockito/mockito.dart';
+import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
 const _testDir = 'test_data';
 
 // TODO: enhance tests so that we can inspect the generated error messages.
-// It might be easier to modify the updater to use an IOSink than to try to read stderr.
+// It might be easier to modify the updater to use an IOSink than to try to read
+// stderr.
 
 Updater updater;
 Stdout _stderr;

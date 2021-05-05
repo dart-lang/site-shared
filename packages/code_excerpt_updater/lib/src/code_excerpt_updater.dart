@@ -26,7 +26,7 @@ final _listEq = const ListEquality().equals;
 ///
 /// Returns, as a string, a version of the given file source, with the
 /// `<?code-excerpt...?>` code fragments updated. Fragments are read from the
-/// [fragmentDirPath] directory, and diff sources from [srcDirPath].
+/// [fragmentDirPath] directory, and diff sources from `srcDirPath`.
 class Updater {
   final RegExp codeBlockStartMarker =
       RegExp(r'^\s*(///?)?\s*(```|{%-?\s*\w+\s*(\w*)(\s+.*)?-?%})?');
@@ -92,8 +92,11 @@ class Updater {
   }
 
   int get numErrors => _reporter.numErrors;
+
   int get numSrcDirectives => _numSrcDirectives;
+
   int get numUpdatedFrag => _numUpdatedFrag;
+
   int get numWarnings => _reporter.numWarnings;
 
   int get lineNum => _origNumLines - _lines.length;
@@ -150,7 +153,9 @@ class Updater {
     void _checkForMoreThan1ArgErr() {
       if (info.args.keys.length > 1) {
         _reporter.error(
-            'set instruction should have at most one argument: ${info.instruction}');
+          'set instruction should have at most one argument: '
+          '${info.instruction}',
+        );
       }
     }
 

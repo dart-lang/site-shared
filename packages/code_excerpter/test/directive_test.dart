@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:code_excerpter/src/directive.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('basic', () {
@@ -27,7 +26,7 @@ void main() {
   // Leading and trailing text is ignored
   group('context insenstivie', () {
     test(Kind.startRegion, () {
-      final spaces = '  ';
+      const spaces = '  ';
       final d = Directive.tryParse('$spaces// #docregion');
       expect(d.kind, Kind.startRegion);
       expect(d.rawArgs, '');
@@ -84,9 +83,9 @@ void main() {
 
   group('problem cases:', () {
     test('Deprecated unquoted default region name', () {
-      final d = Directive.tryParse("#docregion ,a");
+      final d = Directive.tryParse('#docregion ,a');
       expect(d.kind, Kind.startRegion);
-      expect(d.rawArgs, ",a");
+      expect(d.rawArgs, ',a');
       expect(d.args, ['', 'a']);
       expect(d.issues, ['unquoted default region name is deprecated']);
     });

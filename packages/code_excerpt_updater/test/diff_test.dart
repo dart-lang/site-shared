@@ -104,7 +104,7 @@ void main() {
   });
 
   test('Diff using to regexp but no from regexp', () {
-    var d = Diff('$diff1head\n$hunk2');
+    final d = Diff('$diff1head\n$hunk2');
     expect(d.keepLines(to: patternArgToMatcher(r'/^\+\s+child:/')), true);
     expect(d.toString(), '$diff1head\n$hunk2Trimmed');
   });

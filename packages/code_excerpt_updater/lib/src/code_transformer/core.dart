@@ -1,14 +1,16 @@
 /// Collected code transformer and predicate declarations
-
 import '../constants.dart';
-import '../nullable.dart';
 import '../matcher.dart';
+import '../nullable.dart';
 import '../util.dart';
 
 typedef CodeTransformer = String Function(String code);
 
-CodeTransformer compose(CodeTransformer f, CodeTransformer g) =>
-    f == null ? g : g == null ? f : (String s) => g(f(s));
+CodeTransformer compose(CodeTransformer f, CodeTransformer g) => f == null
+    ? g
+    : g == null
+        ? f
+        : (String s) => g(f(s));
 
 CodeTransformer _retain(Matcher p) => (String code) {
       final lines = code.split(eol)..retainWhere(p);

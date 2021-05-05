@@ -6,9 +6,9 @@ import 'package:test/test.dart';
 const _testDir = 'test_data';
 
 void main() {
-  final excerptsYaml = true;
-  final fragmentDirPath = '$_testDir/excerpt_yaml';
-  final srcDirPath = fragmentDirPath;
+  const excerptsYaml = true;
+  const fragmentDirPath = '$_testDir/excerpt_yaml';
+  const srcDirPath = fragmentDirPath;
   final _reporter =
       IssueReporter(IssueContext(() => 'unused/path/to/file', () => 1));
 

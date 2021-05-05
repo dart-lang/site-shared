@@ -8,7 +8,9 @@ final _leadingWhitespace = RegExp(r'^[ \t]*');
 /// WARNING: this method potentially mutates its argument.
 void dropTrailingBlankLines(List<String> lines) {
   // Drop any blank lines at the end of lines
-  while (lines.isNotEmpty && blankLine.hasMatch(lines.last)) lines.removeLast();
+  while (lines.isNotEmpty && blankLine.hasMatch(lines.last)) {
+    lines.removeLast();
+  }
 }
 
 /// Unindent [lines] to the extent possible without losing

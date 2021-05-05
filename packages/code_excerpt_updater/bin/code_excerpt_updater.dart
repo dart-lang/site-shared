@@ -7,7 +7,7 @@ import 'dart:io';
 import 'package:code_excerpt_updater/code_excerpt_updater_cli.dart';
 
 /// See [UpdaterCLI].
-Future<Null> main(List<String> args) async {
+Future<void> main(List<String> args) async {
   final updater = UpdaterCLI();
   updater.setArgs(args);
   if (!updater.argsAreValid) return;
