@@ -147,7 +147,9 @@ class Excerpter {
     final regions = _regions.join(', ');
     final s = regions.isEmpty
         ? ''
-        : _regions.length > 1 ? 's ($regions)' : ' $regions';
+        : _regions.length > 1
+            ? 's ($regions)'
+            : ' $regions';
     _warn(msg('region$s'));
   }
 
