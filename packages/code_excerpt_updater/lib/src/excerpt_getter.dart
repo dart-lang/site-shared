@@ -72,7 +72,8 @@ class ExcerptGetter {
     YamlMap excerptsYaml;
     try {
       final contents = File(excerptYamlPath).readAsStringSync();
-      excerptsYaml = loadYaml(contents, sourceUrl: excerptYamlPath) as YamlMap;
+      excerptsYaml =
+          loadYaml(contents, sourceUrl: Uri.file(excerptYamlPath)) as YamlMap;
       _yamlExcerptLeftBorderChar =
           (excerptsYaml[_yamlExcerptLeftBorderCharKey] ?? '') as String;
     } on FileSystemException {

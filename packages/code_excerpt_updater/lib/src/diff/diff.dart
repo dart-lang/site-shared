@@ -6,7 +6,7 @@ class Diff {
   final String _rawText;
   bool _parsed = false;
 
-  final List<String> fileInfo = List(2);
+  final List<String> fileInfo = [null, null];
   List<Hunk> hunks;
 
   Diff(this._rawText);
