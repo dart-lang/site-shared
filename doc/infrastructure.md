@@ -84,7 +84,7 @@ files (such as [src/_assets/css/_code_pre.scss][]) like this:
 JavaScript can be similarly imported:
 
 ```js
-//= require vendor/jquery-3.3.1
+//= require vendor/jquery-3.6.0
 ```
 
 > **Note:** `//= require` is [jekyll-assets][] include syntax.
