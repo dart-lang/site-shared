@@ -10,7 +10,7 @@
 
 ## 0.6.2
 
-- Internal changes (ran dartfmt --fix).
+- Internal changes (ran format --fix).
 
 ## 0.6.1
 

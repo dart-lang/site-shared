@@ -11,9 +11,10 @@ is organized as a collection of projects.
 
 As part of [CI][], project sources are:
 
-- Format-checked (using dartfmt or flutter format)
-- Analyzed
-- Tested (test files are under `examples/*/test`)
+- Format-checked (using `dart format` or `flutter format`)
+- Analyzed (using `dart analyze` or `flutter analyze`)
+- Tested (test files are under `examples/*/test`; run with `dart test`
+or `flutter test`)
 
 By doing so we ensure that our code excerpts are valid Dart code.
 

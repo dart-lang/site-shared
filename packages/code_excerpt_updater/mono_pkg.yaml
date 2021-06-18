@@ -6,7 +6,7 @@ dart:
 stages:
 - analyzer_and_format:
   - group:
-    - dartfmt
-    - dartanalyzer: --fatal-infos .
+    - format
+    - format: --fatal-infos .
 - unit_test:
   - test:
