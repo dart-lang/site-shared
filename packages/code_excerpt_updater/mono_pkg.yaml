@@ -7,6 +7,6 @@ stages:
 - analyzer_and_format:
   - group:
     - format
-    - format: --fatal-infos .
+    - analyze: --fatal-infos .
 - unit_test:
   - test:
