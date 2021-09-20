@@ -18,10 +18,10 @@ the desired resource file. In some cases, you'll needed to adjust the site
 
 We use the [Jekyll][] site generator, leaving most of its configuration options
 at their [default settings][Default configuration], including use of Kramdown as
-the markdown processor and Rouge as the default syntax highlighter.
+the markdown processor and [Rouge][] as the default syntax highlighter.
 
-To see a list of the languages you can use with <code>```</code>, go to
-https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers.
+To see a list of the languages you can use with <code>```</code>, see
+Rouge's [list of supported languages and lexer][languages].
 The most common languages we use are `dart`, <code>console</code> (or its equivalent,
 <code>terminal</code>), <code>nocode</code>, and <code>yaml</code>.
 
@@ -95,6 +95,8 @@ JavaScript can be similarly imported:
 [Jekyll]: https://jekyllrb.com
 [jekyll-assets]: https://github.com/envygeeks/jekyll-assets
 [jekyll-toc]: https://github.com/toshimaru/jekyll-toc
+[languages]: https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers
+[Rouge]: https://github.com/rouge-ruby/rouge
 [src/_assets]: https://github.com/dart-lang/site-shared/tree/master/src/_assets
 [src/_plugins]: https://github.com/dart-lang/site-shared/tree/master/src/_plugins
 [src/_assets/css/_code_pre.scss]: https://github.com/dart-lang/site-shared/tree/master/src/_assets/css/_code_pre.scss

@@ -1,6 +1,6 @@
 ## Compressing
 
-Most site have a gulp task that can be used to compress all images, for example:
+Most sites have a gulp task that can be used to compress all images, for example:
 
 ```terminal
 npx gulp compress-images [--path=some/path]
@@ -15,7 +15,9 @@ Ways to center an image, while allowing it to be responsive:
 {:.text-center}
 ```
 
-The previous example must be be preceded and followed by a blank line so that the `text-center` class is applied to the paragraph that will be wrapping the image.
+The previous example must be preceded and followed by a blank line
+so that the `text-center` class is applied to the paragraph
+that will be wrapping the image.
 
 This one adds padding after the image too:
 
@@ -25,7 +27,9 @@ This one adds padding after the image too:
 </div>
 ```
 
-If you know that your image will fit within the page as rendered on your smallest target device, then you can use the following:
+If you know that your image will fit
+within the page as rendered on your smallest target device, 
+then you can use the following:
 
 ```
 {% asset path/file.ext class="d-block mx-auto" width="160px" ... %}
