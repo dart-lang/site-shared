@@ -20,7 +20,8 @@ By doing so we ensure that our code excerpts are valid Dart code.
 
 ## How should I organize my example code?
 
-Organize our example code like any other Dart project, placing source files under the following folders:
+Organize our example code like any other Dart project, 
+placing source files under the following folders:
 
 - `examples/my_example_project/lib`
 - `examples/my_example_project/test`

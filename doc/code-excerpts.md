@@ -176,7 +176,7 @@ To make use of code diffs in a given page, add the following to the page's front
 diff2html: true
 ```
 
-A `<?code-excerpt?>` instruction will procduce a code diff when two files are named using either of the following methods:
+A `<?code-excerpt?>` instruction will produce a code diff when two files are named using either of the following methods:
 
 - Use the `diff-with` argument: `diff-with="path/to/second/file.ext"`.
 - Use the bash brace syntax in the instruction's first unnamed argument:

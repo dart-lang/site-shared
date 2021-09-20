@@ -1,4 +1,5 @@
-This page has information and links that might come in handy as you develop content for Dart and Flutter websites.
+This page has information and links that might come in handy
+as you develop content for Dart and Flutter websites.
 
 Contents of this page:
 * [Semantic line breaks (<=80 chars)](#semantic-line-breaks)
@@ -80,14 +81,16 @@ Follow these rules when creating links:
 
 * Use jekyll variables if they exist; define new ones if necessary.
   You can find sitewide variables in `/_config.yml`.
-  For example, the [site-www `_config.yml` file](https://github.com/dart-lang/site-www/blob/master/_config.yml) defines variables like
-  `webdev`, `flutter`, and `dart_api`, so site-www has URLs like
+  For example, the [site-www `_config.yml` file][] defines variables like
+  `dartpad`, `flutter`, and `dart_api`, so site-www has URLs like
   the following:
-  * `{{site.webdev}}`
-  * `{{site.webdev}}/tools/dart2js`
+  * `{{site.dartpad}}`
+  * `{{site.flutter}}`
   * `{{site.flutter}}/debugging/#the-dart-analyzer`
   * `{{site.dart_api}}/dev`
   * `{{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}}/dart-html`
+
+  [site-www `_config.yml` file]: https://github.com/dart-lang/site-www/blob/master/_config.yml
 
 * Simplify API URLs as much as possible. In particular,
   **do not embed the version** (unless you really want that).
@@ -104,7 +107,7 @@ Also see: https://github.com/dart-lang/site-www/wiki/Referring-to-API-docs
 
 ## Images
 
-Use zopfli to compress PNGs.
+Use [zopfli](https://github.com/google/zopfli) to compress PNGs.
 
 `brew install zopfli`
 
@@ -126,7 +129,10 @@ Keep code valid and foolproof. People love to copy-paste code.
 
 ## Markdown and HTML
 
-* You can use ordinary Markdown (or HTML, if necessary) on the Dart and Flutter sites. To test your markdown, you can either build the site or paste the code into Markdown previewer such as https://dart-lang.github.io/markdown/.
+* You can use ordinary Markdown (or HTML, if necessary) on the Dart and Flutter sites. 
+  To test your markdown, 
+  you can either build the site or paste the code into a Markdown previewer
+  such as https://dart-lang.github.io/markdown/.
 
 * If you're using HTML and want italics, use `<em>`. <br>
   The i-tag is used for icon fonts, such as font-awesome.
@@ -160,8 +166,8 @@ js:
 ---
 ```
 
-The **title:** tag is used for the title displayed on the page and (if no **short-title** tag is present)
-in the tab.
+The **title:** tag is used for the title displayed on the page 
+and (if no **short-title** tag is present) in the tab.
 
 The **description:** tag replaces the default sharing text
 (what you see on Twitter, Facebook, G+).
