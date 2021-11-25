@@ -70,13 +70,12 @@ pre.console-output {
   .p { @extend .pun; } /* Punctuation */
   .c, .c1, .cm { @extend .com; } /* Comment */
   .cp { @extend .typ; } /* Comment.Preproc */
-  .l, .m, .mi, .mf, .mh, .mx, .mb, .mo { @extend .lit; } /* Literal.* */
+  .l, .m, .mb, .mf, .mi, .mo, .mx { @extend .lit; } /* Literal.* */
   .o { @extend .opn; } /* Operator */
   .n { @extend .typ; } /* Name */
   .na { @extend .kwd; } /* Name.Attribute */
+  .nb { @extend .typ; } /* Name.Builtin */
+  .nl { @extend .kwd; } /* Name.Label */
   .no { @extend .lit; } /* Name.Constant */
   .nt { @extend .tag; } /* Name.Tag */
-  .nl { @extend .kwd; } /* Name.Label */
-  .nl { @extend .kwd; } /* Name.Label */
-  .nb { @extend .typ; } /* Name.Builtin */
 }
