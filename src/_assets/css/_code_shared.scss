@@ -69,9 +69,13 @@ pre.console-output {
   .k, .kc, .kd, .kn, .kp, .kr, .kt { @extend .kwd; } /* Keyword.* */
   .p { @extend .pun; } /* Punctuation */
   .c, .c1, .cm { @extend .com; } /* Comment */
-  .l { @extend .lit; } /* Literal */
+  .cp { @extend .typ; } /* Comment.Preproc */
+  .l, .m, .mb, .mf, .mh, .mi, .mo, .mx { @extend .lit; } /* Literal.* */
   .o { @extend .opn; } /* Operator */
   .n { @extend .typ; } /* Name */
   .na { @extend .kwd; } /* Name.Attribute */
+  .nb { @extend .typ; } /* Name.Builtin */
+  .nl { @extend .kwd; } /* Name.Label */
   .no { @extend .lit; } /* Name.Constant */
+  .nt { @extend .tag; } /* Name.Tag */
 }
