@@ -1,15 +1,14 @@
-import '../nullable.dart';
-
 import 'core.dart';
 import 'replace.dart';
 
 const defaultPlaster = '···';
 
 class PlasterCodeTransformer {
-  PlasterCodeTransformer(this.excerptsYaml, this._replace);
-
   final bool excerptsYaml;
+
   final ReplaceCodeTransformer _replace;
+
+  PlasterCodeTransformer(this.excerptsYaml, this._replace);
 
   /// Replace raw plaster markers in excerpt with [plasterTemplate].
   /// Note that plaster line indentation is not affected.
@@ -17,8 +16,7 @@ class PlasterCodeTransformer {
   /// If [plasterTemplate] is 'none' then plasters are removed.
   /// If [plasterTemplate] is null then a default [lang] specific plaster
   /// template is used.
-  @nullable
-  CodeTransformer codeTransformer(String plasterTemplate, String lang) {
+  CodeTransformer? codeTransformer(String? plasterTemplate, String lang) {
     if (plasterTemplate == 'none') return removeCodeTransformer(defaultPlaster);
     if (!excerptsYaml) return null;
 
@@ -30,10 +28,7 @@ class PlasterCodeTransformer {
         : _replace.codeTransformerHelper(defaultPlaster, template);
   }
 
-  @nullable
-  String _plasterTemplateFor(String lang) {
-    if (lang == null) return null;
-
+  String? _plasterTemplateFor(String lang) {
     switch (lang) {
       case 'css':
         return '/* $defaultPlaster */';

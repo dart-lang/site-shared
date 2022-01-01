@@ -7,10 +7,9 @@ import 'code_transformer/core.dart';
 import 'constants.dart';
 import 'diff/diff.dart';
 import 'matcher.dart';
-import 'nullable.dart';
 
 typedef ErrorReporter = void Function(String msg);
-typedef ExcerptFetcher = Iterable<String> Function(String path, String region);
+typedef ExcerptFetcher = Iterable<String>? Function(String path, String region);
 
 class Differ {
   Differ(this._excerptFetcher, this._log, this._reportError);
@@ -20,13 +19,11 @@ class Differ {
   final ErrorReporter _reportError;
   final Logger _log;
 
-  @nullable
-  Directory _tmpDir;
+  Directory? _tmpDir;
 
-  @nullable
-  Iterable<String> getDiff(String relativeSrcPath1, String region,
-      Map<String, String> args, String pathPrefix) {
-    final relativeSrcPath2 = args['diff-with'];
+  Iterable<String>? getDiff(String relativeSrcPath1, String region,
+      Map<String, String?> args, String pathPrefix) {
+    final relativeSrcPath2 = args['diff-with'] ?? '';
     final useCompleteFiles = region.isEmpty && args['remove'] == null;
     final path1 = useCompleteFiles
         ? filteredFile(p.join(pathPrefix, relativeSrcPath1))
@@ -35,8 +32,10 @@ class Differ {
         ? filteredFile(p.join(pathPrefix, relativeSrcPath2))
         : _writeExcerpt(relativeSrcPath2, region, args);
 
-    final diffArgs = args['diff-u'] == null ? ['-u'] : ['-U', args['diff-u']];
-    diffArgs.addAll([path1.path, path2.path]);
+    final diffUArg = args['diff-u'];
+    final diffArgs = diffUArg == null ? ['-u'] : ['-U', diffUArg];
+    diffArgs.add(path1.path);
+    diffArgs.add(path2.path);
     final r = Process.runSync('diff', diffArgs);
 
     try {
@@ -70,9 +69,11 @@ class Differ {
     */
 
     var diffText = (r.stdout as String).trim();
-    final from = patternArgToMatcher(args['from']);
-    final to = patternArgToMatcher(args['to']);
-    if (from != null || to != null) {
+    final fromArg = args['from'];
+    final toArg = args['to'];
+    if (fromArg != null || toArg != null) {
+      final from = fromArg == null ? null : patternArgToMatcher(fromArg);
+      final to = toArg == null ? null : patternArgToMatcher(toArg);
       final diff = Diff(diffText);
       if (diff.keepLines(from: from, to: to)) diffText = diff.toString();
     }
@@ -105,11 +106,15 @@ class Differ {
 
   /// Write the named region of [filePath] to a temporary file whose filename
   /// is derived from [filePath]. Returns the [File] instance of the temp file.
-  File _writeExcerpt(String filePath, String region, Map<String, String> args) {
+  File _writeExcerpt(
+      String filePath, String region, Map<String, String?> args) {
     var excerpt = _excerptFetcher(filePath, region)?.join(eol) ?? '';
 
     final removeArg = args['remove'];
-    if (removeArg != null) excerpt = removeCodeTransformer(removeArg)(excerpt);
+    if (removeArg != null) {
+      final removed = removeCodeTransformer(removeArg);
+      excerpt = removed(excerpt);
+    }
 
     // To avoid "No newline at end of file" messages from the diff tool,
     // ensure that the excerpt ends with an EOL (since all trailing blank lines

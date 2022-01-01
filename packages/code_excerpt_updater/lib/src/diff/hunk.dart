@@ -24,39 +24,36 @@ class Hunk {
   final headRegExp = RegExp(r'@@ -(\d+)(,(\d+))? \+(\d+)(,(\d+))? @@(.*)');
 
   String _rawText;
-  bool _parsed = false;
 
   String _rawHead = '';
-  List<int> _start;
-  List< /*@nullable*/ int> _length;
+  List<int> _start = const [];
+  List<int> _length = const [];
   String _timeStamp = '';
-  List<String> _lines;
+  List<String> _lines = const [];
+  bool _parsed = false;
 
-  Hunk(String textFormat) {
-    _rawText = textFormat ?? '';
-    if (_rawText.isNotEmpty) _parse();
+  Hunk(String? textFormat) : _rawText = textFormat ?? '' {
+    if (_rawText.isNotEmpty) {
+      final srcLines = _rawText.split(eol);
+      _rawText = '';
+      _rawHead = srcLines.first;
+      _lines = srcLines.skip(1).toList();
+
+      final m = headRegExp.firstMatch(_rawHead);
+      if (m == null) {
+        throw Exception('The raw text is missing a header.');
+      }
+
+      _start = [_int(m[1]) ?? 0, _int(m[4]) ?? 0];
+      _length = [_int(m[3]) ?? 1, _int(m[6]) ?? 1];
+      _timeStamp = m[7] ?? '';
+
+      assert(_rawHead == _head, '_rawHead: $_rawHead\n_head:$_head');
+      _parsed = true;
+    }
   }
 
-  void _parse() {
-    if (_parsed) return;
-
-    final srcLines = _rawText.split(eol);
-    _rawText = '';
-    _rawHead = srcLines.first;
-    _lines = srcLines.skip(1).toList();
-
-    final m = headRegExp.firstMatch(_rawHead);
-    assert(m != null);
-
-    _start = [_int(m[1]), _int(m[4])];
-    _length = [_int(m[3]) ?? 1, _int(m[6]) ?? 1];
-    _timeStamp = m[7];
-    _parsed = true;
-
-    assert(_rawHead == _head, '_rawHead: $_rawHead\n_head:$_head');
-  }
-
-  int start(int i) {
+  int? start(int i) {
     assert(isValidFileIndex(i));
     return _start[i];
   }
@@ -121,21 +118,15 @@ class Hunk {
 
   String _lineLength(int i) {
     assert(isValidFileIndex(i));
-    return _length[i] == null || _length[i] <= 1
-        ? '${_start[i]}'
-        : '${_start[i]},${_length[i]}';
+    final indexLength = _length[i];
+    return indexLength <= 1 ? '${_start[i]}' : '${_start[i]},$indexLength';
   }
 
   bool isValidFileIndex(int i) => i == 0 || i == 1;
 
-  int _int(String s) {
+  int? _int(String? s) {
     if (s == null) return null;
-    try {
-      // Can't use tryParse() since this code needs to run under 1.x as well.
-      return int.parse(s);
-    } catch (e) {
-      return null;
-    }
+    return int.tryParse(s);
   }
 
   int _indexOfFirstMatch(List<String> a, Matcher m) {

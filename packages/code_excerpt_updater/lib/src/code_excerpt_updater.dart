@@ -38,18 +38,18 @@ class Updater {
   final int defaultIndentation;
   final bool escapeNgInterpolation;
   final String globalReplaceExpr;
-  final String globalPlasterTemplate;
-  String filePlasterTemplate;
+  final String? globalPlasterTemplate;
+  String? filePlasterTemplate;
 
-  ArgProcessor _argProcessor;
-  Differ _differ;
-  ExcerptGetter _getter;
-  IssueReporter _reporter;
+  late final ArgProcessor _argProcessor;
+  late final Differ _differ;
+  late final ExcerptGetter _getter;
+  late final IssueReporter _reporter;
 
-  CodeTransformer _appGlobalCodeTransformer;
-  CodeTransformer _fileGlobalCodeTransformer;
-  PlasterCodeTransformer _plaster;
-  ReplaceCodeTransformer _replace;
+  CodeTransformer? _appGlobalCodeTransformer;
+  CodeTransformer? _fileGlobalCodeTransformer;
+  late final PlasterCodeTransformer _plaster;
+  late final ReplaceCodeTransformer _replace;
 
   String _filePath = '';
   int _origNumLines = 0;
@@ -66,8 +66,8 @@ class Updater {
     this.escapeNgInterpolation = true,
     this.globalReplaceExpr = '',
     this.globalPlasterTemplate,
-    Stdout err,
-    Level logLevel,
+    Stdout? err,
+    Level? logLevel,
   }) {
     initLogger(logLevel);
     _reporter =
@@ -87,8 +87,7 @@ class Updater {
     _argProcessor = ArgProcessor(_reporter);
     _getter =
         ExcerptGetter(excerptsYaml, fragmentDirPath, srcDirPath, _reporter);
-    _differ = Differ((path, region) => _getter.getExcerpt(path, region), log,
-        _reporter.error);
+    _differ = Differ(_getter.getExcerpt, log, _reporter.error);
   }
 
   int get numErrors => _reporter.numErrors;
@@ -101,14 +100,24 @@ class Updater {
 
   int get lineNum => _origNumLines - _lines.length;
 
-  CodeTransformer get fileAndCmdLineCodeTransformer =>
-      compose(_fileGlobalCodeTransformer, _appGlobalCodeTransformer);
+  CodeTransformer? get fileAndCmdLineCodeTransformer {
+    final fileTransformer = _fileGlobalCodeTransformer;
+    final appCodeTransformer = _appGlobalCodeTransformer;
+    if (fileTransformer != null) {
+      return compose(fileTransformer, appCodeTransformer);
+    }
+
+    if (appCodeTransformer != null) {
+      return appCodeTransformer;
+    }
+    return null;
+  }
 
   /// Returns the content of the file at [path] with code blocks updated.
   /// Missing fragment files are reported via `err`.
   /// If [path] cannot be read then an exception is thrown.
   String generateUpdatedFile(String path) {
-    _filePath = path == null || path.isEmpty ? 'unnamed-file' : path;
+    _filePath = path.isEmpty ? 'unnamed-file' : path;
     return _updateSrc(File(path).readAsStringSync());
   }
 
@@ -134,7 +143,7 @@ class Updater {
         _reporter.error('invalid processing instruction: $line');
         continue;
       }
-      if (!match[0].endsWith('?>')) {
+      if (!(match[0]?.endsWith('?>') ?? false)) {
         _reporter
             .warn('processing instruction must be closed using "?>" syntax');
       }
@@ -210,6 +219,7 @@ class Updater {
           )
         : _differ.getDiff(infoPath, info.region, args,
             p.join(_getter.srcDirPath, _getter.pathBase));
+
     log.finer('>>> new code block code: $newCodeBlockCode');
     if (newCodeBlockCode == null) {
       // Error has been reported. Return while leaving existing code.
@@ -218,10 +228,10 @@ class Updater {
       return <String>[openingCodeBlockLine];
     }
 
-    final _codeBlockEndMarker = firstLineMatch[2].startsWith('`')
+    final _codeBlockEndMarker = firstLineMatch[2]?.startsWith('`') == true
         ? codeBlockEndMarker
         : codeBlockEndPrettifyMarker;
-    String closingCodeBlockLine;
+    String? closingCodeBlockLine;
     while (_lines.isNotEmpty) {
       line = _lines[0];
       final match = _codeBlockEndMarker.firstMatch(line);
@@ -279,10 +289,11 @@ class Updater {
     args.forEach((arg, val) => transformers.add(_argToTransformer(arg, val)));
 
     transformers.add(fileAndCmdLineCodeTransformer);
-    return transformers.fold(null, compose);
+
+    return transformers.fold((s) => s, compose);
   }
 
-  CodeTransformer _argToTransformer(String arg, String value) {
+  CodeTransformer? _argToTransformer(String arg, String value) {
     switch (arg) {
       case 'from':
         return fromCodeTransformer(value);
@@ -303,7 +314,7 @@ class Updater {
     }
   }
 
-  int _getIndentBy(String indentByAsString) {
+  int _getIndentBy([String? indentByAsString]) {
     if (indentByAsString == null) return defaultIndentation;
     var errorMsg = '';
     var result = 0;
@@ -325,8 +336,8 @@ class Updater {
   final RegExp _codeBlockLangSpec = RegExp(r'(?:```|prettify\s+)(\w+)');
 
   String _codeLang(String openingCodeBlockLine, String path) {
-    final match = _codeBlockLangSpec.firstMatch(openingCodeBlockLine);
-    if (match != null) return match[1];
+    final match = _codeBlockLangSpec.firstMatch(openingCodeBlockLine)?[1];
+    if (match != null) return match;
 
     var ext = p.extension(path);
     if (ext.startsWith('.')) ext = ext.substring(1);

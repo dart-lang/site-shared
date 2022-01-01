@@ -7,7 +7,7 @@
 ///   <h1>Hello World!</h1>
 /// </div>
 /// ```
-int basic1;
+int? basic1;
 
 /// Test: no code in code block, directive with indentation
 /// <?code-excerpt "no_region.dart" indent-by="2"?>
@@ -15,7 +15,7 @@ int basic1;
 ///   var greeting = 'hello';
 ///   var scope = 'world';
 /// ```
-num basic2;
+num? basic2;
 
 /// Test: out-of-date code in code block, directive with indentation
 /// <?code-excerpt "no_region.dart" indent-by="2"?>

@@ -3,4 +3,4 @@
 /// <?code-excerpt "frag_with_trailing_whitespace.dart"?>
 /// ```dart
 /// ```
-int v;
+int? v;

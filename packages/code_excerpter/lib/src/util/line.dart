@@ -18,13 +18,18 @@ void dropTrailingBlankLines(List<String> lines) {
 /// lines are ignored in the process computing the maximal
 /// left-shift.
 Iterable<String> maxUnindent(Iterable<String> lines) {
-  final nonblankLines = lines.where((s) => !blankLine.hasMatch(s));
+  final nonBlankLines = lines.where((s) => !blankLine.hasMatch(s));
+
   // Length of leading spaces to be trimmed
-  final lengths = nonblankLines.map((s) {
-    final match = _leadingWhitespace.firstMatch(s);
-    return match == null ? 0 : match[0].length;
+  final lengths = nonBlankLines.map((s) {
+    final matchLength = _leadingWhitespace.firstMatch(s)?[0]?.length;
+    return matchLength ?? 0;
   });
-  if (lengths.isEmpty) return lines;
+
+  if (lengths.isEmpty) {
+    return lines;
+  }
+
   final len = lengths.reduce(min);
   return len == 0
       ? lines

@@ -6,8 +6,8 @@ class Diff {
   final String _rawText;
   bool _parsed = false;
 
-  final List<String> fileInfo = [null, null];
-  List<Hunk> hunks;
+  final List<String?> fileInfo = [null, null];
+  List<Hunk> hunks = [];
 
   Diff(this._rawText);
 
@@ -16,7 +16,7 @@ class Diff {
   /// lines. Omit [from], to keep lines as of the first line of the first hunk.
   /// Omit [to] to keep all lines after [from]. Returns true iff [from] or [to]
   /// matched.
-  bool keepLines({Matcher from, Matcher to}) {
+  bool keepLines({Matcher? from, Matcher? to}) {
     if (!_parsed) _parse();
     var matchFound = false;
     if (from != null) {

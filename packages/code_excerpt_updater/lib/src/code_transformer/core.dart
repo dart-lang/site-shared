@@ -1,16 +1,15 @@
 /// Collected code transformer and predicate declarations
 import '../constants.dart';
 import '../matcher.dart';
-import '../nullable.dart';
 import '../util.dart';
 
 typedef CodeTransformer = String Function(String code);
 
-CodeTransformer compose(CodeTransformer f, CodeTransformer g) => f == null
-    ? g
-    : g == null
-        ? f
-        : (String s) => g(f(s));
+CodeTransformer compose(CodeTransformer f, CodeTransformer? g) =>
+    g == null ? f : (String s) => g(f(s));
+
+CodeTransformer composeFlipped(CodeTransformer? f, CodeTransformer g) =>
+    f != null ? (String s) => g(f(s)) : g;
 
 CodeTransformer _retain(Matcher p) => (String code) {
       final lines = code.split(eol)..retainWhere(p);
@@ -21,30 +20,25 @@ CodeTransformer _retain(Matcher p) => (String code) {
 // Specific transformers
 //---
 
-@nullable
 CodeTransformer fromCodeTransformer(String arg) {
   final matcher = patternArgToMatcher(arg, 'from');
-  if (matcher == null) return null;
   return (String code) {
     final lines = code.split(eol).skipWhile(not(matcher));
     return lines.join(eol);
   };
 }
 
-@nullable
 CodeTransformer removeCodeTransformer(String arg) {
   final matcher = patternArgToMatcher(arg, 'remove');
-  return matcher == null ? null : _retain(not(matcher));
+  return _retain(not(matcher));
 }
 
-@nullable
 CodeTransformer retainCodeTransformer(String arg) {
   final matcher = patternArgToMatcher(arg, 'retain');
-  return matcher == null ? null : _retain(matcher);
+  return _retain(matcher);
 }
 
-@nullable
-CodeTransformer skipCodeTransformer(String arg) {
+CodeTransformer? skipCodeTransformer(String arg) {
   final n = toInt(arg);
   if (n == null) return null;
   return n >= 0
@@ -55,8 +49,7 @@ CodeTransformer skipCodeTransformer(String arg) {
         };
 }
 
-@nullable
-CodeTransformer takeCodeTransformer(String arg) {
+CodeTransformer? takeCodeTransformer(String arg) {
   final n = toInt(arg);
   if (n == null) return null;
   return n >= 0
@@ -67,10 +60,8 @@ CodeTransformer takeCodeTransformer(String arg) {
         };
 }
 
-@nullable
 CodeTransformer toCodeTransformer(String arg) {
   final matcher = patternArgToMatcher(arg, 'to');
-  if (matcher == null) return null;
   return (String code) {
     final lines = code.split(eol);
     final i = _indexWhere(lines, matcher); // lines.indexWhere(matcher)

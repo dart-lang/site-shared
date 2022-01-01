@@ -10,16 +10,22 @@ void main() {
 
     test(Kind.startRegion, () {
       final d = Directive.tryParse('#docregion');
-      expect(d.kind, Kind.startRegion);
-      expect(d.rawArgs, '');
-      expect(d.args, []);
+      expect(d, isNotNull);
+      if (d != null) {
+        expect(d.kind, Kind.startRegion);
+        expect(d.rawArgs, '');
+        expect(d.args, []);
+      }
     });
 
     test(Kind.endRegion, () {
       final d = Directive.tryParse('#enddocregion');
-      expect(d.kind, Kind.endRegion);
-      expect(d.rawArgs, '');
-      expect(d.args, []);
+      expect(d, isNotNull);
+      if (d != null) {
+        expect(d.kind, Kind.endRegion);
+        expect(d.rawArgs, '');
+        expect(d.args, []);
+      }
     });
   });
 
@@ -28,18 +34,24 @@ void main() {
     test(Kind.startRegion, () {
       const spaces = '  ';
       final d = Directive.tryParse('$spaces// #docregion');
-      expect(d.kind, Kind.startRegion);
-      expect(d.rawArgs, '');
-      expect(d.args, []);
-      expect(d.indentation, spaces);
+      expect(d, isNotNull);
+      if (d != null) {
+        expect(d.kind, Kind.startRegion);
+        expect(d.rawArgs, '');
+        expect(d.args, []);
+        expect(d.indentation, spaces);
+      }
     });
 
     test(Kind.endRegion, () {
       final d = Directive.tryParse(' #enddocregion a,b,  c  ');
-      expect(d.kind, Kind.endRegion);
-      expect(d.rawArgs, 'a,b,  c');
-      expect(d.args, ['a', 'b', 'c']);
-      expect(d.indentation, ' ');
+      expect(d, isNotNull);
+      if (d != null) {
+        expect(d.kind, Kind.endRegion);
+        expect(d.rawArgs, 'a,b,  c');
+        expect(d.args, ['a', 'b', 'c']);
+        expect(d.indentation, ' ');
+      }
     });
   });
 
@@ -47,36 +59,48 @@ void main() {
     group('HTML:', () {
       test(Kind.startRegion, () {
         final d = Directive.tryParse('<!--#docregion-->');
-        expect(d.kind, Kind.startRegion);
-        expect(d.rawArgs, '');
-        expect(d.args, []);
-        expect(d.indentation, '');
+        expect(d, isNotNull);
+        if (d != null) {
+          expect(d.kind, Kind.startRegion);
+          expect(d.rawArgs, '');
+          expect(d.args, []);
+          expect(d.indentation, '');
+        }
       });
 
       test(Kind.endRegion, () {
         final d = Directive.tryParse('<!-- #enddocregion a -->  ');
-        expect(d.kind, Kind.endRegion);
-        expect(d.rawArgs, 'a');
-        expect(d.args, ['a']);
-        expect(d.indentation, '');
+        expect(d, isNotNull);
+        if (d != null) {
+          expect(d.kind, Kind.endRegion);
+          expect(d.rawArgs, 'a');
+          expect(d.args, ['a']);
+          expect(d.indentation, '');
+        }
       });
     });
 
     group('CSS:', () {
       test(Kind.startRegion, () {
         final d = Directive.tryParse('/*#docregion*/');
-        expect(d.kind, Kind.startRegion);
-        expect(d.rawArgs, '');
-        expect(d.args, []);
-        expect(d.indentation, '');
+        expect(d, isNotNull);
+        if (d != null) {
+          expect(d.kind, Kind.startRegion);
+          expect(d.rawArgs, '');
+          expect(d.args, []);
+          expect(d.indentation, '');
+        }
       });
 
       test(Kind.endRegion, () {
         final d = Directive.tryParse('/* #enddocregion a */  ');
-        expect(d.kind, Kind.endRegion);
-        expect(d.rawArgs, 'a');
-        expect(d.args, ['a']);
-        expect(d.indentation, '');
+        expect(d, isNotNull);
+        if (d != null) {
+          expect(d.kind, Kind.endRegion);
+          expect(d.rawArgs, 'a');
+          expect(d.args, ['a']);
+          expect(d.indentation, '');
+        }
       });
     });
   });
@@ -84,26 +108,35 @@ void main() {
   group('problem cases:', () {
     test('Deprecated unquoted default region name', () {
       final d = Directive.tryParse('#docregion ,a');
-      expect(d.kind, Kind.startRegion);
-      expect(d.rawArgs, ',a');
-      expect(d.args, ['', 'a']);
-      expect(d.issues, ['unquoted default region name is deprecated']);
+      expect(d, isNotNull);
+      if (d != null) {
+        expect(d.kind, Kind.startRegion);
+        expect(d.rawArgs, ',a');
+        expect(d.args, ['', 'a']);
+        expect(d.issues, ['unquoted default region name is deprecated']);
+      }
     });
 
     test('Duplicate "a" region', () {
       final d = Directive.tryParse('#docregion a,b,c,a');
-      expect(d.kind, Kind.startRegion);
-      expect(d.rawArgs, 'a,b,c,a');
-      expect(d.args, ['a', 'b', 'c']);
-      expect(d.issues, ['repeated argument "a"']);
+      expect(d, isNotNull);
+      if (d != null) {
+        expect(d.kind, Kind.startRegion);
+        expect(d.rawArgs, 'a,b,c,a');
+        expect(d.args, ['a', 'b', 'c']);
+        expect(d.issues, ['repeated argument "a"']);
+      }
     });
 
     test('Duplicate "" region', () {
       final d = Directive.tryParse("#docregion '',''");
-      expect(d.kind, Kind.startRegion);
-      expect(d.rawArgs, "'',''");
-      expect(d.args, ['']);
-      expect(d.issues, ['repeated argument ""']);
+      expect(d, isNotNull);
+      if (d != null) {
+        expect(d.kind, Kind.startRegion);
+        expect(d.rawArgs, "'',''");
+        expect(d.args, ['']);
+        expect(d.issues, ['repeated argument ""']);
+      }
     });
   });
 }

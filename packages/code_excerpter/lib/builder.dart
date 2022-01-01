@@ -7,14 +7,12 @@ import 'src/util/line.dart';
 
 const excerptLineLeftBorderChar = '|';
 
-Builder builder(BuilderOptions options) => CodeExcerptBuilder(options);
-
 class CodeExcerptBuilder implements Builder {
   final outputExtension = '.excerpt.yaml';
 
-  BuilderOptions options;
+  final BuilderOptions? options;
 
-  CodeExcerptBuilder(this.options);
+  CodeExcerptBuilder([this.options]);
 
   @override
   Future<void> build(BuildStep buildStep) async {

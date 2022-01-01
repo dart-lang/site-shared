@@ -15,6 +15,6 @@ void main() {
     expect(codeExcerpter, isNotNull);
     final buildExtensions = codeExcerpter['build_extensions'] as Map;
     expect(buildExtensions, isNotNull);
-    expect(buildExtensions, builder(null).buildExtensions);
+    expect(buildExtensions, CodeExcerptBuilder().buildExtensions);
   });
 }
