@@ -1,6 +1,13 @@
 analyzer:
+  language:
+    strict-inference: true
+    strict-raw-types: true
   strong-mode:
     implicit-casts: false
+  errors:
+    unused_element: error
+    unused_import: error
+    unused_local_variable: error
 
 linter:
   rules:
@@ -51,6 +58,7 @@ linter:
     - no_duplicate_case_values
     - no_runtimeType_toString
     - non_constant_identifier_names
+    - null_check_on_nullable_type_parameter
     - null_closures
     - omit_local_variable_types
     - only_throw_errors
@@ -68,6 +76,7 @@ linter:
     - prefer_equal_for_default_values
     - prefer_expression_function_bodies
     - prefer_final_fields
+    - prefer_final_in_for_each
     - prefer_final_locals
     - prefer_for_elements_to_map_fromIterable
     - prefer_function_declarations_over_variables
@@ -101,6 +110,7 @@ linter:
     - unnecessary_lambdas
     - unnecessary_new
     - unnecessary_null_aware_assignments
+    - unnecessary_null_checks
     - unnecessary_null_in_if_null_operators
     - unnecessary_overrides
     - unnecessary_parenthesis

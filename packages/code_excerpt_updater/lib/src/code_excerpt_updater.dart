@@ -18,7 +18,7 @@ import 'instr_info.dart';
 import 'issue_reporter.dart';
 import 'logger.dart';
 
-final _listEq = const ListEquality().equals;
+final _stringListEquality = const ListEquality<String>().equals;
 
 /// A simple line-based updater for markdown code-blocks. It processes given
 /// files line-by-line, looking for matches to [procInstrRE] contained within
@@ -133,7 +133,7 @@ class Updater {
       r'^(\s*((?:///?|-|\*)\s*)?)?<\?code-excerpt\s*("([^"]+)")?((\s+[-\w]+(\s*=\s*"[^"]*")?\s*)*)\??>');
 
   String _processLines() {
-    final output = [];
+    final output = <String>[];
     while (_lines.isNotEmpty) {
       final line = _lines.removeAt(0);
       output.add(line);
@@ -265,8 +265,10 @@ class Updater {
           ? _line.replaceAllMapped(
               RegExp(r'({){|(})}'), (m) => '${m[1] ?? m[2]}!${m[1] ?? m[2]}')
           : _line;
-    }).toList();
-    if (!_listEq(currentCodeBlock, prefixedCodeExcerpt)) _numUpdatedFrag++;
+    }).toList(growable: false);
+    if (!_stringListEquality(currentCodeBlock, prefixedCodeExcerpt)) {
+      _numUpdatedFrag++;
+    }
     final result = <String>[
       openingCodeBlockLine,
       ...prefixedCodeExcerpt,

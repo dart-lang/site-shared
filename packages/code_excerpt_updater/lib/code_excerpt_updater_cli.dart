@@ -119,13 +119,13 @@ class UpdaterCLI {
       _printUsageAndExit(_parser, exitCode: 64);
     }
 
-    bool flag(String name) => (args[name] ?? false) as bool;
+    bool flag(String name) => args[name] as bool? ?? false;
 
     final pathsToFileOrDir = args.rest;
 
     if (flag('help')) _printHelpAndExit(_parser);
 
-    String str(String name) => (args[name] ?? '') as String;
+    String str(String name) => args[name] as String? ?? '';
 
     var i = 0;
     if (args[_indentFlagName] != null) {
@@ -184,7 +184,7 @@ class UpdaterCLI {
     }
   }
 
-  Future _processEntity(String path,
+  Future<void> _processEntity(String path,
       {bool warnAboutNonDartFile = false}) async {
     final type = await FileSystemEntity.type(path);
     switch (type) {
@@ -202,12 +202,12 @@ class UpdaterCLI {
 
   /// Process (recursively) the entities in the directory [dirPath], ignoring
   /// non-Dart and non-directory entities.
-  Future _processDirectory(String dirPath) async {
+  Future<void> _processDirectory(String dirPath) async {
     log.fine('_processDirectory: $dirPath');
     if (_exclude(dirPath)) return;
     final dir = Directory(dirPath);
-    final entityList = dir.list(); // recursive: true, followLinks: false
-    await for (FileSystemEntity fse in entityList) {
+    final fileEntityList = dir.list(); // recursive: true, followLinks: false
+    await for (final fse in fileEntityList) {
       final path = fse.path;
       final exclude =
           _exclude(path) || fse is File && !_validExt.hasMatch(path);
@@ -217,7 +217,7 @@ class UpdaterCLI {
     }
   }
 
-  Future _processFile(String path) async {
+  Future<void> _processFile(String path) async {
     try {
       await _updateFile(path);
       numFiles++;
@@ -231,7 +231,7 @@ class UpdaterCLI {
 
   bool _exclude(String path) => excludePathRegExp.any((e) => path.contains(e));
 
-  Future _updateFile(String filePath) async {
+  Future<void> _updateFile(String filePath) async {
     final updater = Updater(
       fragmentDirPath,
       srcDirPath,

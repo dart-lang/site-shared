@@ -14,7 +14,7 @@ void main() {
       if (d != null) {
         expect(d.kind, Kind.startRegion);
         expect(d.rawArgs, '');
-        expect(d.args, []);
+        expect(d.args, <String>[]);
       }
     });
 
@@ -24,13 +24,13 @@ void main() {
       if (d != null) {
         expect(d.kind, Kind.endRegion);
         expect(d.rawArgs, '');
-        expect(d.args, []);
+        expect(d.args, <String>[]);
       }
     });
   });
 
   // Leading and trailing text is ignored
-  group('context insenstivie', () {
+  group('context insensitive', () {
     test(Kind.startRegion, () {
       const spaces = '  ';
       final d = Directive.tryParse('$spaces// #docregion');
@@ -38,7 +38,7 @@ void main() {
       if (d != null) {
         expect(d.kind, Kind.startRegion);
         expect(d.rawArgs, '');
-        expect(d.args, []);
+        expect(d.args, <String>[]);
         expect(d.indentation, spaces);
       }
     });
@@ -63,7 +63,7 @@ void main() {
         if (d != null) {
           expect(d.kind, Kind.startRegion);
           expect(d.rawArgs, '');
-          expect(d.args, []);
+          expect(d.args, <String>[]);
           expect(d.indentation, '');
         }
       });
@@ -87,7 +87,7 @@ void main() {
         if (d != null) {
           expect(d.kind, Kind.startRegion);
           expect(d.rawArgs, '');
-          expect(d.args, []);
+          expect(d.args, <String>[]);
           expect(d.indentation, '');
         }
       });

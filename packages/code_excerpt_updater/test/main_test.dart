@@ -26,7 +26,7 @@ String _expectedFn2Path(String relPath) =>
 String getSrc(String relPath) => _readFile(_srcFileName2Path(relPath));
 String getExpected(String relPath) => _readFile(_expectedFn2Path(relPath));
 
-const _errMsgs = {
+const Map<String, String> _errorMessages = {
   'no_change/frag_not_found.dart':
       'Error: test_data/src/no_change/frag_not_found.dart:2 '
           'cannot find a source file "test_data/diff_src/dne.xzy", '
@@ -58,7 +58,7 @@ void _stdFileTest(String testFilePath) {
         updater.generateUpdatedFile(_srcFileName2Path(testFileRelativePath));
     // print('>> updatedDocs: ${updatedDocs}');
 
-    final expectedErr = _errMsgs[testFilePath];
+    final expectedErr = _errorMessages[testFilePath];
     if (expectedErr == null) {
       verifyZeroInteractions(_stderr);
       expect(updater.numErrors, 0);

@@ -15,7 +15,7 @@ class ArgProcessor {
     var i = 1;
     info.linePrefix = procInstrMatch[i++] ?? '';
     // The instruction is the first line in a markdown list.
-    for (var c in ['-', '*']) {
+    for (final c in const ['-', '*']) {
       if (!info.linePrefix.contains(c)) continue;
       info.linePrefix = info.linePrefix.replaceFirst(c, ' ');
       break; // It can't contain both characters
