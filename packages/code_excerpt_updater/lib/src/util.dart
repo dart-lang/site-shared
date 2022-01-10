@@ -16,8 +16,8 @@ int? toInt(String? s, {int radix = 10, int? errorValue}) {
 
 //-----------------------------------------------------------------------------
 
-final RegExp _blankLineRegEx = RegExp(r'^\s*$');
-final RegExp _leadingWhitespaceRegEx = RegExp(r'^[ \t]*');
+final _blankLineRegEx = RegExp(r'^\s*$');
+final _leadingWhitespaceRegEx = RegExp(r'^[ \t]*');
 
 Iterable<String> trimMinLeadingSpace(Iterable<String> lines) {
   final nonBlankLines = lines.where((s) => !_blankLineRegEx.hasMatch(s));
@@ -41,10 +41,10 @@ Iterable<String> trimMinLeadingSpace(Iterable<String> lines) {
 //-----------------------------------------------------------------------------
 // TODO: consider writing the following conversions as a string transformer.
 
-final RegExp escapedSlashRE = RegExp(r'\\/');
+final escapedSlashRE = RegExp(r'\\/');
 
-final RegExp _slashHexCharRE = RegExp(r'\\x(..)');
-final RegExp _slashLetterRE = RegExp(r'\\([\\nt])');
+final _slashHexCharRE = RegExp(r'\\x(..)');
+final _slashLetterRE = RegExp(r'\\([\\nt])');
 
 /// Encode special characters: '\t', `\n`, and `\xHH` where `HH` are hex digits.
 String encodeSlashChar(String s) => s

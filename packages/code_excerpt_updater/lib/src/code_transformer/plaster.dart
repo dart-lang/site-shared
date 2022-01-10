@@ -1,7 +1,7 @@
 import 'core.dart';
 import 'replace.dart';
 
-const String defaultPlaster = '···';
+const defaultPlaster = '···';
 
 class PlasterCodeTransformer {
   final bool excerptsYaml;

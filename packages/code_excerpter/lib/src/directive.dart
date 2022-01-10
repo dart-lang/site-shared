@@ -5,10 +5,10 @@
 /// - CSS and Java-like languages: `*/`
 /// - HTML: `-->`
 ///
-final RegExp _directiveRegEx = RegExp(
+final _directiveRegEx = RegExp(
     r'^(\s*)(\S.*?)?#((?:end)?docregion)\b\s*(.*?)(?:\s*(?:-->|\*\/))?\s*$');
 
-final RegExp _argSeparator = RegExp(r'\s*,\s*');
+final _argSeparator = RegExp(r'\s*,\s*');
 
 /// Represents a code-excerpter directive (both the model and lexical elements)
 class Directive {

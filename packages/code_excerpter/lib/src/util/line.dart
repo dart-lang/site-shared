@@ -1,9 +1,9 @@
 import 'dart:math' show min;
 
-const String eol = '\n';
+const eol = '\n';
 
-final RegExp blankLine = RegExp(r'^\s*$');
-final RegExp _leadingWhitespace = RegExp(r'^[ \t]*');
+final blankLine = RegExp(r'^\s*$');
+final _leadingWhitespace = RegExp(r'^[ \t]*');
 
 /// WARNING: this method potentially mutates its argument.
 void dropTrailingBlankLines(List<String> lines) {
