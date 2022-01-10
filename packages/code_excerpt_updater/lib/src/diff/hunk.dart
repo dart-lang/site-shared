@@ -21,7 +21,8 @@ const eol = '\n';
 class Hunk {
   static final Hunk empty = Hunk('');
 
-  final headRegExp = RegExp(r'@@ -(\d+)(,(\d+))? \+(\d+)(,(\d+))? @@(.*)');
+  static final RegExp headRegExp =
+      RegExp(r'@@ -(\d+)(,(\d+))? \+(\d+)(,(\d+))? @@(.*)');
 
   String _rawText;
 

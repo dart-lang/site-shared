@@ -23,7 +23,11 @@ final Logger log = () {
   if (logger == null) {
     logger = Logger('package:code_excerpter');
     Logger.root.level = initLevel;
-    Logger.root.onRecord.listen((r) => logListeners.forEach((h) => h(r)));
+    Logger.root.onRecord.listen((r) {
+      for (final h in logListeners) {
+        h(r);
+      }
+    });
   }
 
   return logger;

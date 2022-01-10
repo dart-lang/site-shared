@@ -74,7 +74,9 @@ class Excerpter {
 
     if (directive == null) {
       // Add line to open regions
-      _openExcerpts.forEach((name) => excerpts[name]?.add(_line));
+      for (final name in _openExcerpts) {
+        excerpts[name]?.add(_line);
+      }
       return;
     }
 

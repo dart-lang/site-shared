@@ -68,16 +68,8 @@ CodeTransformer toCodeTransformer(String arg) {
   final matcher = patternArgToMatcher(arg, 'to');
   return (String code) {
     final lines = code.split(eol);
-    final i = _indexWhere(lines, matcher); // lines.indexWhere(matcher)
+    final i = lines.indexWhere(matcher);
     if (i < 0) return code;
     return lines.take(i + 1).join(eol);
   };
-}
-
-/// Patch: 1.24.3 doesn't have Iterable.indexWhere(). Drop this once we drop 1.x
-int _indexWhere(List<String> list, bool Function(String s) test) {
-  for (var i = 0; i < list.length; i++) {
-    if (test(list[i])) return i;
-  }
-  return -1;
 }

@@ -9,8 +9,8 @@ import 'issue_reporter.dart';
 import 'logger.dart';
 import 'util.dart';
 
-const _defaultYamlExcerptLeftBorderChar = ''; // I.e., no char by default
-const _yamlExcerptLeftBorderCharKey = '#border';
+const String _defaultYamlExcerptLeftBorderChar = ''; // I.e., no char by default
+const String _yamlExcerptLeftBorderCharKey = '#border';
 
 class ExcerptGetter {
   ExcerptGetter(

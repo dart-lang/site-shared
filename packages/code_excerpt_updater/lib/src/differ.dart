@@ -12,14 +12,14 @@ typedef ErrorReporter = void Function(String msg);
 typedef ExcerptFetcher = Iterable<String>? Function(String path, String region);
 
 class Differ {
-  Differ(this._excerptFetcher, this._log, this._reportError);
-
-  final docregionRe = RegExp(r'#(end)?doc(plaster|region)\b');
+  final RegExp docregionRe = RegExp(r'#(end)?doc(plaster|region)\b');
   final ExcerptFetcher _excerptFetcher;
   final ErrorReporter _reportError;
   final Logger _log;
 
-  Directory? _tmpDir;
+  late final Directory _tmpDir = Directory.systemTemp;
+
+  Differ(this._excerptFetcher, this._log, this._reportError);
 
   Iterable<String>? getDiff(String relativeSrcPath1, String region,
       Map<String, String?> args, String pathPrefix) {
@@ -129,7 +129,7 @@ class Differ {
   File _writeTmp(String filePath, String content) {
     final ext = p.extension(filePath);
     final tmpFilePath =
-        p.join(getTmpDir().path, 'differ_src_${filePath.hashCode}$ext');
+        p.join(tempDirectory.path, 'differ_src_${filePath.hashCode}$ext');
     final tmpFile = File(tmpFilePath);
     tmpFile.writeAsStringSync(content);
     return tmpFile;
@@ -141,7 +141,7 @@ class Differ {
   //    return i;
   //  }
 
-  final _diffFileIdRegEx = RegExp(r'^(---|\+\+\+) ([^\t]+)\t(.*)$');
+  final RegExp _diffFileIdRegEx = RegExp(r'^(---|\+\+\+) ([^\t]+)\t(.*)$');
 
   String _adjustDiffFileIdLine(String relativePath, String diffFileIdLine) {
     final line = diffFileIdLine;
@@ -153,6 +153,5 @@ class Differ {
     return '${match[1]} $relativePath';
   }
 
-  Directory getTmpDir() =>
-      _tmpDir ??= Directory.systemTemp; // .createTempSync();
+  Directory get tempDirectory => _tmpDir;
 }

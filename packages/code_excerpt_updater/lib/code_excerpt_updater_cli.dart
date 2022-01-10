@@ -10,9 +10,9 @@ import 'package:logging/logging.dart';
 import 'src/code_excerpt_updater.dart';
 import 'src/logger.dart';
 
-const _commandName = 'code_excerpt_updater';
-final _validExt = RegExp(r'\.(dart|jade|md)$');
-final _dotPathRe = RegExp(r'(^|/)\..*($|/)');
+const String _commandName = 'code_excerpt_updater';
+final RegExp _dotPathRe = RegExp(r'(^|/)\..*($|/)');
+final RegExp _validExt = RegExp(r'\.(dart|jade|md)$');
 
 /// Processes `.dart` and `.md` files, recursively traverses directories
 /// using [Updater]. See this command's help for CLI argument details.

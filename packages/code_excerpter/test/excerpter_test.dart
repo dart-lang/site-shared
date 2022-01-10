@@ -117,7 +117,7 @@ void main() {
   });
 
   group('region not closed:', () {
-    ['', '\n'].forEach((eol) {
+    for (final eol in const ['', '\n']) {
       group('empty region:', () {
         test('default region', () {
           final excerpter = Excerpter(uri, '#docregion$eol');
@@ -140,7 +140,7 @@ void main() {
             {defaultRegionKey: expectedLines, 'b': expectedLines});
         _expectNoLogs();
       });
-    });
+    }
   });
 
   group('problems:', problemCases);

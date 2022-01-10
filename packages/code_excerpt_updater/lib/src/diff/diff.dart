@@ -7,7 +7,7 @@ class Diff {
   bool _parsed = false;
 
   final List<String?> fileInfo = [null, null];
-  List<Hunk> hunks = [];
+  final List<Hunk> hunks = [];
 
   Diff(this._rawText);
 
@@ -34,7 +34,7 @@ class Diff {
     for (var i = 0; i < hunks.length; i++) {
       final hunk = hunks[i];
       if (hunk.dropLinesAfter(to)) {
-        hunks = hunks.take(i + 1).toList();
+        hunks.length = i + 1;
         return true;
       }
     }
@@ -68,7 +68,7 @@ class Diff {
     fileInfo[1] = lines[1];
 
     var i = 2;
-    hunks = [];
+    hunks.clear();
     while (i < lines.length) {
       if (!lines[i].startsWith('@@')) throw _invalidHunk(i);
       final start = i++;

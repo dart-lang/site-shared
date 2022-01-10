@@ -5,12 +5,12 @@ import '../util.dart';
 import 'core.dart';
 
 class ReplaceCodeTransformer {
-  ReplaceCodeTransformer(this._reporter);
-
   final IssueReporter _reporter;
 
-  final _matchDollarNumRE = RegExp(r'(\$+)(&|\d*)');
-  final _endRE = RegExp(r'^g;?\s*$');
+  final RegExp _matchDollarNumRE = RegExp(r'(\$+)(&|\d*)');
+  final RegExp _endRE = RegExp(r'^g;?\s*$');
+
+  ReplaceCodeTransformer(this._reporter);
 
   CodeTransformer? codeTransformer(String? replaceExp) {
     void _reportErr([String extraInfo = '']) {

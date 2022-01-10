@@ -4,7 +4,8 @@ class IssueReporter {
   final IssueContext _ctx;
   final Stdout _stderr;
 
-  int numWarnings = 0, numErrors = 0;
+  int numWarnings = 0;
+  int numErrors = 0;
 
   IssueReporter(this._ctx, [Stdout? err]) : _stderr = err ?? stderr;
 

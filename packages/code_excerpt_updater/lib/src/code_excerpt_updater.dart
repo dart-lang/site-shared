@@ -18,8 +18,6 @@ import 'instr_info.dart';
 import 'issue_reporter.dart';
 import 'logger.dart';
 
-final _stringListEquality = const ListEquality<String>().equals;
-
 /// A simple line-based updater for markdown code-blocks. It processes given
 /// files line-by-line, looking for matches to [procInstrRE] contained within
 /// markdown code blocks.
@@ -55,7 +53,8 @@ class Updater {
   int _origNumLines = 0;
   List<String> _lines = [];
 
-  int _numSrcDirectives = 0, _numUpdatedFrag = 0;
+  int _numSrcDirectives = 0;
+  int _numUpdatedFrag = 0;
 
   /// [err] defaults to [stderr].
   Updater(
@@ -256,7 +255,8 @@ class Updater {
               RegExp(r'({){|(})}'), (m) => '${m[1] ?? m[2]}!${m[1] ?? m[2]}')
           : _line;
     }).toList(growable: false);
-    if (!_stringListEquality(currentCodeBlock, prefixedCodeExcerpt)) {
+    if (!const ListEquality<String>()
+        .equals(currentCodeBlock, prefixedCodeExcerpt)) {
       _numUpdatedFrag++;
     }
     final result = <String>[
