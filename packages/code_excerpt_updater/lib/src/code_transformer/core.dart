@@ -5,11 +5,15 @@ import '../util.dart';
 
 typedef CodeTransformer = String Function(String code);
 
-CodeTransformer compose(CodeTransformer f, CodeTransformer? g) =>
-    g == null ? f : (String s) => g(f(s));
-
-CodeTransformer composeFlipped(CodeTransformer? f, CodeTransformer g) =>
-    f != null ? (String s) => g(f(s)) : g;
+CodeTransformer? compose(CodeTransformer? f, CodeTransformer? g) {
+  if (f == null) {
+    return g;
+  }
+  if (g == null) {
+    return f;
+  }
+  return (String s) => g(f(s));
+}
 
 CodeTransformer _retain(Matcher p) => (String code) {
       final lines = code.split(eol)..retainWhere(p);

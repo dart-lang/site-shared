@@ -55,7 +55,7 @@ class ReplaceCodeTransformer {
       transformers.add(transformer);
     }
 
-    return transformers.fold(null, composeFlipped);
+    return transformers.fold(null, compose);
   }
 
   CodeTransformer codeTransformerHelper(String re, String _replacement) {

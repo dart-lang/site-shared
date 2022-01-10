@@ -278,21 +278,33 @@ class Updater {
     return result;
   }
 
-  CodeTransformer _excerptCodeTransformer(
+  CodeTransformer? _excerptCodeTransformer(
       Map<String, String> args, String lang) {
-    final transformers = [
-      _plaster.codeTransformer(
-          args.containsKey('plaster')
-              ? args['plaster']
-              : filePlasterTemplate ?? globalPlasterTemplate,
-          lang),
-    ];
+    final transformers = <CodeTransformer>[];
 
-    args.forEach((arg, val) => transformers.add(_argToTransformer(arg, val)));
+    final plasterTransformer = _plaster.codeTransformer(
+        args.containsKey('plaster')
+            ? args['plaster']
+            : filePlasterTemplate ?? globalPlasterTemplate,
+        lang);
 
-    transformers.add(fileAndCmdLineCodeTransformer);
+    if (plasterTransformer != null) {
+      transformers.add(plasterTransformer);
+    }
 
-    return transformers.fold((s) => s, compose);
+    args.forEach((arg, val) {
+      final argTransformer = _argToTransformer(arg, val);
+      if (argTransformer != null) {
+        transformers.add(argTransformer);
+      }
+    });
+
+    final fileAndCodeTransformer = fileAndCmdLineCodeTransformer;
+    if (fileAndCodeTransformer != null) {
+      transformers.add(fileAndCodeTransformer);
+    }
+
+    return transformers.fold(null, compose);
   }
 
   CodeTransformer? _argToTransformer(String arg, String value) {
