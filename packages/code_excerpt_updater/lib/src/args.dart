@@ -47,7 +47,7 @@ class ArgProcessor {
       }
       final argName = match[1] ?? '';
       final argValue = match[3];
-      if (argValue != null) info.args[argName] = argValue;
+      info.args[argName] = argValue;
       log.finer(
         '  >> arg: $argName = ${argValue == null ? argValue : '"$argValue"'}',
       );

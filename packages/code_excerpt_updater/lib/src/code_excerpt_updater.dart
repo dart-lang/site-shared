@@ -100,18 +100,8 @@ class Updater {
 
   int get lineNum => _origNumLines - _lines.length;
 
-  CodeTransformer? get fileAndCmdLineCodeTransformer {
-    final fileTransformer = _fileGlobalCodeTransformer;
-    final appCodeTransformer = _appGlobalCodeTransformer;
-    if (fileTransformer != null) {
-      return compose(fileTransformer, appCodeTransformer);
-    }
-
-    if (appCodeTransformer != null) {
-      return appCodeTransformer;
-    }
-    return null;
-  }
+  CodeTransformer? get fileAndCmdLineCodeTransformer =>
+      compose(_fileGlobalCodeTransformer, _appGlobalCodeTransformer);
 
   /// Returns the content of the file at [path] with code blocks updated.
   /// Missing fragment files are reported via `err`.
@@ -279,7 +269,7 @@ class Updater {
   }
 
   CodeTransformer? _excerptCodeTransformer(
-      Map<String, String> args, String lang) {
+      Map<String, String?> args, String lang) {
     final transformers = <CodeTransformer>[];
 
     final plasterTransformer = _plaster.codeTransformer(
@@ -307,7 +297,10 @@ class Updater {
     return transformers.fold(null, compose);
   }
 
-  CodeTransformer? _argToTransformer(String arg, String value) {
+  CodeTransformer? _argToTransformer(String arg, String? value) {
+    if (value == null) {
+      return null;
+    }
     switch (arg) {
       case 'from':
         return fromCodeTransformer(value);

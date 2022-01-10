@@ -21,7 +21,7 @@ class InstrInfo {
 
   String get region => args['region'] ?? _region ?? '';
 
-  final Map<String, String> args = {};
+  final Map<String, String?> args = {};
 
   @override
   String toString() => 'InstrInfo: $linePrefix$instruction; args=$args';
