@@ -48,7 +48,7 @@ final hunk2 = '''
 
 void main() {
   group('basic hunk 1', () {
-    Hunk h;
+    late Hunk h;
 
     setUp(() {
       h = Hunk(hunk1);
@@ -81,7 +81,7 @@ void main() {
   });
 
   group('basic hunk 2', () {
-    Hunk h;
+    late Hunk h;
 
     setUp(() {
       h = Hunk(hunk2);

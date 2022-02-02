@@ -8,10 +8,8 @@ import 'package:code_excerpt_updater/code_excerpt_updater_cli.dart';
 
 /// See [UpdaterCLI].
 Future<void> main(List<String> args) async {
-  final updater = UpdaterCLI();
-  updater.setArgs(args);
-  if (!updater.argsAreValid) return;
-  await updater.processArgs();
+  final updater = UpdaterCLI.fromArgs(args);
+  await updater.process();
   final msg = 'Processed ${updater.numFiles} Dart/Jade/Markdown files: '
       '${updater.numUpdatedFrag} out of '
       '${updater.numSrcDirectives} fragments needed updating.';

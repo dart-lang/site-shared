@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 void main() {
   group('maxUnindent', () {
     test('empty list', () {
-      expect(maxUnindent([]), []);
+      expect(maxUnindent([]), <String>[]);
     });
 
     test('no leading space', () {

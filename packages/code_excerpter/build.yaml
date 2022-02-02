@@ -10,7 +10,6 @@ builders:
         include:
           - example/**
           - examples/**
-          - null_safety_examples/**
           - lib/**
           - test/**
           - web/**

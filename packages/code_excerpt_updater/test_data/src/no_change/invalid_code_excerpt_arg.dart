@@ -1,2 +1,2 @@
 /// <?code-excerpt foo="abc"?>
-int noApiDoc0;
+int? noApiDoc0;

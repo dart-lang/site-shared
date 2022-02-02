@@ -14,8 +14,8 @@ const _testDir = 'test_data';
 // It might be easier to modify the updater to use an IOSink than to try to read
 // stderr.
 
-Updater updater;
-Stdout _stderr;
+late Updater updater;
+late Stdout _stderr;
 
 String _readFile(String path) => File(path).readAsStringSync();
 
@@ -26,7 +26,7 @@ String _expectedFn2Path(String relPath) =>
 String getSrc(String relPath) => _readFile(_srcFileName2Path(relPath));
 String getExpected(String relPath) => _readFile(_expectedFn2Path(relPath));
 
-final _errMsgs = {
+const Map<String, String> _errorMessages = {
   'no_change/frag_not_found.dart':
       'Error: test_data/src/no_change/frag_not_found.dart:2 '
           'cannot find a source file "test_data/diff_src/dne.xzy", '
@@ -58,7 +58,7 @@ void _stdFileTest(String testFilePath) {
         updater.generateUpdatedFile(_srcFileName2Path(testFileRelativePath));
     // print('>> updatedDocs: ${updatedDocs}');
 
-    final expectedErr = _errMsgs[testFilePath];
+    final expectedErr = _errorMessages[testFilePath];
     if (expectedErr == null) {
       verifyZeroInteractions(_stderr);
       expect(updater.numErrors, 0);

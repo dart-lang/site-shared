@@ -40,7 +40,7 @@ void main() {
   });
 
   group('Diff with one hunk:', () {
-    Diff d;
+    late Diff d;
 
     setUp(() => d = Diff(diff1));
 

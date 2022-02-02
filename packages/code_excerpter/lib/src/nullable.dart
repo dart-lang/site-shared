@@ -1,1 +1,0 @@
-const nullable = 1;

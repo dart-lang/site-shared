@@ -7,7 +7,6 @@ import 'code_transformer/core.dart';
 import 'constants.dart';
 import 'issue_reporter.dart';
 import 'logger.dart';
-import 'nullable.dart';
 import 'util.dart';
 
 const _defaultYamlExcerptLeftBorderChar = ''; // I.e., no char by default
@@ -25,12 +24,11 @@ class ExcerptGetter {
   String pathBase = '';
   String _yamlExcerptLeftBorderChar = _defaultYamlExcerptLeftBorderChar;
 
-  @nullable
-  Iterable<String> getExcerpt(
+  Iterable<String>? getExcerpt(
       // String pathBase,
       String relativePath,
       String region,
-      [CodeTransformer t]) {
+      [CodeTransformer? t]) {
     _yamlExcerptLeftBorderChar = _defaultYamlExcerptLeftBorderChar;
     var excerpt = _getExcerptAsString(relativePath, region);
     if (excerpt == null) return null; // Errors have been reported
@@ -57,19 +55,18 @@ class ExcerptGetter {
   /// Look for a fragment file under [fragmentDirPath], failing that look for a
   /// source file under [srcDirPath]. If a file is found return its content as
   /// a string. Otherwise, report an error and return null.
-  @nullable
-  String _getExcerptAsString(String relativePath, String region) => excerptsYaml
-      ? _getExcerptAsStringFromYaml(relativePath, region)
-      : _getExcerptAsStringLegacy(relativePath, region);
+  String? _getExcerptAsString(String relativePath, String region) =>
+      excerptsYaml
+          ? _getExcerptAsStringFromYaml(relativePath, region)
+          : _getExcerptAsStringLegacy(relativePath, region);
 
   /// Potentially assigns to _yamlExcerptLeftBorderChar the
   /// value of the YAML [_yamlExcerptLeftBorderCharKey] key.
-  @nullable
-  String _getExcerptAsStringFromYaml(String relativePath, String region) {
+  String? _getExcerptAsStringFromYaml(String relativePath, String region) {
     const ext = '.excerpt.yaml';
     final excerptYamlPath =
         p.join(fragmentDirPath, pathBase, relativePath + ext);
-    YamlMap excerptsYaml;
+    YamlMap? excerptsYaml;
     try {
       final contents = File(excerptYamlPath).readAsStringSync();
       excerptsYaml =
@@ -101,15 +98,16 @@ class ExcerptGetter {
     }
   }
 
-  @nullable
-  String _getExcerptAsStringLegacy(String relativePath, String region) {
+  String? _getExcerptAsStringLegacy(String relativePath, String region) {
     const fragExtension = '.txt';
-    var file = relativePath + fragExtension;
+    final String file;
     if (region.isNotEmpty) {
       final dir = p.dirname(relativePath);
       final basename = p.basenameWithoutExtension(relativePath);
       final ext = p.extension(relativePath);
       file = p.join(dir, '$basename-$region$ext$fragExtension');
+    } else {
+      file = relativePath + fragExtension;
     }
 
     // First look for a matching fragment

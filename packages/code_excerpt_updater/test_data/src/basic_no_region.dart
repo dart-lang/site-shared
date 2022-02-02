@@ -4,13 +4,13 @@
 /// <?code-excerpt "no_region.html"?>
 /// ```html
 /// ```
-int basic1;
+int? basic1;
 
 /// Test: no code in code block, directive with indentation
 /// <?code-excerpt "no_region.dart" indent-by="2"?>
 /// ```dart
 /// ```
-num basic2;
+num? basic2;
 
 /// Test: out-of-date code in code block, directive with indentation
 /// <?code-excerpt "no_region.dart" indent-by="2"?>

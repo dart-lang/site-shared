@@ -1,7 +1,5 @@
 import 'package:logging/logging.dart';
 
-import 'nullable.dart';
-
 final Logger _log = Logger('CEU.CT');
 
 typedef Matcher = bool Function(String t);
@@ -9,10 +7,8 @@ typedef Matcher = bool Function(String t);
 
 Matcher not(Matcher p) => (String s) => !p(s);
 
-@nullable
 Matcher patternArgToMatcher(String arg, [String cmd = '']) {
-  if (arg == null) return null;
-  Matcher matcher;
+  final Matcher matcher;
   if (arg.startsWith('/') && arg.endsWith('/')) {
     final re = RegExp(arg.substring(1, arg.length - 1));
     _log.finest(' >> $cmd arg: "$arg" used as regexp $re');
