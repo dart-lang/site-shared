@@ -1,9 +1,4 @@
-
-// TODO this should be moved from this file for better 
-// clarity and transparency
-// @import 'vendor/code-prettify/_prettify';
-
-// NOTE moved from _code to a shared module since imports end 
+// NOTE moved from _code to a shared module since imports end
 // up being sneaky and messy in terms of ordering
 @mixin pre-defaults {
   background-color: $site-color-codeblock-bg;
