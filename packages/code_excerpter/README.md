@@ -95,7 +95,7 @@ As illustrated above, the region markers can be followed by zero or more comma-s
 A legal **region name** is one of:
 
 - `''`
-- A non-empty sequence of alpha-numeric characters possibly containing a hypen (`-`)
+- A non-empty sequence of alphanumeric characters possibly containing a hyphen (`-`)
   or an underscore (`_`).
 
 ## Sample builder config

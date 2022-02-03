@@ -4,7 +4,7 @@ Test: empty region
 ```dart
 ```
 
-The full file, because an empty region overrides the parenthecial remark in the path/title:
+The full file, because an empty region overrides the parenthetical remark in the path/title:
 <?code-excerpt "basic.dart (greeting)" region="" title?>
 ```dart
 ```

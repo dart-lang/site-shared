@@ -1,6 +1,5 @@
 import 'package:code_excerpt_updater/src/excerpt_getter.dart';
 import 'package:code_excerpt_updater/src/issue_reporter.dart';
-import 'package:code_excerpt_updater/src/nullable.dart';
 import 'package:test/test.dart';
 
 const _testDir = 'test_data';
@@ -12,8 +11,7 @@ void main() {
   final _reporter =
       IssueReporter(IssueContext(() => 'unused/path/to/file', () => 1));
 
-  @nullable
-  ExcerptGetter eg;
+  late ExcerptGetter eg;
 
   setUpAll(() {
     eg = ExcerptGetter(excerptsYaml, fragmentDirPath, srcDirPath, _reporter)

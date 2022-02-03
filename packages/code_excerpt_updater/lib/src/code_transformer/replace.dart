@@ -1,20 +1,18 @@
 import '../constants.dart';
 import '../issue_reporter.dart';
 import '../logger.dart';
-import '../nullable.dart';
 import '../util.dart';
 import 'core.dart';
 
 class ReplaceCodeTransformer {
-  ReplaceCodeTransformer(this._reporter);
-
   final IssueReporter _reporter;
 
-  final _matchDollarNumRE = RegExp(r'(\$+)(&|\d*)');
-  final _endRE = RegExp(r'^g;?\s*$');
+  final RegExp _matchDollarNumRE = RegExp(r'(\$+)(&|\d*)');
+  final RegExp _endRE = RegExp(r'^g;?\s*$');
 
-  @nullable
-  CodeTransformer codeTransformer(String replaceExp) {
+  ReplaceCodeTransformer(this._reporter);
+
+  CodeTransformer? codeTransformer(String? replaceExp) {
     void _reportErr([String extraInfo = '']) {
       _reporter.error(
         '${'invalid replace attribute ("$replaceExp"); '}'
@@ -54,13 +52,12 @@ class ReplaceCodeTransformer {
         return null;
       }
       final transformer = codeTransformerHelper(re, replacement);
-      if (transformer != null) transformers.add(transformer);
+      transformers.add(transformer);
     }
 
     return transformers.fold(null, compose);
   }
 
-  @nullable
   CodeTransformer codeTransformerHelper(String re, String _replacement) {
     final replacement = encodeSlashChar(_replacement);
     log.finest(' >> replacement expr: $replacement');
@@ -73,20 +70,22 @@ class ReplaceCodeTransformer {
         RegExp(re),
         (Match m) => replacement.replaceAllMapped(_matchDollarNumRE, (_m) {
               // In JS, $$ becomes $ in a replacement string.
-              final numDollarChar = _m[1].length;
+              final numDollarChar = _m[1]!.length;
               // Escaped dollar characters, if any:
               final dollars = r'$' * (numDollarChar ~/ 2);
 
+              final number = _m[2];
+
               // Even number of $'s, e.g. $$1?
-              if (numDollarChar.isEven || _m[2].isEmpty) {
+              if (numDollarChar.isEven || number == null || number.isEmpty) {
                 return '$dollars${_m[2]}';
               }
 
-              if (_m[2] == '&') return '$dollars${m[0]}';
+              if (number == '&') return '$dollars${m[0]}';
 
-              final argNum = toInt(_m[2], errorValue: m.groupCount + 1);
+              final argNum = int.tryParse(number) ?? m.groupCount + 1;
               // No corresponding group? Return the arg, like in JavaScript.
-              if (argNum > m.groupCount) return '$dollars\$${_m[2]}';
+              if (argNum > m.groupCount) return '$dollars\$$number';
 
               return '$dollars${m[argNum]}';
             }));

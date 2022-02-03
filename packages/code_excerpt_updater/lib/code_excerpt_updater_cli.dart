@@ -9,11 +9,10 @@ import 'package:logging/logging.dart';
 
 import 'src/code_excerpt_updater.dart';
 import 'src/logger.dart';
-import 'src/nullable.dart';
 
 const _commandName = 'code_excerpt_updater';
-final _validExt = RegExp(r'\.(dart|jade|md)$');
 final _dotPathRe = RegExp(r'(^|/)\..*($|/)');
+final _validExt = RegExp(r'\.(dart|jade|md)$');
 
 /// Processes `.dart` and `.md` files, recursively traverses directories
 /// using [Updater]. See this command's help for CLI argument details.
@@ -33,11 +32,11 @@ class UpdaterCLI {
       '(defaults to "", that is, the current working directory)';
   static const _replaceName = 'replace';
 
-  final _parser = ArgParser()
+  static final _parser = ArgParser()
     ..addFlag(_logFineFlagName)
     ..addMultiOption(_excludeFlagName,
         help: 'Paths to exclude when processing a directory recursively.\n'
-            'Dot files and directorys are always excluded.',
+            'Dot files and directories are always excluded.',
         valueHelp: 'PATH_REGEXP,...')
     ..addFlag(_failOnRefresh,
         negatable: false,
@@ -59,10 +58,7 @@ class UpdaterCLI {
         abbr: 'q',
         help: 'PATH to directory containing code used in diffs\n$_defaultPath.')
     ..addFlag(_inPlaceFlagName,
-        abbr: 'w',
-        defaultsTo: false,
-        negatable: false,
-        help: 'Write updates to files in-place.')
+        abbr: 'w', negatable: false, help: 'Write updates to files in-place.')
     ..addFlag(_escapeNgInterpolationFlagName,
         defaultsTo: true,
         help: 'Escape Angular interpolation syntax {{...}} as {!{...}!}.')
@@ -73,37 +69,48 @@ class UpdaterCLI {
     )
     ..addOption(
       _replaceName,
-      help: 'REPLACE-EXPRESSIONs. Global replace argument. '
+      help: 'REPLACE-EXPRESSIONS. Global replace argument. '
           'See README for syntax.',
     )
     ..addFlag(_yamlFlagName,
         negatable: false, help: 'Read excerpts from *.excerpt.yaml files.');
 
-  bool escapeNgInterpolation;
-  List<String> excludePathRegExpStrings;
-  List<RegExp> excludePathRegExp;
-  bool excerptsYaml;
-  bool failOnRefresh;
-  String fragmentDirPath, replaceExpr, srcDirPath;
-  @nullable
-  String plasterTemplate;
-  bool inPlaceFlag;
-  int indentation;
-  List<String> pathsToFileOrDir = [];
-  Level logLevel;
-
-  bool argsAreValid = false;
+  final bool escapeNgInterpolation;
+  final List<String> excludePathRegExpStrings;
+  final List<RegExp> excludePathRegExp;
+  final bool excerptsYaml;
+  final bool failOnRefresh;
+  final String fragmentDirPath;
+  final String replaceExpr;
+  final String srcDirPath;
+  final String? plasterTemplate;
+  final bool inPlaceFlag;
+  final int indentation;
+  final List<String> pathsToFileOrDir;
+  final Level? logLevel;
 
   int numErrors = 0;
   int numFiles = 0;
   int numSrcDirectives = 0;
   int numUpdatedFrag = 0;
 
-  void setArgs(List<String> argsAsStrings) {
-    ArgResults args;
+  UpdaterCLI._(
+      this.escapeNgInterpolation,
+      this.excludePathRegExpStrings,
+      this.excludePathRegExp,
+      this.excerptsYaml,
+      this.failOnRefresh,
+      this.fragmentDirPath,
+      this.replaceExpr,
+      this.srcDirPath,
+      this.plasterTemplate,
+      this.inPlaceFlag,
+      this.indentation,
+      this.pathsToFileOrDir,
+      this.logLevel);
 
-    bool flag(String name) => (args[name] ?? false) as bool;
-    String str(String name) => (args[name] ?? '') as String;
+  factory UpdaterCLI.fromArgs(List<String> argsAsStrings) {
+    final ArgResults args;
 
     try {
       args = _parser.parse(argsAsStrings);
@@ -111,9 +118,14 @@ class UpdaterCLI {
       print('${e.message}\n');
       _printUsageAndExit(_parser, exitCode: 64);
     }
-    pathsToFileOrDir = args.rest;
+
+    bool flag(String name) => args[name] as bool? ?? false;
+
+    final pathsToFileOrDir = args.rest;
 
     if (flag('help')) _printHelpAndExit(_parser);
+
+    String str(String name) => args[name] as String? ?? '';
 
     var i = 0;
     if (args[_indentFlagName] != null) {
@@ -124,43 +136,55 @@ class UpdaterCLI {
             msg: '$_indentFlagName: invalid value  "${args[_indentFlagName]}"');
       }
     }
-    indentation = i;
+    final indentation = i;
 
-    if (flag(_logFineFlagName)) logLevel = Level.FINE;
+    final logLevel = flag(_logFineFlagName) ? Level.FINE : null;
 
     if (pathsToFileOrDir.isEmpty) {
       _printUsageAndExit(_parser, msg: 'Expecting one or more path arguments');
     }
-    escapeNgInterpolation = flag(_escapeNgInterpolationFlagName);
-    excludePathRegExpStrings = args[_excludeFlagName] as List<String>;
-    excerptsYaml = flag(_yamlFlagName);
-    failOnRefresh = flag(_failOnRefresh);
-    fragmentDirPath = str(_fragmentDirPathFlagName);
-    inPlaceFlag = flag(_inPlaceFlagName);
-    plasterTemplate = args[_plasterFlagName] == null
+
+    final escapeNgInterpolation = flag(_escapeNgInterpolationFlagName);
+    final excludePathRegExpStrings = args[_excludeFlagName] as List<String>;
+    final excerptsYaml = flag(_yamlFlagName);
+    final failOnRefresh = flag(_failOnRefresh);
+    final fragmentDirPath = str(_fragmentDirPathFlagName);
+    final inPlaceFlag = flag(_inPlaceFlagName);
+    final plasterTemplate = args[_plasterFlagName] == null
         ? null
         : args[_plasterFlagName] as String;
-    replaceExpr = str(_replaceName);
-    srcDirPath = str(_srcDirPathFlagName);
+    final replaceExpr = str(_replaceName);
+    final srcDirPath = str(_srcDirPathFlagName);
 
-    excludePathRegExp = [
+    final excludePathRegExp = [
       _dotPathRe,
-      ...excludePathRegExpStrings.map((p) => RegExp(p))
+      ...excludePathRegExpStrings.map(RegExp.new)
     ];
-    argsAreValid = true;
+
+    return UpdaterCLI._(
+        escapeNgInterpolation,
+        excludePathRegExpStrings,
+        excludePathRegExp,
+        excerptsYaml,
+        failOnRefresh,
+        fragmentDirPath,
+        replaceExpr,
+        srcDirPath,
+        plasterTemplate,
+        inPlaceFlag,
+        indentation,
+        pathsToFileOrDir,
+        logLevel);
   }
 
   /// Process files/directories given as CLI arguments.
-  Future<void> processArgs() async {
-    if (!argsAreValid) {
-      throw Exception('Cannot proceed without valid arguments');
-    }
+  Future<void> process() async {
     for (final entityPath in pathsToFileOrDir) {
       await _processEntity(entityPath, warnAboutNonDartFile: true);
     }
   }
 
-  Future _processEntity(String path,
+  Future<void> _processEntity(String path,
       {bool warnAboutNonDartFile = false}) async {
     final type = await FileSystemEntity.type(path);
     switch (type) {
@@ -178,12 +202,12 @@ class UpdaterCLI {
 
   /// Process (recursively) the entities in the directory [dirPath], ignoring
   /// non-Dart and non-directory entities.
-  Future _processDirectory(String dirPath) async {
+  Future<void> _processDirectory(String dirPath) async {
     log.fine('_processDirectory: $dirPath');
     if (_exclude(dirPath)) return;
     final dir = Directory(dirPath);
-    final entityList = dir.list(); // recursive: true, followLinks: false
-    await for (FileSystemEntity fse in entityList) {
+    final fileEntityList = dir.list(); // recursive: true, followLinks: false
+    await for (final fse in fileEntityList) {
       final path = fse.path;
       final exclude =
           _exclude(path) || fse is File && !_validExt.hasMatch(path);
@@ -193,7 +217,7 @@ class UpdaterCLI {
     }
   }
 
-  Future _processFile(String path) async {
+  Future<void> _processFile(String path) async {
     try {
       await _updateFile(path);
       numFiles++;
@@ -207,7 +231,7 @@ class UpdaterCLI {
 
   bool _exclude(String path) => excludePathRegExp.any((e) => path.contains(e));
 
-  Future _updateFile(String filePath) async {
+  Future<void> _updateFile(String filePath) async {
     final updater = Updater(
       fragmentDirPath,
       srcDirPath,
@@ -230,18 +254,18 @@ class UpdaterCLI {
       await File(filePath).writeAsString(result);
     }
   }
+}
 
-  void _printHelpAndExit(ArgParser parser) {
-    print('Use $_commandName to update code fragments within markdown '
-        'code blocks preceded with <?code-excerpt?> directives. '
-        '(See the tool\'s GitHub repo README for details.)\n');
-    _printUsageAndExit(parser);
-  }
+Never _printHelpAndExit(ArgParser parser) {
+  print('Use $_commandName to update code fragments within markdown '
+      'code blocks preceded with <?code-excerpt?> directives. '
+      '(See the tool\'s GitHub repo README for details.)\n');
+  _printUsageAndExit(parser);
+}
 
-  void _printUsageAndExit(ArgParser parser, {String msg, int exitCode = 1}) {
-    if (msg != null) print('\n$msg\n');
-    print('Usage: $_commandName [OPTIONS] file_or_directory...\n');
-    print(parser.usage);
-    exit(exitCode);
-  }
+Never _printUsageAndExit(ArgParser parser, {String? msg, int exitCode = 1}) {
+  if (msg != null) print('\n$msg\n');
+  print('Usage: $_commandName [OPTIONS] file_or_directory...\n');
+  print(parser.usage);
+  exit(exitCode);
 }

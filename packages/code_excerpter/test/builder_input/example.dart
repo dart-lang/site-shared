@@ -6,7 +6,7 @@ import 'dart:async';
 Future<void> main() async {
   // #enddocregion main-stub
   print('Compute π using the Monte Carlo method.');
-  await for (var estimate in computePi().take(500)) {
+  await for (final estimate in computePi().take(500)) {
     print('π ≅ $estimate');
   }
   // #docregion main-stub

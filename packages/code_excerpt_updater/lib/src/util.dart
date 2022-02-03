@@ -2,10 +2,11 @@ import 'dart:math';
 
 import 'constants.dart';
 
-// ignore_for_file: type_annotate_public_apis
-
 /// String to int conversion
-int toInt(String s, {int radix = 10, int errorValue}) {
+int? toInt(String? s, {int radix = 10, int? errorValue}) {
+  if (s == null) {
+    return errorValue;
+  }
   try {
     return int.parse(s, radix: radix);
   } on FormatException {
@@ -19,13 +20,18 @@ final _blankLineRegEx = RegExp(r'^\s*$');
 final _leadingWhitespaceRegEx = RegExp(r'^[ \t]*');
 
 Iterable<String> trimMinLeadingSpace(Iterable<String> lines) {
-  final nonblankLines = lines.where((s) => !_blankLineRegEx.hasMatch(s));
+  final nonBlankLines = lines.where((s) => !_blankLineRegEx.hasMatch(s));
+
   // Length of leading spaces to be trimmed
-  final lengths = nonblankLines.map((s) {
-    final match = _leadingWhitespaceRegEx.firstMatch(s);
-    return match == null ? 0 : match[0].length;
+  final lengths = nonBlankLines.map((s) {
+    final matchLength = _leadingWhitespaceRegEx.firstMatch(s)?[0]?.length;
+    return matchLength ?? 0;
   });
-  if (lengths.isEmpty) return lines;
+
+  if (lengths.isEmpty) {
+    return lines;
+  }
+
   final len = lengths.reduce(min);
   return len == 0
       ? lines
@@ -49,13 +55,12 @@ String encodeSlashChar(String s) => s
     // Recover `\` characters.
     .replaceAll(zeroChar, backslash);
 
-String _hexToChar(String hexDigits, {String errorValue}) {
+String _hexToChar(String? hexDigits, {required String errorValue}) {
   final charCode = toInt(hexDigits, radix: 16);
   return charCode == null ? errorValue : String.fromCharCode(charCode);
 }
 
-//
-String _slashCharToChar(String char) {
+String _slashCharToChar(String? char) {
   switch (char) {
     case 'n':
       return '\n';

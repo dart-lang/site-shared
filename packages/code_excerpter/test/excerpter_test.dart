@@ -17,7 +17,7 @@ final emptyLines = List.unmodifiable([]);
 
 final List<LogRecord> logs = [];
 
-void _expectNoLogs() => expect(logs, []);
+void _expectNoLogs() => expect(logs, <LogRecord>[]);
 
 void main() {
   setUpAll(() {
@@ -52,7 +52,7 @@ void main() {
       test(testName, () {
         final excerpter = Excerpter(uri, content);
         excerpter.weave();
-        expect(excerpter.excerpts, {});
+        expect(excerpter.excerpts, <String, List<String>>{});
         _expectNoLogs();
       });
     }
@@ -117,7 +117,7 @@ void main() {
   });
 
   group('region not closed:', () {
-    ['', '\n'].forEach((eol) {
+    for (final eol in const ['', '\n']) {
       group('empty region:', () {
         test('default region', () {
           final excerpter = Excerpter(uri, '#docregion$eol');
@@ -140,7 +140,7 @@ void main() {
             {defaultRegionKey: expectedLines, 'b': expectedLines});
         _expectNoLogs();
       });
-    });
+    }
   });
 
   group('problems:', problemCases);
@@ -153,7 +153,7 @@ void problemCases() {
     excerpter.weave();
     expect(logs.length, 1);
     expect(logs[0].message, contains('empty region at $uri:2'));
-    expect(excerpter.excerpts, {defaultRegionKey: []});
+    expect(excerpter.excerpts, {defaultRegionKey: <String>[]});
     logs.clear();
   });
 
@@ -215,7 +215,7 @@ void problemCases() {
       expect(
           logs[0].message, contains('repeated start for region "" at $uri:2'));
       expect(excerpter.excerpts, {
-        defaultRegionKey: [],
+        defaultRegionKey: <String>[],
       });
       logs.clear();
     });
@@ -227,8 +227,8 @@ void problemCases() {
       expect(
           logs[0].message, contains('repeated start for region "a" at $uri:2'));
       expect(excerpter.excerpts, {
-        defaultRegionKey: [],
-        'a': [],
+        defaultRegionKey: <String>[],
+        'a': <String>[],
       });
       logs.clear();
     });
@@ -242,8 +242,8 @@ void problemCases() {
       expect(logs[0].message,
           contains('unquoted default region name is deprecated at $uri:1'));
       expect(excerpter.excerpts, {
-        defaultRegionKey: [],
-        'a': [],
+        defaultRegionKey: <String>[],
+        'a': <String>[],
       });
       logs.clear();
     });
@@ -254,8 +254,8 @@ void problemCases() {
       expect(logs.length, 1);
       expect(logs[0].message, contains('repeated argument "a" at $uri:1'));
       expect(excerpter.excerpts, {
-        defaultRegionKey: [],
-        'a': [],
+        defaultRegionKey: <String>[],
+        'a': <String>[],
       });
       logs.clear();
     });

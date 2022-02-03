@@ -15,7 +15,7 @@ class ArgProcessor {
     var i = 1;
     info.linePrefix = procInstrMatch[i++] ?? '';
     // The instruction is the first line in a markdown list.
-    for (var c in ['-', '*']) {
+    for (final c in const ['-', '*']) {
       if (!info.linePrefix.contains(c)) continue;
       info.linePrefix = info.linePrefix.replaceFirst(c, ' ');
       break; // It can't contain both characters
@@ -28,13 +28,13 @@ class ArgProcessor {
     return info;
   }
 
-  RegExp supportedArgs = RegExp(
+  final RegExp supportedArgs = RegExp(
     r'^(class|diff-with|diff-u|from|indent-by|path-base|plaster|region|replace|'
     r'remove|retain|skip|take|title|to)$',
   );
-  RegExp argRegExp = RegExp(r'^([-\w]+)\s*(=\s*"(.*?)"\s*|\b)\s*');
+  final RegExp argRegExp = RegExp(r'^([-\w]+)\s*(=\s*"(.*?)"\s*|\b)\s*');
 
-  void _extractAndNormalizeNamedArgs(InstrInfo info, String argsAsString) {
+  void _extractAndNormalizeNamedArgs(InstrInfo info, String? argsAsString) {
     if (argsAsString == null) return;
     var restOfArgs = argsAsString.trim();
     log.fine('>> __extractAndNormalizeNamedArgs: [$restOfArgs]');
@@ -45,13 +45,13 @@ class ArgProcessor {
             'instruction argument parsing failure at/around: $restOfArgs');
         break;
       }
-      final argName = match[1];
+      final argName = match[1] ?? '';
       final argValue = match[3];
       info.args[argName] = argValue;
       log.finer(
         '  >> arg: $argName = ${argValue == null ? argValue : '"$argValue"'}',
       );
-      restOfArgs = restOfArgs.substring(match[0].length);
+      restOfArgs = restOfArgs.substring(match[0]?.length ?? 0);
     }
     _processPathAndRegionArgs(info);
     _expandDiffPathBraces(info);
@@ -68,8 +68,12 @@ class ArgProcessor {
           'argument; choose one or the other.';
       _reporter.error(msg);
     }
-    info.path = match[1] + match[2] + match[4];
-    info.args['diff-with'] = match[1] + match[3] + match[4];
+    final groupOne = match[1] ?? '';
+    final groupTwo = match[2] ?? '';
+    final groupThree = match[3] ?? '';
+    final groupFour = match[4] ?? '';
+    info.path = groupOne + groupTwo + groupFour;
+    info.args['diff-with'] = groupOne + groupThree + groupFour;
   }
 
   final RegExp regionInPath = RegExp(r'\s*\((.+)\)\s*$');
@@ -89,15 +93,15 @@ class ArgProcessor {
     log.finer('>>> path="${info.path}", region="${info.region}"');
   }
 
-  void _validateArgs(Map<String, String> args) {
+  void _validateArgs(Map<String, String?> args) {
     _isNullOr(args['skip'], _isInt);
     _isNullOr(args['take'], _isInt);
   }
 
-  final isNumericRegExp = RegExp(r'^[-+]?\d+$');
+  final RegExp isNumericRegExp = RegExp(r'^[-+]?\d+$');
 
   bool _isInt(String value) => isNumericRegExp.hasMatch(value);
 
-  bool _isNullOr(String value, Predicate<String> test) =>
+  bool _isNullOr(String? value, Predicate<String> test) =>
       value == null || test(value);
 }
