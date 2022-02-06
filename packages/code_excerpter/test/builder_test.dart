@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:build/build.dart';
 import 'package:code_excerpter/builder.dart';
 import 'package:test/test.dart';
 import 'package:yaml/yaml.dart';
@@ -16,5 +17,9 @@ void main() {
     final buildExtensions = codeExcerpter['build_extensions'] as Map;
     expect(buildExtensions, isNotNull);
     expect(buildExtensions, CodeExcerptBuilder().buildExtensions);
+  });
+
+  test('top-level builder factory function returns a CodeExcerptBuilder', () {
+    expect(builder(BuilderOptions.empty), isA<CodeExcerptBuilder>());
   });
 }
