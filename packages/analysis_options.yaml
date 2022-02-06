@@ -2,8 +2,7 @@ analyzer:
   language:
     strict-inference: true
     strict-raw-types: true
-  strong-mode:
-    implicit-casts: false
+    strict-casts: true
   errors:
     unused_element: error
     unused_import: error
