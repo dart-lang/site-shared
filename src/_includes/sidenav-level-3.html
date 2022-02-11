@@ -20,7 +20,9 @@
     >{{entry3.title}}
     {%- if entry3.permalink == nil %} (TBC)
     {%- elsif entry3.permalink contains '://' -%}
-      <i class="fas fa-external-link-alt"></i>
+      <span class="material-icons md-24">
+        open_in_new
+      </span>
     {%- endif -%}
     </a>
   </li>
