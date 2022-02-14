@@ -7,6 +7,8 @@ import 'src/util/line.dart';
 
 const excerptLineLeftBorderChar = '|';
 
+Builder builder(BuilderOptions options) => CodeExcerptBuilder(options);
+
 class CodeExcerptBuilder implements Builder {
   static const outputExtension = '.excerpt.yaml';
 
