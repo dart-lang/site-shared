@@ -97,7 +97,7 @@ JavaScript can be similarly imported:
 [jekyll-toc]: https://github.com/toshimaru/jekyll-toc
 [languages]: https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers
 [Rouge]: https://github.com/rouge-ruby/rouge
-[src/_assets]: https://github.com/dart-lang/site-shared/tree/master/src/_assets
-[src/_plugins]: https://github.com/dart-lang/site-shared/tree/master/src/_plugins
-[src/_assets/css/_code_pre.scss]: https://github.com/dart-lang/site-shared/tree/master/src/_assets/css/_code_pre.scss
-[tool/before-install.sh]: https://github.com/dart-lang/site-shared/tree/master/tool/before-install.sh
+[src/_assets]: https://github.com/dart-lang/site-shared/tree/main/src/_assets
+[src/_plugins]: https://github.com/dart-lang/site-shared/tree/main/src/_plugins
+[src/_assets/css/_code_pre.scss]: https://github.com/dart-lang/site-shared/tree/main/src/_assets/css/_code_pre.scss
+[tool/before-install.sh]: https://github.com/dart-lang/site-shared/tree/main/tool/before-install.sh

@@ -90,7 +90,7 @@ Follow these rules when creating links:
   * `{{site.dart_api}}/dev`
   * `{{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}}/dart-html`
 
-  [site-www `_config.yml` file]: https://github.com/dart-lang/site-www/blob/master/_config.yml
+  [site-www `_config.yml` file]: https://github.com/dart-lang/site-www/blob/main/_config.yml
 
 * Simplify API URLs as much as possible. In particular,
   **do not embed the version** (unless you really want that).
@@ -213,4 +213,4 @@ That's old. Here's the new way to create these boxes:
 You can see the full list of aside/alert types
 in your site repo's `_config.yml` file.
 For example, search for `alert:` in
-[Flutter's `_config.yml` file](https://github.com/flutter/website/blob/master/_config.yml).
+[Flutter's `_config.yml` file](https://github.com/flutter/website/blob/main/_config.yml).

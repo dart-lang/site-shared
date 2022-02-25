@@ -56,6 +56,6 @@ Most repos use a script named `./tool/check-code.sh`.
 
 [CI]: https://www.thoughtworks.com/continuous-integration
 [code excerpts]: code-excerpts.md
-[How do I update the analyzer results files?]: https://github.com/dart-lang/site-www/tree/master/examples#how-do-i-update-the-analyzer-results-files
+[How do I update the analyzer results files?]: https://github.com/dart-lang/site-www/tree/main/examples#how-do-i-update-the-analyzer-results-files
 [site-www]: https://github.com/dart-lang/site-www
 [How do I write a test for my code excerpt?]: code-excerpts.md#how-do-i-write-a-test-for-my-code-excerpt

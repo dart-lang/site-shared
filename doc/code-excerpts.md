@@ -208,11 +208,11 @@ allows the originating source file to contain multiple versions of the same clas
 [code_excerpt_updater]: https://github.com/chalin/code_excerpt_updater
 [code_excerpter]: https://github.com/chalin/code_excerpter
 [examples]: examples.md
-[hello-world example]: https://github.com/dart-lang/site-www/blob/master/examples/misc/test/samples_test.dart
-[layout/lakes/interactive/lib/main.dart]: https://github.com/flutter/website/blob/master/examples/layout/lakes/interactive/lib/main.dart?raw=1
+[hello-world example]: https://github.com/dart-lang/site-www/blob/main/examples/misc/test/samples_test.dart
+[layout/lakes/interactive/lib/main.dart]: https://github.com/flutter/website/blob/main/examples/layout/lakes/interactive/lib/main.dart?raw=1
 [markdown_with_code_excerpts.rb]: src/_plugins/markdown_with_code_excerpts.rb
 [processing instruction]: https://en.wikipedia.org/wiki/Processing_Instruction
 [regular expression]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 [Should I write a test?]: examples#should-i-write-a-test
-[src/_guides/language/effective-dart/design.md]: https://github.com/dart-lang/site-www/blob/master/src/_guides/language/effective-dart/design.md?raw=1
-[src/docs/development/ui/interactive.md]: https://github.com/flutter/website/blob/master/src/docs/development/ui/interactive.md?raw=1
+[src/_guides/language/effective-dart/design.md]: https://github.com/dart-lang/site-www/blob/main/src/_guides/language/effective-dart/design.md?raw=1
+[src/docs/development/ui/interactive.md]: https://github.com/flutter/website/blob/main/src/docs/development/ui/interactive.md?raw=1
