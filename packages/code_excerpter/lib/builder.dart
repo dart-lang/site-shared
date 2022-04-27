@@ -21,7 +21,14 @@ class CodeExcerptBuilder implements Builder {
     final assetId = buildStep.inputId;
     if (assetId.package.startsWith(r'$') || assetId.path.endsWith(r'$')) return;
 
-    final content = await buildStep.readAsString(assetId);
+    final String content;
+    try {
+      content = await buildStep.readAsString(assetId);
+    } on FormatException {
+      log.finest('Skipped ${assetId.path} due to failing to read as string.');
+      return;
+    }
+
     final outputAssetId = assetId.addExtension(outputExtension);
 
     final excerpter = Excerpter(assetId.path, content);
