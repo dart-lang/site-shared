@@ -3,6 +3,7 @@
 ## <?code-pane?> instructions.
 ##
 
+require 'active_support/isolated_execution_state'
 require 'active_support/core_ext/string'
 require 'open3'
 require 'nokogiri'
