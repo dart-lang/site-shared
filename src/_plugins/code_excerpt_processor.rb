@@ -30,7 +30,7 @@ module DartSite
     end
 
     def code_excerpt_regex
-      /^(\s*(<\?(code-\w+)[^>]*>)\n)((\s*)```(\w*)\n(.*?)\n(\s*)```\n?)?/m;
+      /^(\s*(<\?(code-\w+)[^>]*>)\n)((\s*)```((\w*)([^\n]*))\n(.*?)\n(\s*)```\n?)?/m;
     end
 
     def code_excerpt_processing_init
@@ -44,7 +44,8 @@ module DartSite
       args = process_pi_args(pi)
       optional_code_block = match[4]
       indent = match[5]
-      lang = !match[6] || match[6].empty? ? (args['ext'] || 'nocode') : match[6]
+      secondary_class = match[6]
+      lang = !match[7] || match[7].empty? ? (args['ext'] || 'nocode') : match[7]
       attrs = mk_code_example_directive_attr(lang, args['linenums'])
 
       return process_code_pane(pi, attrs, args) if pi_name == 'code-pane'
@@ -58,7 +59,7 @@ module DartSite
         return ''
       end
 
-      code = match[7]
+      code = match[9]
       leading_whitespace = get_indentation_string(optional_code_block)
       code = Util.trim_min_leading_space(code)
 
@@ -75,7 +76,7 @@ module DartSite
       # because we're rendering the code block as HTML.
       escaped_code = CGI.escapeHTML(code)
 
-      code = @code_framer.frame_code(title, classes, attrs, _process_highlight_markers(escaped_code), indent)
+      code = @code_framer.frame_code(title, classes, attrs, _process_highlight_markers(escaped_code), indent, secondary_class)
       code.indent!(leading_whitespace.length) if leading_whitespace
       code
     end

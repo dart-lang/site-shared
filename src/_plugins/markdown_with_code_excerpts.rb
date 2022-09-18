@@ -43,7 +43,7 @@ module Jekyll
     end
 
     class IdentityCodeFramer
-      def frame_code(title, classes, attrs, escaped_code, indent)
+      def frame_code(title, classes, attrs, escaped_code, indent, secondary_class)
         escaped_code
       end
     end
