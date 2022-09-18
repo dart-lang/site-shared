@@ -44,7 +44,7 @@ module DartSite
       args = process_pi_args(pi)
       optional_code_block = match[4]
       indent = match[5]
-      full_class = match[6]
+      secondary_class = match[6]
       lang = !match[7] || match[7].empty? ? (args['ext'] || 'nocode') : match[7]
       attrs = mk_code_example_directive_attr(lang, args['linenums'])
 
@@ -76,7 +76,7 @@ module DartSite
       # because we're rendering the code block as HTML.
       escaped_code = CGI.escapeHTML(code)
 
-      code = @code_framer.frame_code(title, classes, attrs, _process_highlight_markers(escaped_code), indent, full_class)
+      code = @code_framer.frame_code(title, classes, attrs, _process_highlight_markers(escaped_code), indent, secondary_class)
       code.indent!(leading_whitespace.length) if leading_whitespace
       code
     end
