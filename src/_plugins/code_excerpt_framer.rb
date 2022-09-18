@@ -3,14 +3,14 @@ module DartSite
   # Takes the given code excerpt (with the given attributes) and creates
   # some framing HTML: e.g., a div with possible excerpt title in a header.
   class CodeExcerptFramer
-    def frame_code(title, classes, attrs, escaped_code, indent)
-      _unindented_template(title, classes, attrs, escaped_code.gsub('\\','\\\\\\\\'))
+    def frame_code(title, classes, attrs, escaped_code, indent, extra_code_classes)
+      _unindented_template(title, classes, attrs, escaped_code.gsub('\\','\\\\\\\\'), extra_code_classes)
     end
 
     private
     # @param [String] div_classes, in the form "foo bar"
     # @param [Hash] attrs: attributes as attribute-name/value pairs.
-    def _unindented_template(title, _div_classes, attrs, escaped_code)
+    def _unindented_template(title, _div_classes, attrs, escaped_code, extra_code_classes)
       div_classes = ['code-excerpt']
       div_classes << _div_classes if _div_classes
 
@@ -30,8 +30,10 @@ module DartSite
         <div class="#{div_classes * ' '}">
         #{title ? "<div class=\"code-excerpt__header\">#{title}</div>" : '!n'}
         <div class="code-excerpt__code">!n
-          <pre class="#{pre_classes * ' '}">!n
-            escaped_code!n
+          <pre>!n
+            <code class="#{extra_code_classes} #{pre_classes * ' '}">!n
+              escaped_code!n
+            </code>!n
           </pre>!n
         </div>
         </div>
