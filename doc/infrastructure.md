@@ -42,58 +42,16 @@ are kept as in sync to the extent practical / possible.
 
 The main third-party Jekyll plugins we use are the following:
 
-- [jekyll-assets][], for asset management. Assets are the site files under
-  `src/_assets`. For production builds, jekyll-assets does asset file
-  finger-printing. This ensures that resource file caching won't interfere with
-  the release of new asset versions since each asset file is suffixed with a
-  hash determined from the file content.
-- [jekyll-toc][] for autogeneration of page table of contents.
+- [jekyll-toc][] for auto-generation of page table of contents.
 
 We share custom plugins across sites. These can be found under [src/_plugins][].
 To use a shared plugin, create a symlink from the plugin in
 `site-shared/src/_plugins` to the repo's `src/_plugins` folder.
 
-## Assets
-
-You can tell [jekyll-assets][] where to look for shared assets (like CSS and JS
-files) by adding the following lines to a site's Jekyll config file
-(`_config.yml`):
-
-```yaml
-assets:
-  sources:
-    - _shared/_assets
-    - _shared/_assets/css
-```
-
-This assumes that you've setup a single symlink to the `site-shared` submodule
-by running the following commands (from the repo root):
-
-```console
-$ cd src
-$ ln -s ../site-shared/src _shared
-```
-
-Once this is setup, then you can simply "include" `site-shared` assets like CSS
-files (such as [src/_assets/css/_code_pre.scss][]) like this:
-
-```scss
-@import '_code_pre';
-```
-
-JavaScript can be similarly imported:
-
-```js
-//= require vendor/jquery-3.6.0
-```
-
-> **Note:** `//= require` is [jekyll-assets][] include syntax.
-
 [bundler]: https://bundler.io
 [Default configuration]: https://jekyllrb.com/docs/configuration/default/
 [git submodule]: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 [Jekyll]: https://jekyllrb.com
-[jekyll-assets]: https://github.com/envygeeks/jekyll-assets
 [jekyll-toc]: https://github.com/toshimaru/jekyll-toc
 [languages]: https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers
 [Rouge]: https://github.com/rouge-ruby/rouge
