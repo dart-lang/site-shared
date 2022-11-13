@@ -13,7 +13,7 @@ List<String> contentGeneratingNoExcerpts = [
   'docregion', // Without leading #
 ];
 
-final emptyLines = List.unmodifiable([]);
+final emptyLines = List<String>.unmodifiable(<String>[]);
 
 final List<LogRecord> logs = [];
 
