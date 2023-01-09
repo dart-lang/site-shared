@@ -1,17 +1,16 @@
 ## Compressing
 
-Most sites have a gulp task that can be used to compress all images, for example:
+Compress/optimize all images uploaded to the site
+to reduce site load time as well as Jekyll build time.
 
-```terminal
-npx gulp compress-images [--path=some/path]
-```
+TODO: Include tool in site infrastructure for optimizing images
 
 ## Centering
 
 Ways to center an image, while allowing it to be responsive:
 
 ```
-{% asset path/file.ext class="mw-100" alt="..." %}
+![...](path/file.ext){: .mw-100}
 {:.text-center}
 ```
 
@@ -23,7 +22,7 @@ This one adds padding after the image too:
 
 ```html
 <div class="text-center mb-4">
-  {% asset path/file.ext class="mw-100" alt="..." %}
+  ![...](path/file.ext){: .mw-100}
 </div>
 ```
 
@@ -31,12 +30,18 @@ If you know that your image will fit
 within the page as rendered on your smallest target device, 
 then you can use the following:
 
+```markdown
+![...](path/file.ext){:width="160px" .d-block .mx-auto}
 ```
-{% asset path/file.ext class="d-block mx-auto" width="160px" ... %}
-```
+
+## Alt text
+
+If an image is not decorative and not just used as a visual guide,
+specify alt text following the [alt text style guide][]. 
+This goes in the initial `[]` using Markdown syntax.
 
 ```markdown
-![AnimatedBuilder widget tree][]{:.mx-auto.d-block}
-
-[AnimatedBuilder widget tree]: {% asset path/file.ext @path %}
+![AnimatedBuilder widget tree](/path/widget_tree.png)
 ```
+
+[alt text style guide]: https://developers.google.com/style/images#alt-text

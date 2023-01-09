@@ -86,9 +86,9 @@ Follow these rules when creating links:
   the following:
   * `{{site.dartpad}}`
   * `{{site.flutter}}`
-  * `{{site.flutter}}/debugging/#the-dart-analyzer`
-  * `{{site.dart_api}}/dev`
-  * `{{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}}/dart-html`
+  * `{{site.flutter-docs}}/debugging/#the-dart-analyzer`
+  * `{{site.dart-api}}/dev`
+  * `{{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-html`
 
   [site-www `_config.yml` file]: https://github.com/dart-lang/site-www/blob/main/_config.yml
 
@@ -99,21 +99,11 @@ Follow these rules when creating links:
   [https://api.dart.dev/stable/2.6.0/dart-core/Object-class.html](https://api.dart.dev/stable/2.6.0/dart-core/Object-class.html).
   Instead, change the version string to either **stable** or **dev**
   (or use `{{site.data.pkg-vers.SDK.channel}})`:
-  * [{{site.dart_api}}/stable/dart-core/Object-class.html](https://api.dart.dev/stable/dart-core/Object-class.html)
-  * [{{site.dart_api}}/dev/dart-core/Object-class.html](https://api.dart.dev/dev/dart-core/Object-class.html)
-  * [{{site.dart_api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Object-class.html](https://api.dart.dev/stable/dart-core/Object-class.html)
+  * [{{site.dart-api}}/stable/dart-core/Object-class.html](https://api.dart.dev/stable/dart-core/Object-class.html)
+  * [{{site.dart-api}}/dev/dart-core/Object-class.html](https://api.dart.dev/dev/dart-core/Object-class.html)
+  * [{{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Object-class.html](https://api.dart.dev/stable/dart-core/Object-class.html)
 
 Also see: https://github.com/dart-lang/site-www/wiki/Referring-to-API-docs
-
-## Images
-
-Use [zopfli](https://github.com/google/zopfli) to compress PNGs.
-
-`brew install zopfli`
-
-Then run it as described in https://ariya.io/2016/06/using-zopfli-to-optimize-png-images.
-
-[TODO: move this section to a new page that talks more about images, assets, etc.]
 
 ## Code
 
@@ -123,13 +113,15 @@ Keep code valid and foolproof. People love to copy-paste code.
 * If you need to give bad examples,
   make it impossible to mistake them for good ones.
   (See [Effective Dart: Usage](https://dart.dev/guides/language/effective-dart/usage) for a nice scheme.)
-
-[TODO: move this section to a new page that talks about how we auto-include code?]
+* Use [Code excerpts](https://github.com/dart-lang/site-shared/blob/main/doc/code-excerpts.md)
+  to allow analyzing and testing your code
+  to make sure it stays up to date.
 
 
 ## Markdown and HTML
 
-* You can use ordinary Markdown (or HTML, if necessary) on the Dart and Flutter sites. 
+* You can use ordinary Markdown (or HTML, if necessary) 
+  on the Dart and Flutter sites. 
   To test your markdown, 
   you can either build the site or paste the code into a Markdown previewer
   such as https://dart-lang.github.io/markdown/.
@@ -137,10 +129,54 @@ Keep code valid and foolproof. People love to copy-paste code.
 * If you're using HTML and want italics, use `<em>`. <br>
   The i-tag is used for icon fonts, such as font-awesome.
 
+* If you need to include Markdown within HTML,
+  add `markdown="1"` to the HTML element.
+
+For more guidelines to follow when writing Markdown,
+see our [Markdown guidelines][].
+
+[Markdown guidelines]: https://github.com/dart-lang/site-shared/blob/main/doc/markdown.md
+
+## Liquid templates
+
+The sites support the 
+[Liquid template engine][liquid]
+for processing templates.
+This support is responsible for variable support such as ``{{site.dart-api}}``,
+[includes][], custom-built tags, and [filters][].
+
+You can use this support to generate content, include files,
+avoid repetition, and more.
+To learn more, see the [Liquid documentation][liquid].
+
+If you need to use Liquid syntax in text or a code snippet,
+such as when referencing localization resource bundles,
+use the [`raw` and `endraw`][raw] tags
+to disable tag processing:
+
+````markdown
+{% raw %}
+```json
+{count, plural, =0{no wombats} =1{1 wombat} other{{count} wombats}}
+```
+{% endraw %}
+````
+
+While using Liquid templating functionality to generate content,
+also keep in mind [Whitespace control][]
+to allow for proper formatting of the generate HTML.
+
+[liquid]: https://shopify.github.io/liquid/
+[includes]: https://jekyllrb.com/docs/liquid/tags/#includes
+[filters]: https://jekyllrb.com/docs/liquid/filters
+[raw]: https://shopify.github.io/liquid/tags/template/#raw
+[Whitespace control]: https://shopify.github.io/liquid/basics/whitespace/
 
 ## Top matter (YAML)
 
 At the top of every page is a bunch of YAML.
+Every published page **must**
+have at least a **title** and **description**.
 
 Here's a typical example:
 
@@ -168,6 +204,7 @@ js:
 
 The **title:** tag is used for the title displayed on the page 
 and (if no **short-title** tag is present) in the tab.
+Titles should use sentence case.
 
 The **description:** tag replaces the default sharing text
 (what you see on Twitter, Facebook, G+).
@@ -178,7 +215,6 @@ Add an **image:** tag to replace the default sharing image. For example:
 image: 'https://dart.dev/path/to/sharing/image.png'
 ```
 
-[TODO: Check what the path should be. Changes made in [dart-lang/site-webdev#799](https://github.com/dart-lang/site-webdev/pull/799) use a relative path. site-www doesn't have any page-specific images, but [#319](https://github.com/dart-lang/site-www/pull/319) is the corresponding PR.]
 
 Use **toc: false** to remove a TOC from a page that would ordinarily have one.
 Use the value **true** to do the opposite.
@@ -196,9 +232,8 @@ and **category**.
 
 ## Asides
 
-You'll see `<aside>` used on some older pages for colored boxes:
-notes, tips, warnings, and so on.
-That's old. Here's the new way to create these boxes:
+To add notes, tips, warnings, and other asides
+use the following custom-defined Liquid tags:
 
 ```
 {{site.alert.tip}}
@@ -209,6 +244,8 @@ That's old. Here's the new way to create these boxes:
   Important text goes here.
 {{site.alert.end}}
 ```
+
+All text should within an aside should be consistently indented 2 spaces.
 
 You can see the full list of aside/alert types
 in your site repo's `_config.yml` file.
