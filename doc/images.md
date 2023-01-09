@@ -3,7 +3,7 @@
 Compress/optimize all images uploaded to the site
 to reduce site load time as well as Jekyll build time.
 
-TODO: Include tool in site infrastructure for optimizing images
+[TODO: Include tool in site infrastructure for optimizing images]
 
 ## Centering
 
