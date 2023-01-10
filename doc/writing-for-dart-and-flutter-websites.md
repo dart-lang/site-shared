@@ -207,7 +207,7 @@ and (if no **short-title** tag is present) in the tab.
 Titles should use sentence case.
 
 The **description:** tag replaces the default sharing text
-(what you see on Twitter, Facebook, G+).
+(what you see on Twitter, Facebook, and other social media).
 Descriptions can't have line breaks (`<br`).
 
 Add an **image:** tag to replace the default sharing image. For example:
