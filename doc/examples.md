@@ -6,12 +6,12 @@ description: Examples
 # Examples
 
 The [code excerpts][] that appear in the Dart and Flutter sites are extracted
-from the source files contained in the site repo's `examples` folder. The folder
-is organized as a collection of projects.
+from the source files contained in the site repo's `examples` folder. 
+The folder is organized as a collection of projects.
 
 As part of [CI][], project sources are:
 
-- Format-checked (using `dart format` or `flutter format`)
+- Format-checked (using `dart format`)
 - Analyzed (using `dart analyze` or `flutter analyze`)
 - Tested (test files are under `examples/*/test`; run with `dart test`
 or `flutter test`)

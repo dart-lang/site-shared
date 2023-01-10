@@ -205,8 +205,8 @@ allows the originating source file to contain multiple versions of the same clas
 
 
 [\<?code-excerpt?> syntax]: https://github.com/chalin/code_excerpt_updater#3-code-excerpt-syntax
-[code_excerpt_updater]: https://github.com/chalin/code_excerpt_updater
-[code_excerpter]: https://github.com/chalin/code_excerpter
+[code_excerpt_updater]: https://github.com/dart-lang/site-shared/tree/main/packages/code_excerpt_updater
+[code_excerpter]: https://github.com/dart-lang/site-shared/tree/main/packages/code_excerpter
 [examples]: examples.md
 [hello-world example]: https://github.com/dart-lang/site-www/blob/main/examples/misc/test/samples_test.dart
 [layout/lakes/interactive/lib/main.dart]: https://github.com/flutter/website/blob/main/examples/layout/lakes/interactive/lib/main.dart?raw=1

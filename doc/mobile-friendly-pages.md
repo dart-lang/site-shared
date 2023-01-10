@@ -1,4 +1,6 @@
-Ensuring that a page is mobile friendly can take a little more effort than ensuring that images are responsive. Here are some points to consider:
+Ensuring that a page is mobile friendly can take a little more effort
+than ensuring that images are responsive.
+Here are some points to consider:
 
 - Responsive **images**. A lot could be written here, 
   including serving size-appropriate images depending on the client. 
