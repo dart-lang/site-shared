@@ -17,7 +17,9 @@ There are two ways to document code blocks on our sites:
     ````
 
  1. Use the [prettify][] Jekyll block tag, supported via a custom plugin
-    designed for use on our sites:
+    designed for use on our sites. 
+    Only use if you need code highlighting and the snippet
+    is not a code-excerpt.
 
     ```markdown
     {% prettify dart %}
@@ -77,9 +79,9 @@ by **four spaces**:
 Embedding link URLs inside text makes the text difficult to read, for example:
 
 ```markdown
-Now that we have a `TabController` to work with, we can create our
+Now that you have a `TabController` to work with, you can create
 tabs using the [TabBar](https://api.flutter.dev/flutter/material/TabBar-class.html) widget.
-In this example, we'll create a `TabBar` with 3 [Tab](https://api.flutter.dev/flutter/material/Tab-class.html)
+In this example, you'll create a `TabBar` with 3 [Tab](https://api.flutter.dev/flutter/material/Tab-class.html)
 widgets and place it within an [AppBar](https://api.flutter.dev/flutter/material/AppBar-class.html).
 ```
 
@@ -87,9 +89,9 @@ Instead, place link definitions at the end of the current section,
 or if it is used more than once, at the end of the page:
 
 ```markdown
-Now that we have a `TabController` to work with, we can create our
+Now that you have a `TabController` to work with, you can create
 tabs using the [TabBar][] widget.
-In this example, we'll create a `TabBar` with 3 [Tab][]
+In this example, you'll create a `TabBar` with 3 [Tab][]
 widgets and place it within an [AppBar][].
 
 [AppBar]: https://api.flutter.dev/flutter/material/AppBar-class.html
