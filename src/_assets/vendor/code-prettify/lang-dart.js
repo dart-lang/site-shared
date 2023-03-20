@@ -51,13 +51,13 @@ PR['registerLangHandler'](
       [PR['PR_KEYWORD'], /^\b(?:class|enum|extension|interface|mixin)\b/i],
 
       // General keywords.
-      [PR['PR_KEYWORD'], /^\b(?:assert|async|await|break|case|catch|continue|default|do|else|finally|for|if|in|is|new|on|rethrow|return|super|switch|sync|this|throw|try|while|yield)\b/i],
+      [PR['PR_KEYWORD'], /^\b(?:assert|async|await|break|case|catch|continue|default|do|else|finally|for|if|in|is|new|on|rethrow|return|super|switch|sync|this|throw|try|when|while|yield)\b/i],
 
       // Declaration keywords.
-      [PR['PR_KEYWORD'], /^\b(?:abstract|const|covariant|extends|external|factory|final|get|implements|late|native|operator|required|set|static|typedef|var|with)\b/i],
+      [PR['PR_KEYWORD'], /^\b(?:abstract|base|const|covariant|extends|external|factory|final|get|implements|inline|interface|late|native|operator|required|sealed|set|static|typedef|var|with)\b/i],
 
       // Keywords for types.
-      [PR['PR_TYPE'], /^\b(?:bool|double|dynamic|Function|int|Never|Null|num|Object|String|Symbol|Type|void)\b/i],
+      [PR['PR_TYPE'], /^\b(?:bool|double|dynamic|Function|int|Never|Null|num|Object|Record|String|Symbol|Type|void)\b/i],
 
       // Keywords for constants.
       [PR['PR_KEYWORD'], /^\b(?:false|null|true)\b/i],
