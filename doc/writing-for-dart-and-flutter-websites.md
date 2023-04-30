@@ -246,7 +246,7 @@ use the following custom-defined Liquid tags:
 {{site.alert.end}}
 ```
 
-All text should within an aside should be consistently indented 2 spaces.
+All text within an aside should be consistently indented 2 spaces.
 
 You can see the full list of aside/alert types
 in your site repo's `_config.yml` file.
