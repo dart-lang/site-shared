@@ -1,10 +1,11 @@
-/// This class exposes a singleton logger via [log].
+/// Exposes a singleton logger via [log].
 ///
 /// The singleton logger is initialized as follows:
 ///
 /// - If the build system logger is defined, that logger is used.
 /// - Otherwise, create a new Logger named 'package:code_excerpter'
 ///
+library;
 
 import 'dart:async';
 

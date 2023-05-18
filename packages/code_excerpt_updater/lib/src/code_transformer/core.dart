@@ -1,4 +1,6 @@
 /// Collected code transformer and predicate declarations
+library;
+
 import '../constants.dart';
 import '../matcher.dart';
 import '../util.dart';

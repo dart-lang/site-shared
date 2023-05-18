@@ -86,11 +86,9 @@ class Excerpter {
       case Kind.startRegion:
         containsDirectives = true;
         _startRegion(directive);
-        break;
       case Kind.endRegion:
         containsDirectives = true;
         _endRegion(directive);
-        break;
       default:
         throw Exception('Unimplemented directive: $_line');
     }
