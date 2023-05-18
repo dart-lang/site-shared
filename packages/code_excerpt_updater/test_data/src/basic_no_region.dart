@@ -1,4 +1,5 @@
 /// No region arguments in this file.
+library;
 
 /// Test: no code in code block, directive w/o indentation
 /// <?code-excerpt "no_region.html"?>

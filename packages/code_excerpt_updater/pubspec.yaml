@@ -2,14 +2,14 @@ name: code_excerpt_updater
 publish_to: none
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
+  sdk: ^3.0.0
 
 dependencies:
-  args: ^2.3.0
-  logging: ^1.0.2
-  path: ^1.8.1
-  yaml: ^3.1.0
+  args: ^2.4.1
+  logging: ^1.1.1
+  path: ^1.8.3
+  yaml: ^3.1.2
 
 dev_dependencies:
-  mockito: ^5.0.17
-  test: ^1.20.1
+  mockito: ^5.4.0
+  test: ^1.23.0

@@ -34,21 +34,28 @@ linter:
     - camel_case_extensions
     - camel_case_types
     - cancel_subscriptions
+    - collection_methods_unrelated_type
+    - combinators_ordering
     - comment_references
     - constant_identifier_names
     - control_flow_in_finally
     - curly_braces_in_flow_control_structures
+    - dangling_library_doc_comments
     - directives_ordering
+    - discarded_futures
     - empty_catches
     - empty_constructor_bodies
     - empty_statements
     - file_names
     - hash_and_equals
     - implementation_imports
-    - invariant_booleans
+    - implicit_call_tearoffs
+    - implicit_reopen
+    - invalid_case_patterns
     - iterable_contains_unrelated_type
     - join_return_with_assignment
     - lines_longer_than_80_chars
+    - library_annotations
     - library_names
     - library_prefixes
     - list_remove_unrelated_type
@@ -72,7 +79,6 @@ linter:
     - prefer_const_constructors
     - prefer_const_declarations
     - prefer_contains
-    - prefer_equal_for_default_values
     - prefer_expression_function_bodies
     - prefer_final_fields
     - prefer_final_in_for_each
@@ -102,13 +108,18 @@ linter:
     - test_types_in_equals
     - throw_in_finally
     - type_init_formals
+    - type_literal_in_constant_pattern
     - unawaited_futures
     - unnecessary_brace_in_string_interps
+    - unnecessary_breaks
     - unnecessary_const
     - unnecessary_getters_setters
     - unnecessary_lambdas
+    - unnecessary_late
+    - unnecessary_library_directive
     - unnecessary_new
     - unnecessary_null_aware_assignments
+    - unnecessary_null_aware_operator_on_extension_on_nullable
     - unnecessary_null_checks
     - unnecessary_null_in_if_null_operators
     - unnecessary_overrides
@@ -116,6 +127,8 @@ linter:
     - unnecessary_statements
     - unnecessary_string_interpolations
     - unnecessary_this
+    - unnecessary_to_list_in_spreads
+    - unreachable_from_main
     - unrelated_type_equality_checks
     - unsafe_html
     - use_enums
@@ -124,6 +137,7 @@ linter:
     - use_is_even_rather_than_modulo
     - use_rethrow_when_possible
     - use_string_buffers
+    - use_string_in_part_of_directives
     - use_super_parameters
     - valid_regexps
     - void_checks

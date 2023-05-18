@@ -1,4 +1,5 @@
 /// App-wide constants
+library;
 
 const backslash = '\\';
 const eol = '\n';
