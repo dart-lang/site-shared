@@ -83,7 +83,7 @@ module DartSite
 
     def _process_highlight_markers(s)
       # Only replace [! and !] if both exist
-      s.gsub(/\[!(.*?)!\]/, '<span class="highlight">\1</span>')
+      s.gsub(/\[!(.*?)!\]/m, '<span class="highlight">\1</span>')
     end
 
     def trim_min_leading_space(code)
