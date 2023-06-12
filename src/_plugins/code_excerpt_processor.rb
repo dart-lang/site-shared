@@ -30,7 +30,7 @@ module DartSite
     end
 
     def code_excerpt_regex
-      /^(\s*(<\?(code-\w+)[^>]*>)\n)((\s*)```((\w*)([^\n]*))\n(.*?)\n(\s*)```\n?)?/m;
+      /^(\s*(<\?(code-\w+)[^>]*>)\n)?((\s*)```((\w*)([^\n]*))\n(.*?)\n(\s*)```\n?)?/m;
     end
 
     def code_excerpt_processing_init
@@ -40,17 +40,24 @@ module DartSite
     def process_code_excerpt(match)
       # pi_line_with_whitespace = match[1]
       pi = match[2] # full processing instruction <?code-excerpt...?>
+      args = { }
+      # If there is no processing instruction,
+      # it is a normal Markdown codeblock that we should still process.
+      unless pi.nil?
+        args = process_pi_args(pi)
+      end
       pi_name = match[3]
-      args = process_pi_args(pi)
       optional_code_block = match[4]
       indent = match[5]
-      secondary_class = match[6]
+      secondary_classes = match[8]
       lang = !match[7] || match[7].empty? ? (args['ext'] || 'nocode') : match[7]
       attrs = mk_code_example_directive_attr(lang, args['linenums'])
 
       return process_code_pane(pi, attrs, args) if pi_name == 'code-pane'
 
-      if pi_name != 'code-excerpt'
+      # If there is anything processing instruction besides `code-excerpt`
+      # don't continue.
+      if !pi_name.nil? && pi_name != 'code-excerpt'
         log_puts "Warning: unrecognized instruction: #{pi}"
         return match[0]
       elsif !optional_code_block
@@ -63,7 +70,9 @@ module DartSite
       leading_whitespace = get_indentation_string(optional_code_block)
       code = Util.trim_min_leading_space(code)
 
-      if lang == 'diff'
+      # If there is no excerpt processing instruction,
+      # don't run the diffing logic.
+      if pi_name == 'code-excerpt' && lang == 'diff'
         diff = @code_differ.render(args, code)
         diff.indent!(leading_whitespace.length) if leading_whitespace
         return diff
@@ -76,7 +85,7 @@ module DartSite
       # because we're rendering the code block as HTML.
       escaped_code = CGI.escapeHTML(code)
 
-      code = @code_framer.frame_code(title, classes, attrs, _process_highlight_markers(escaped_code), indent, secondary_class)
+      code = @code_framer.frame_code(title, classes, attrs, _process_highlight_markers(escaped_code), indent, secondary_classes)
       code.indent!(leading_whitespace.length) if leading_whitespace
       code
     end
