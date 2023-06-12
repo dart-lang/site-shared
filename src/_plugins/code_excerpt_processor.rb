@@ -55,7 +55,7 @@ module DartSite
 
       return process_code_pane(pi, attrs, args) if pi_name == 'code-pane'
 
-      # If there is anything processing instruction besides `code-excerpt`
+      # If there is a processing instruction besides `code-excerpt`
       # don't continue.
       if !pi_name.nil? && pi_name != 'code-excerpt'
         log_puts "Warning: unrecognized instruction: #{pi}"
