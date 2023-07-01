@@ -26,10 +26,10 @@ import 'logger.dart';
 /// `<?code-excerpt...?>` code fragments updated. Fragments are read from the
 /// [fragmentDirPath] directory, and diff sources from `srcDirPath`.
 class Updater {
-  final RegExp codeBlockStartMarker =
+  static final RegExp codeBlockStartMarker =
       RegExp(r'^\s*(///?)?\s*(```|{%-?\s*\w+\s*(\w*)(\s+.*)?-?%})?');
-  final RegExp codeBlockEndMarker = RegExp(r'^\s*(///?)?\s*(```)?');
-  final RegExp codeBlockEndPrettifyMarker =
+  static final RegExp codeBlockEndMarker = RegExp(r'^\s*(///?)?\s*(```)?');
+  static final RegExp codeBlockEndPrettifyMarker =
       RegExp(r'^\s*(///?)?\s*({%-?\s*end\w+\s*-?%})?');
 
   final String fragmentDirPath;
@@ -148,7 +148,7 @@ class Updater {
   }
 
   void _processSetInstruction(InstrInfo info) {
-    void _checkForMoreThan1ArgErr() {
+    void checkForMoreThan1ArgErr() {
       if (info.args.keys.length > 1) {
         _reporter.error(
           'set instruction should have at most one argument: '
@@ -159,15 +159,15 @@ class Updater {
 
     if (info.args.containsKey('path-base')) {
       _getter.pathBase = info.args['path-base'] ?? '';
-      _checkForMoreThan1ArgErr();
+      checkForMoreThan1ArgErr();
     } else if (info.args.containsKey('replace')) {
       _fileGlobalCodeTransformer = info.args['replace']?.isNotEmpty ?? false
           ? _replace.codeTransformer(info.args['replace'])
           : null;
-      _checkForMoreThan1ArgErr();
+      checkForMoreThan1ArgErr();
     } else if (info.args.containsKey('plaster')) {
       filePlasterTemplate = info.args['plaster'];
-      _checkForMoreThan1ArgErr();
+      checkForMoreThan1ArgErr();
     } else if (info.args.keys.isEmpty ||
         info.args.keys.length == 1 && info.args['class'] != null) {
       // Ignore empty instruction, other tools process them.
@@ -217,13 +217,13 @@ class Updater {
       return <String>[openingCodeBlockLine];
     }
 
-    final _codeBlockEndMarker = firstLineMatch[2]?.startsWith('`') == true
+    final codeBlockEndChecker = firstLineMatch[2]?.startsWith('`') == true
         ? codeBlockEndMarker
         : codeBlockEndPrettifyMarker;
     String? closingCodeBlockLine;
     while (_lines.isNotEmpty) {
       line = _lines[0];
-      final match = _codeBlockEndMarker.firstMatch(line);
+      final match = codeBlockEndChecker.firstMatch(line);
       if (match == null) {
         _reporter.error('unterminated markdown code block '
             'for <?code-excerpt "$infoPath"?>');
@@ -248,12 +248,12 @@ class Updater {
         args['diff-with'] == null ? _getIndentBy(args['indent-by']) : 0;
     final indentation = ' ' * indentBy;
     final prefixedCodeExcerpt = newCodeBlockCode.map((line) {
-      final _line =
+      final prefixedLine =
           '$linePrefix$indentation$line'.replaceFirst(RegExp(r'\s+$'), '');
       return escapeNgInterpolation
-          ? _line.replaceAllMapped(
+          ? prefixedLine.replaceAllMapped(
               RegExp(r'({){|(})}'), (m) => '${m[1] ?? m[2]}!${m[1] ?? m[2]}')
-          : _line;
+          : prefixedLine;
     }).toList(growable: false);
     if (!const ListEquality<String>()
         .equals(currentCodeBlock, prefixedCodeExcerpt)) {

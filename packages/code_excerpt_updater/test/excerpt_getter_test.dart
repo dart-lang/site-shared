@@ -8,14 +8,18 @@ void main() {
   const excerptsYaml = true;
   const fragmentDirPath = '$_testDir/excerpt_yaml';
   const srcDirPath = fragmentDirPath;
-  final _reporter =
+  final issueReporter =
       IssueReporter(IssueContext(() => 'unused/path/to/file', () => 1));
 
   late ExcerptGetter eg;
 
   setUpAll(() {
-    eg = ExcerptGetter(excerptsYaml, fragmentDirPath, srcDirPath, _reporter)
-      ..pathBase = '';
+    eg = ExcerptGetter(
+      excerptsYaml,
+      fragmentDirPath,
+      srcDirPath,
+      issueReporter,
+    )..pathBase = '';
   });
 
   test('sanity', () {

@@ -2,7 +2,7 @@
 // is governed by a MIT-style license that can be found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:io';
+import 'dart:io' as io;
 
 import 'package:code_excerpt_updater/code_excerpt_updater_cli.dart';
 
@@ -14,10 +14,10 @@ Future<void> main(List<String> args) async {
       '${updater.numUpdatedFrag} out of '
       '${updater.numSrcDirectives} fragments needed updating.';
   print(msg);
-  final _exitCode = updater.numErrors > 0
+  final exitCode = updater.numErrors > 0
       ? updater.numErrors
       : updater.failOnRefresh && updater.numUpdatedFrag > 0
           ? updater.numUpdatedFrag
           : 0;
-  exitCode = _exitCode;
+  io.exitCode = exitCode;
 }

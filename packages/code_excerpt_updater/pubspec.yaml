@@ -6,10 +6,13 @@ environment:
 
 dependencies:
   args: ^2.4.1
+  collection: ^1.17.2
   logging: ^1.1.1
   path: ^1.8.3
   yaml: ^3.1.2
 
 dev_dependencies:
+  analysis_defaults:
+    path: ../analysis_defaults
   mockito: ^5.4.0
   test: ^1.23.0
