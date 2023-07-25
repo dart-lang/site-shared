@@ -192,6 +192,8 @@ class UpdaterCLI {
         return _processDirectory(path);
       case FileSystemEntityType.file:
         if (_validExt.hasMatch(path)) return _processFile(path);
+      default:
+        break;
     }
     if (warnAboutNonDartFile) {
       final kind =

@@ -126,7 +126,7 @@ void testsFromDefaultDir() {
   group('No change to doc;', () {
     setUp(() => clearInteractions(_stderr));
 
-    final _testFileNames = [
+    final testFileNames = [
       'basic_diff.dart',
       'basic_no_region.dart',
       'basic_with_args.md',
@@ -143,11 +143,11 @@ void testsFromDefaultDir() {
       'skip-and-take.md',
     ].map((fn) => p.join('no_change', fn));
 
-    _testFileNames.forEach(_stdFileTest);
+    testFileNames.forEach(_stdFileTest);
   });
 
   group('Code updates;', () {
-    final _testFileNames = [
+    final testFileNames = [
       'arg-order.md',
       'basic_no_region.dart',
       'basic_with_empty_region.md',
@@ -162,7 +162,7 @@ void testsFromDefaultDir() {
       'retain.md',
     ];
 
-    _testFileNames.forEach(_stdFileTest);
+    testFileNames.forEach(_stdFileTest);
   });
 
   group('Handle trailing space;', () {
@@ -226,12 +226,12 @@ void testExcerptYaml() {
       );
     });
 
-    final _testFileNames = [
+    final testFileNames = [
       'excerpt_yaml.md',
       'plaster.md',
     ];
 
-    _testFileNames.forEach(_stdFileTest);
+    testFileNames.forEach(_stdFileTest);
   });
 
   group('globally change default plaster', () {
