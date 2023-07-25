@@ -147,7 +147,7 @@ void testsFromDefaultDir() {
   });
 
   group('Code updates;', () {
-    final testFileNames0 = [
+    final testFileNames = [
       'arg-order.md',
       'basic_no_region.dart',
       'basic_with_empty_region.md',
@@ -162,7 +162,7 @@ void testsFromDefaultDir() {
       'retain.md',
     ];
 
-    testFileNames0.forEach(_stdFileTest);
+    testFileNames.forEach(_stdFileTest);
   });
 
   group('Handle trailing space;', () {
