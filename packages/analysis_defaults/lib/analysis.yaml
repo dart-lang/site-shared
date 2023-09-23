@@ -8,7 +8,6 @@ analyzer:
 
 linter:
   rules:
-    - comment_references
     - deprecated_member_use_from_same_package
     - discarded_futures
     - eol_at_end_of_file
@@ -24,4 +23,3 @@ linter:
     - unnecessary_null_aware_operator_on_extension_on_nullable
     - unnecessary_to_list_in_spreads
     - use_enums
-    - use_super_parameters
