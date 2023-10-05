@@ -7,4 +7,4 @@ environment:
 
 # NOTE: Code is not allowed in this package. Do not add dependencies.
 dependencies:
-  dart_flutter_team_lints: ^2.0.0
+  dart_flutter_team_lints: ^2.1.0
