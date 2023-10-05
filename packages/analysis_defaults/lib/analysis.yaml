@@ -13,6 +13,8 @@ linter:
     - eol_at_end_of_file
     - implicit_reopen
     - invalid_case_patterns
+    - no_self_assignments
+    - no_wildcard_variable_uses
     - package_api_docs
     - prefer_final_fields
     - prefer_final_in_for_each

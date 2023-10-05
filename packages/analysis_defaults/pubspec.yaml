@@ -1,9 +1,9 @@
 name: analysis_defaults
-description: Analysis defaults for Dart/Flutter site tools
+description: Analysis defaults for Dart/Flutter site tools.
 publish_to: none
 
 environment:
-  sdk: ^3.0.0
+  sdk: ^3.1.0
 
 # NOTE: Code is not allowed in this package. Do not add dependencies.
 dependencies:

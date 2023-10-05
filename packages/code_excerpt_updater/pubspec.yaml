@@ -2,7 +2,7 @@ name: code_excerpt_updater
 publish_to: none
 
 environment:
-  sdk: ^3.0.1
+  sdk: ^3.1.0
 
 dependencies:
   args: ^2.4.1
