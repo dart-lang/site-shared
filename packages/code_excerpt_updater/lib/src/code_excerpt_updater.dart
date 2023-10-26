@@ -27,8 +27,7 @@ import 'logger.dart';
 /// [fragmentDirPath] directory, and diff sources from `srcDirPath`.
 class Updater {
   static final RegExp codeBlockStartMarker =
-      RegExp(r'^\s*(///?)?\s*(```|{%-?\s*\w+\s*(\w*)(\s+.*)?-?%})?');
-  static final RegExp codeBlockEndMarker = RegExp(r'^\s*(///?)?\s*(```)?');
+      RegExp(r'^\s*(///?)?\s*(```+|{%-?\s*\w+\s*(\w*)(\s+.*)?-?%})?');
   static final RegExp codeBlockEndPrettifyMarker =
       RegExp(r'^\s*(///?)?\s*({%-?\s*end\w+\s*-?%})?');
 
@@ -217,9 +216,18 @@ class Updater {
       return <String>[openingCodeBlockLine];
     }
 
-    final codeBlockEndChecker = firstLineMatch[2]?.startsWith('`') == true
-        ? codeBlockEndMarker
-        : codeBlockEndPrettifyMarker;
+    final RegExp codeBlockEndChecker;
+    final codeBlockStart = firstLineMatch[2];
+    if (codeBlockStart != null && codeBlockStart.startsWith('`')) {
+      // Create a RegExp to check for at least the same amount of backticks
+      // as the opening backticks had.
+      final backtickCount = codeBlockStart.length;
+      codeBlockEndChecker = _createCodeBlockEndMarker(backtickCount);
+    } else {
+      // Fall back to the prettify end marker for now.
+      codeBlockEndChecker = codeBlockEndPrettifyMarker;
+    }
+
     String? closingCodeBlockLine;
     while (_lines.isNotEmpty) {
       line = _lines[0];
@@ -350,4 +358,7 @@ class Updater {
     if (ext.startsWith('.')) ext = ext.substring(1);
     return ext;
   }
+
+  static RegExp _createCodeBlockEndMarker(int backtickCount) =>
+      RegExp(r'^\s*(///?)?\s*' '(`{$backtickCount})?');
 }
