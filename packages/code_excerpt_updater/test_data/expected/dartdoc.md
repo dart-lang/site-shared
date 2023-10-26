@@ -1,6 +1,7 @@
 ## API docs
 
-Code block containing triple-backticks:
+Markdown code block opened and closed with more than 3 backticks
+that contains another Markdown code block declared with just 3.
 
 <?code-excerpt "backticks_in_api_doc.dart"?>
 ````dart
