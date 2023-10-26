@@ -13,15 +13,14 @@ linter:
     - eol_at_end_of_file
     - implicit_reopen
     - invalid_case_patterns
+    - matching_super_parameters
+    - no_literal_bool_comparisons
     - no_self_assignments
     - no_wildcard_variable_uses
     - package_api_docs
     - prefer_final_fields
     - prefer_final_in_for_each
     - prefer_final_locals
-    - secure_pubspec_urls
-    - type_literal_in_constant_pattern
     - unnecessary_breaks
     - unnecessary_null_aware_operator_on_extension_on_nullable
-    - unnecessary_to_list_in_spreads
     - use_enums
