@@ -1,8 +1,9 @@
 *.iml
 .idea
 .vscode
+.DS_Store
 
-.packages
-.pub
+.dart_tool
+build/
 
 build
