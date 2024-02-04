@@ -86,16 +86,16 @@ jobs:
         if: "always() && steps.packages_code_excerpter_pub_upgrade.conclusion == 'success'"
         working-directory: packages/code_excerpter
   job_003:
-    name: "analyzer_and_format; Dart 3.2.0; PKG: packages/excerpter; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
+    name: "analyzer_and_format; Dart 3.2.0; PKGS: packages/excerpter, packages/inject_dartpad; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:3.2.0;packages:packages/excerpter;commands:format-analyze"
+          key: "os:ubuntu-latest;pub-cache-hosted;sdk:3.2.0;packages:packages/excerpter-packages/inject_dartpad;commands:format-analyze"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:3.2.0;packages:packages/excerpter
+            os:ubuntu-latest;pub-cache-hosted;sdk:3.2.0;packages:packages/excerpter-packages/inject_dartpad
             os:ubuntu-latest;pub-cache-hosted;sdk:3.2.0
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -119,17 +119,30 @@ jobs:
         run: dart analyze --fatal-infos .
         if: "always() && steps.packages_excerpter_pub_upgrade.conclusion == 'success'"
         working-directory: packages/excerpter
+      - id: packages_inject_dartpad_pub_upgrade
+        name: packages/inject_dartpad; dart pub upgrade
+        run: dart pub upgrade
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: packages/inject_dartpad
+      - name: "packages/inject_dartpad; dart format --output=none --set-exit-if-changed ."
+        run: "dart format --output=none --set-exit-if-changed ."
+        if: "always() && steps.packages_inject_dartpad_pub_upgrade.conclusion == 'success'"
+        working-directory: packages/inject_dartpad
+      - name: "packages/inject_dartpad; dart analyze --fatal-infos ."
+        run: dart analyze --fatal-infos .
+        if: "always() && steps.packages_inject_dartpad_pub_upgrade.conclusion == 'success'"
+        working-directory: packages/inject_dartpad
   job_004:
-    name: "analyzer_and_format; Dart dev; PKGS: packages/code_excerpt_updater, packages/code_excerpter, packages/excerpter; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
+    name: "analyzer_and_format; Dart dev; PKGS: packages/code_excerpt_updater, packages/code_excerpter, packages/excerpter, packages/inject_dartpad; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter;commands:format-analyze"
+          key: "os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter-packages/inject_dartpad;commands:format-analyze"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter
+            os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter-packages/inject_dartpad
             os:ubuntu-latest;pub-cache-hosted;sdk:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -179,6 +192,19 @@ jobs:
         run: dart analyze --fatal-infos .
         if: "always() && steps.packages_excerpter_pub_upgrade.conclusion == 'success'"
         working-directory: packages/excerpter
+      - id: packages_inject_dartpad_pub_upgrade
+        name: packages/inject_dartpad; dart pub upgrade
+        run: dart pub upgrade
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: packages/inject_dartpad
+      - name: "packages/inject_dartpad; dart format --output=none --set-exit-if-changed ."
+        run: "dart format --output=none --set-exit-if-changed ."
+        if: "always() && steps.packages_inject_dartpad_pub_upgrade.conclusion == 'success'"
+        working-directory: packages/inject_dartpad
+      - name: "packages/inject_dartpad; dart analyze --fatal-infos ."
+        run: dart analyze --fatal-infos .
+        if: "always() && steps.packages_inject_dartpad_pub_upgrade.conclusion == 'success'"
+        working-directory: packages/inject_dartpad
   job_005:
     name: "unit_test; Dart 3.1.0; PKGS: packages/code_excerpt_updater, packages/code_excerpter; `dart test`"
     runs-on: ubuntu-latest
