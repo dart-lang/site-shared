@@ -2,11 +2,11 @@ name: inject_dartpad
 publish_to: none
 
 environment:
-  sdk: ^3.2.0
+  sdk: ^3.3.0
 
 dependencies:
   html_unescape: ^2.0.0
-  web: ^0.4.2
+  web: ^0.5.0
 
 dev_dependencies:
   analysis_defaults:
