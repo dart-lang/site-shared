@@ -7,7 +7,7 @@ import 'dart:js_interop';
 import 'package:html_unescape/html_unescape_small.dart';
 import 'package:web/web.dart';
 
-const String _iframePrefix = 'https://preview.dartpad.dev/';
+const String _iframePrefix = 'https://dartpad.dev/';
 
 void main() {
   // Select all `code` elements with the `dartpad` attribute that are
@@ -62,15 +62,18 @@ void _injectEmbed(HTMLElement codeElement) {
   }
 
   host.appendChild(iframe);
-  parent.replaceWith(host as JSAny);
+  parent.replaceWith(host);
+
+  final contentWindow = iframe.contentWindow;
+  if (contentWindow == null) return;
 
   final content = _htmlUnescape.convert(codeElement.innerHTML.trimRight());
 
   window.addEventListener(
     'message',
     (MessageEvent event) {
-      if ((event.data as _EmbedReadyMessage).type == 'ready') {
-        iframe.contentWindow!.postMessage(
+      if ((event.data as _EmbedReadyMessage?)?.type == 'ready') {
+        contentWindow.postMessage(
           {'sourceCode': content, 'type': 'sourceCode'}.jsify(),
           '*'.toJS,
         );
@@ -79,10 +82,6 @@ void _injectEmbed(HTMLElement codeElement) {
   );
 }
 
-@JS()
-@staticInterop
-final class _EmbedReadyMessage {}
-
-extension on _EmbedReadyMessage {
-  external String get type;
+extension type _EmbedReadyMessage._(JSObject _) {
+  external String? get type;
 }
