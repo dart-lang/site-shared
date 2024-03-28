@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:js_interop';
+import 'dart:js_interop_unsafe';
 
 import 'package:html_unescape/html_unescape_small.dart';
 import 'package:web/web.dart' as web;
@@ -15,40 +16,39 @@ void main() {
   final codeElements =
       web.document.querySelectorAll('pre > code[data-dartpad]:only-child');
 
-  final embeds = <String, (web.Window embed, String code)>{};
-
-  for (var index = 0; index < codeElements.length; index += 1) {
-    final codeElement = codeElements.item(index) as web.HTMLElement;
-    if (_injectEmbed(codeElement) case final injectedEmbed?) {
-      final (:id, :window, :code) = injectedEmbed;
-      embeds[id] = (window, code);
-    }
-  }
-
+  final embeds = <String, String>{};
   web.window.addEventListener(
     'message',
     (web.MessageEvent event) {
-      if (event.data case _EmbedReadyMessage(:final type, :final sender)
+      if (event.data case _EmbedReadyMessage(:final type?, :final sender?)
           when type == 'ready') {
-        if (embeds[sender] case (final web.Window window, final String code)) {
-          window.postMessage(
+        if (embeds[sender] case final code?) {
+          final iframe =
+              web.document.getElementById(sender) as web.HTMLIFrameElement;
+          iframe.safelyPostMessage(
             {'sourceCode': code, 'type': 'sourceCode'}.jsify(),
-            '*'.toJS,
+            '*',
           );
           embeds.remove(sender);
         }
       }
     }.toJS,
   );
+
+  for (var index = 0; index < codeElements.length; index += 1) {
+    final codeElement = codeElements.item(index) as web.HTMLElement;
+    if (_injectEmbed(codeElement) case final injectedEmbed?) {
+      final (:id, :code) = injectedEmbed;
+      embeds[id] = code;
+    }
+  }
 }
 
 final _htmlUnescape = HtmlUnescape();
 
 int _currentEmbed = 0;
 
-({String id, web.Window window, String code})? _injectEmbed(
-  web.HTMLElement codeElement,
-) {
+({String id, String code})? _injectEmbed(web.HTMLElement codeElement) {
   final parent = codeElement.parentElement;
   if (parent == null) return null;
 
@@ -76,6 +76,7 @@ int _currentEmbed = 0;
 
   iframe.classList.add('embedded-dartpad');
   final currentId = 'embedded-dartpad-${_currentEmbed++}';
+  iframe.id = currentId;
   iframe.name = currentId;
 
   if (codeElement.getAttribute('data-width') case final width?
@@ -88,18 +89,29 @@ int _currentEmbed = 0;
     iframe.style.height = height;
   }
 
+  final content = _htmlUnescape.convert(codeElement.innerHTML.trimRight());
+
   host.appendChild(iframe);
   parent.replaceWith(host);
 
   final contentWindow = iframe.contentWindow;
   if (contentWindow == null) return null;
 
-  final content = _htmlUnescape.convert(codeElement.innerHTML.trimRight());
-
-  return (id: currentId, window: contentWindow, code: content);
+  return (id: currentId, code: content);
 }
 
 extension type _EmbedReadyMessage._(JSObject _) {
   external String? get type;
   external String? get sender;
+}
+
+extension on web.HTMLIFrameElement {
+  void safelyPostMessage(
+    JSAny? message,
+    String optionsOrTargetOrigin,
+  ) {
+    (this as JSObject)
+        .getProperty<JSObject>('contentWindow'.toJS)
+        .callMethod('postMessage'.toJS, message, optionsOrTargetOrigin.toJS);
+  }
 }
