@@ -1,9 +1,9 @@
-## Diff tests of code blocks in Jekyll `diff` tags
+## Diff tests of code blocks in Markdown `diff` tags
 
 ## Basic
 
 <?code-excerpt "0-base/basic.dart" diff-with="1-step/basic.dart"?>
-{% diff %}
+```diff
 --- 0-base/basic.dart
 +++ 1-step/basic.dart
 @@ -1,4 +1,4 @@
@@ -12,12 +12,12 @@
  var _scope = 'world';
 
  void main() => print('$_greeting $_scope');
-{% enddiff %}
+```
 
 ### Files with docregion tags
 
 <?code-excerpt "0-base/docregion.dart" diff-with="1-step/docregion.dart"?>
-{% diff %}
+```diff
 --- 0-base/docregion.dart
 +++ 1-step/docregion.dart
 @@ -1,4 +1,4 @@
@@ -32,23 +32,23 @@
  /// hunks
 -void main() => print('$_greeting $_scope');
 +void main() => print('$_greeting $_scope!');
-{% enddiff %}
+```
 
 ### Diff region
 
 <?code-excerpt "0-base/docregion.dart (main)" diff-with="1-step/docregion.dart"?>
-{% diff %}
+```diff
 --- 0-base/docregion.dart (main)
 +++ 1-step/docregion.dart (main)
 @@ -1 +1 @@
 -void main() => print('$_greeting $_scope');
 +void main() => print('$_greeting $_scope!');
-{% enddiff %}
+```
 
 ### Files with docregion tags and diff-u argument
 
 <?code-excerpt "0-base/docregion.dart" diff-with="1-step/docregion.dart" diff-u="4"?>
-{% diff %}
+```diff
 --- 0-base/docregion.dart
 +++ 1-step/docregion.dart
 @@ -1,5 +1,5 @@
@@ -65,7 +65,7 @@
  /// hunks
 -void main() => print('$_greeting $_scope');
 +void main() => print('$_greeting $_scope!');
-{% enddiff %}
+```
 
 ## Bash path-brace syntax for diffs
 
