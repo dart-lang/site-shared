@@ -158,16 +158,6 @@ For more information about the `replace` argument syntax see
 
 # Advanced features
 
-## Embellished code excerpts
-
-In some repos, code excerpts not only serve to associate a code block with its
-originating source, but the processing instruction guides Jekyll plugins at site
-compile time. The rendered code is displayed in an embellished bordered box with
-an (optional) header (usually containing the originating file name and code
-region name), as well as an interactive copy-code button.
-
-Nothing extra needs to be added to the processing instructions (other than selected arguments like `title`, when desired). Generation of the adorning HTML is handled by Jekyll plugins like [markdown_with_code_excerpts.rb][].
-
 ## Code diffs
 
 To make use of code diffs in a given page, add the following to the page's front matter (or archive the equivalent setting using `_config.yml` file defaults):
