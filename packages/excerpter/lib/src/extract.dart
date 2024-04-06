@@ -15,7 +15,7 @@ final class ExcerptExtractor {
   ///
   /// If the value a pile path points to is `null`,
   /// the file couldn't be found or read.
-  final _regionCacheByPath = <String, Map<String, Region>?>{};
+  final Map<String, Map<String, Region>?> _regionCacheByPath = {};
 
   /// Extract the region with the specified [regionName] from
   /// the file located at the specified [path].
@@ -71,8 +71,14 @@ final class ExcerptExtractor {
             'A docregion comment must specify at least one region!',
           );
         }
-        final regionNames = rawRegionNames.split(_argSeparatorPattern);
-        for (final regionName in regionNames) {
+        final regionNames = rawRegionNames.split(',');
+        for (final rawRegionName in regionNames) {
+          final regionName = rawRegionName.trim();
+          if (regionName.isEmpty) {
+            throw const ExtractException(
+              'docregion comment tried to use an empty region name.',
+            );
+          }
           if (isEnd) {
             final removed = currentRegions.remove(regionName);
             if (!removed) {
@@ -203,8 +209,6 @@ final class ExtractException implements Exception {
 }
 
 const String _entireFileRegionName = '';
-
-final RegExp _argSeparatorPattern = RegExp(r'\s*,\s*');
 
 final RegExp _docRegionDirective =
     RegExp(r'^.*?#(?<end>end)?docregion\s(?<regions>[a-zA-Z0-9,_\-\s]+).*?$');

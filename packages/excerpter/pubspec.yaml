@@ -12,7 +12,7 @@ dependencies:
   collection: ^1.18.0
   file: ^7.0.0
   glob: ^2.1.2
-  meta: ^1.11.0
+  meta: ^1.14.0
   path: ^1.9.0
 
 dev_dependencies:

@@ -239,7 +239,7 @@ void _stringToReplaceTransforms() {
     final simpleReplace =
         stringToReplaceTransforms('/Hello/Hi/g;', errorNotExpected);
     expect(simpleReplace.length, equals(1));
-    expect(simpleReplace.first.from, equals(RegExp('Hello')));
+    expect(simpleReplace.first.from, equals(RegExp('Hello', multiLine: true)));
     expect(simpleReplace.first.to, equals('Hi'));
   });
 

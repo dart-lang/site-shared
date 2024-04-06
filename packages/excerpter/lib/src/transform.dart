@@ -143,6 +143,7 @@ final class IndentTransform extends AmountTransform {
 ///
 /// Errors in parsing the [replaceInstructions] are reported to the
 /// calling function through the [reportError] callback.
+@useResult
 Iterable<ReplaceTransform> stringToReplaceTransforms(
   String replaceInstructions,
   Never Function(String) reportError,
@@ -150,7 +151,7 @@ Iterable<ReplaceTransform> stringToReplaceTransforms(
   final parts = replaceInstructions
       .replaceAll(r'\/', _placeholderString)
       .split('/')
-      .map((part) => part.replaceAll(r'\/', _placeholderString))
+      .map((part) => part.replaceAll(_placeholderString, '/'))
       .toList(growable: false);
 
   final length = parts.length;
@@ -177,12 +178,12 @@ Iterable<ReplaceTransform> stringToReplaceTransforms(
 
     if (!encodedReplaceWith.contains(_matchDollarNumRE)) {
       transforms.add(SimpleReplaceTransform(
-        RegExp(originalPattern),
+        RegExp(originalPattern, multiLine: true),
         encodedReplaceWith,
       ));
     } else {
       transforms.add(BackReferenceReplaceTransform(
-        RegExp(originalPattern),
+        RegExp(originalPattern, multiLine: true),
         encodedReplaceWith,
       ));
     }
@@ -196,7 +197,7 @@ Iterable<ReplaceTransform> stringToReplaceTransforms(
 /// and [to] string.
 sealed class ReplaceTransform extends Transform {
   /// The pattern to match text to consider for replacement.
-  final RegExp from;
+  final Pattern from;
 
   /// The string to replace the text matching the [from] pattern with.
   final String to;
@@ -297,10 +298,10 @@ final RegExp _slashLetterRE = RegExp(r'\\([\\nt])');
 String _encodeSlashChar(String s) => s
     .replaceAllMapped(_slashLetterRE, (match) => _slashCharToChar(match[1]))
     .replaceAllMapped(
-        _slashHexCharRE,
-        (match) => _hexToChar(match[1],
-            errorValue:
-                '\\x${match[1]}')) // At this point, escaped `\` is encoded as [zeroChar].
+      _slashHexCharRE,
+      // At this point, escaped `\` is encoded as [_placeholderString].
+      (match) => _hexToChar(match[1], errorValue: '\\x${match[1]}'),
+    )
     .replaceAll(_placeholderString, '\\'); // Recover `\` characters.
 
 String _hexToChar(String? hexDigits, {required String errorValue}) {

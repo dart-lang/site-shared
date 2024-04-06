@@ -185,6 +185,8 @@ final class FileUpdater {
           updatedLines = transform.transform(updatedLines);
         }
 
+        updatedLines = updatedLines.map((line) => line.trimRight());
+
         final updatedExcerpt = updatedLines.join('\n');
         if (!(const IterableEquality<String>()
             .equals(oldLines, updatedLines))) {
@@ -278,7 +280,7 @@ final class InjectionException implements Exception {
 }
 
 final RegExp _instructionPattern = RegExp(
-  r'^\s*<\?code-excerpt (?:"(?<path>\S+)(?:\s\((?<region>[^)]+)\))?\s*")?(?<args>.*?)\?>$',
+  r'^\s*<\?code-excerpt\s+(?:"(?<path>\S+)(?:\s\((?<region>[^)]+)\))?\s*")?(?<args>.*?)\?>$',
 );
 
 final RegExp _instructionStart = RegExp(r'^<\?code-excerpt');
