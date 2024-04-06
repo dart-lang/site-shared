@@ -1,7 +1,7 @@
 ## Compressing
 
 Compress/optimize all images uploaded to the site
-to reduce site load time as well as Jekyll build time.
+to reduce site load time as well as site build time.
 
 [TODO: Include tool in site infrastructure for optimizing images]
 
