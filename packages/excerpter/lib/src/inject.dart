@@ -175,10 +175,9 @@ final class FileUpdater {
         var updatedLines = region.linesWithPlaster(plaster);
 
         final transforms = [
-          ...defaultTransforms,
-          ...wholeFileTransforms,
           ...instruction.transforms,
-          IndentTransform(instructionIndent + (instruction.indentBy ?? 0)),
+          ...wholeFileTransforms,
+          ...defaultTransforms,
         ];
 
         for (final transform in transforms) {
@@ -186,6 +185,30 @@ final class FileUpdater {
         }
 
         updatedLines = updatedLines.map((line) => line.trimRight());
+
+        // Remove all shared whitespace on the left.
+        int? sharedLeftWhitespace;
+        for (final line in updatedLines) {
+          final leftWhitespace = line.length - line.trimLeft().length;
+          // If this line has less left whitespace than preceding lines,
+          // use its count as the shared left whitespace.
+          if (sharedLeftWhitespace == null ||
+              leftWhitespace < sharedLeftWhitespace) {
+            sharedLeftWhitespace = leftWhitespace;
+          }
+        }
+
+        if (sharedLeftWhitespace != null && sharedLeftWhitespace > 0) {
+          updatedLines = [
+            for (final line in updatedLines)
+              line.substring(sharedLeftWhitespace),
+          ];
+        }
+
+        // Add back the indentation from the file and any from the instruction.
+        updatedLines =
+            IndentTransform(instructionIndent + (instruction.indentBy ?? 0))
+                .transform(updatedLines);
 
         final updatedExcerpt = updatedLines.join('\n');
         if (!(const IterableEquality<String>()
