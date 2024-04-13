@@ -1,6 +1,6 @@
-FROM gcr.io/gcp-runtimes/ubuntu_20_0_4
+FROM marketplace.gcr.io/google/debian12
 
-# Install github cli
+# Install the GitHub cli.
 RUN apt update && apt install -y \
     curl \
     gpg
@@ -8,7 +8,7 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | g
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null;
 RUN apt update && apt install -y gh;
 
-# Install node and npm
+# Install the latest LTS of Node, which also includes npm.
 RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 ENV NODE_MAJOR=20
