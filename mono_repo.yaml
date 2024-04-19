@@ -11,5 +11,5 @@ github:
     - cron: "0 0 * * 0"
 
 merge_stages:
-- analyzer_and_format
-- unit_test
+  - analyzer_and_format
+  - unit_test

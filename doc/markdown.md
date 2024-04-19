@@ -6,39 +6,13 @@ meaning you can write using [GitHub Flavored Markdown][].
 
 ## Code blocks
 
-There are two ways to document code blocks on our sites:
+Use standard markdown syntax for fenced code blocks.
 
- 1. Use standard markdown syntax for fenced code like this:
-
-    ````markdown
-    ```dart
-    class C { ... }
-    ```
-    ````
-
- 1. Use the [prettify][] Jekyll block tag, supported via a custom plugin
-    designed for use on our sites. 
-    Only use if you need code highlighting and the snippet
-    is not a code-excerpt.
-
-    ```markdown
-    {% prettify dart %}
-    void main() { ... }
-    {% endprettify %}
-    ```
-
-### **PREFER** using ``` fenced markdown for **code blocks**
-
-Standard markdown syntax is recognized by many IDEs as well as online editors
-and viewers like those available on GitHub. These tools offer convenient syntax
-highlighting and more. Markdown syntax can be used in site pages as well as API
-documentation.
-
-For these reasons, prefer standard markdown code-block syntax over use of the
-Jekyll prettify block tag.
-
-Use the `prettify` block tag if you need support for code highlighting, and your
-site isn't using the [markdown_with_code_excerpts.rb][] plugin.
+````markdown
+```dart
+class C { ... }
+```
+````
 
 ## **AVOID** using HTML when markdown syntax will do
 

@@ -4,7 +4,6 @@ as you develop content for Dart and Flutter websites.
 Contents of this page:
 * [Semantic line breaks (<=80 chars)](#semantic-line-breaks)
 * [URLs](#urls)
-* [Images](#images)
 * [Code](#code)
 * [Markdown and HTML](#markdown-and-html)
 * [Top matter (YAML)](#top-matter-yaml)
@@ -76,10 +75,10 @@ Follow these rules when creating links:
 
 * If you're editing an `index.html` or `index.md` page,
   don't use relative links. Instead, use links that **start** with `/`.
-  Otherwise (because we omit trailing `/`s) links go one directory too high.
+  Otherwise, (because we omit trailing `/`s) links go one directory too high.
   For example, a `/tools` page should link to `/tools/sdk`, not to `sdk`.
 
-* Use jekyll variables if they exist; define new ones if necessary.
+* Use liquid variables if they exist; define new ones if necessary.
   You can find sitewide variables in `/_config.yml`.
   For example, the [site-www `_config.yml` file][] defines variables like
   `dartpad`, `flutter`, and `dart_api`, so site-www has URLs like
@@ -167,8 +166,8 @@ also keep in mind [Whitespace control][]
 to allow for proper formatting of the generate HTML.
 
 [liquid]: https://shopify.github.io/liquid/
-[includes]: https://jekyllrb.com/docs/liquid/tags/#includes
-[filters]: https://jekyllrb.com/docs/liquid/filters
+[includes]: https://liquidjs.com/tags/include.html
+[filters]: https://www.11ty.dev/docs/languages/liquid/#filters
 [raw]: https://shopify.github.io/liquid/tags/template/#raw
 [Whitespace control]: https://shopify.github.io/liquid/basics/whitespace/
 
@@ -234,21 +233,14 @@ and **category**.
 ## Asides
 
 To add notes, tips, warnings, and other asides
-use the following custom-defined Liquid tags:
+use the following custom Markdown syntax.
 
 ```
-{{site.alert.tip}}
-  Tip text goes here.
-{{site.alert.end}}
-...
-{{site.alert.important}}
-  Important text goes here.
-{{site.alert.end}}
+:::tip
+Tip text goes here.
+:::
+
+:::important
+Important text goes here.
+:::
 ```
-
-All text within an aside should be consistently indented 2 spaces.
-
-You can see the full list of aside/alert types
-in your site repo's `_config.yml` file.
-For example, search for `alert:` in
-[Flutter's `_config.yml` file](https://github.com/flutter/website/blob/main/_config.yml).
