@@ -2,7 +2,7 @@ name: code_excerpter
 publish_to: none
 
 environment:
-  sdk: ^3.3.0
+  sdk: ^3.4.0
 
 dependencies:
   build: ^2.4.1
@@ -13,5 +13,5 @@ dependencies:
 dev_dependencies:
   analysis_defaults:
     path: ../analysis_defaults
-  build_runner: ^2.4.8
+  build_runner: ^2.4.9
   test: ^1.25.2
