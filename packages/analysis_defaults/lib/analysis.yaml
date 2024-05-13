@@ -22,6 +22,5 @@ linter:
     - prefer_final_in_for_each
     - prefer_final_locals
     - unnecessary_breaks
-    - unnecessary_library_name
     - unnecessary_null_aware_operator_on_extension_on_nullable
     - use_enums
