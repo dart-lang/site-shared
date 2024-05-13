@@ -5,19 +5,21 @@ const eol = '\n';
 /// A unified-diff hunk consisting of a line-range header followed by the
 /// unified diff line details. For example:
 ///
-///     @@ -1,10 +1,12 @@
-///      import 'package:flutter/material.dart';
-///     +import 'package:english_words/english_words.dart';
+/// ```diff
+/// @@ -1,10 +1,12 @@
+///  import 'package:flutter/material.dart';
+/// +import 'package:english_words/english_words.dart';
 ///
-///      void main() => runApp(MyApp());
+///  void main() => runApp(MyApp());
 ///
-///      class MyApp extends StatelessWidget {
-///        @override
-///        Widget build(BuildContext context) {
-///     +    final wordPair = WordPair.random();
-///          return MaterialApp(
-///            title: 'Welcome to Flutter',
-///            home: Scaffold(
+///  class MyApp extends StatelessWidget {
+///    @override
+///    Widget build(BuildContext context) {
+/// +    final wordPair = WordPair.random();
+///      return MaterialApp(
+///        title: 'Welcome to Flutter',
+///        home: Scaffold(
+///  ```
 class Hunk {
   static final Hunk empty = Hunk('');
 
