@@ -4,6 +4,8 @@
 import 'dart:io';
 
 import 'package:collection/collection.dart';
+import 'package:deviation/deviation.dart';
+import 'package:deviation/unified_diff.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 
@@ -162,6 +164,26 @@ final class FileUpdater {
           reportError(e.error);
         }
 
+        Region? diffWithRegion;
+        String? diffWithRegionPath;
+        if (instruction.diffWith
+            case (path: final diffWithPath, region: final diffWithRegionName)) {
+          final combinedDiffWithPath = path.join(
+            baseSourcePath,
+            wholeFilePathBase,
+            diffWithPath,
+          );
+          try {
+            diffWithRegion = await extractor.extractRegion(
+              combinedDiffWithPath,
+              diffWithRegionName,
+            );
+            diffWithRegionPath = diffWithPath;
+          } on ExtractException catch (e) {
+            reportError(e.error);
+          }
+        }
+
         var plaster = (instruction.plasterTemplate ?? wholeFilePlasterTemplate)
             ?.replaceAll(r'$defaultPlaster', defaultPlasterContent);
 
@@ -173,6 +195,7 @@ final class FileUpdater {
         }
 
         var updatedLines = region.linesWithPlaster(plaster);
+        var updatedDiffLines = diffWithRegion?.linesWithPlaster(plaster);
 
         final transforms = [
           ...instruction.transforms,
@@ -182,9 +205,38 @@ final class FileUpdater {
 
         for (final transform in transforms) {
           updatedLines = transform.transform(updatedLines);
+          if (updatedDiffLines != null) {
+            updatedDiffLines = transform.transform(updatedDiffLines);
+          }
         }
 
         updatedLines = updatedLines.map((line) => line.trimRight());
+        updatedDiffLines = updatedDiffLines?.map((line) => line.trimRight());
+
+        if (updatedDiffLines != null) {
+          final patch = _diffAlgorithm.compute<String>(
+            updatedLines.toList(growable: false),
+            updatedDiffLines.toList(growable: false),
+          );
+
+          final UnifiedDiffHeader diffHeader;
+          if (diffWithRegionPath != null) {
+            diffHeader = UnifiedDiffHeader.custom(
+              sourceLineContent: instruction.targetPath,
+              targetLineContent: diffWithRegionPath,
+            );
+          } else {
+            diffHeader = const UnifiedDiffHeader.simple();
+          }
+
+          final diff = UnifiedDiff.fromPatch(
+            patch,
+            header: diffHeader,
+            context: instruction.diffContext,
+          );
+
+          updatedLines = diff.toString().trimRight().split('\n');
+        }
 
         // Remove all shared whitespace on the left.
         int? sharedLeftWhitespace;
@@ -302,8 +354,14 @@ final class InjectionException implements Exception {
   String toString() => '$filePath:$lineNumber - $error';
 }
 
+const DiffAlgorithm _diffAlgorithm = DiffAlgorithm.myers();
+
 final RegExp _instructionPattern = RegExp(
   r'^\s*<\?code-excerpt\s+(?:"(?<path>\S+)(?:\s\((?<region>[^)]+)\))?\s*")?(?<args>.*?)\?>$',
+);
+
+final RegExp _diffWithPattern = RegExp(
+  r'^(?<path>\S+)(?:\s\((?<region>[^)]+)\))?',
 );
 
 final RegExp _instructionStart = RegExp(r'^<\?code-excerpt');
@@ -394,6 +452,9 @@ final class _InjectInstruction extends _Instruction {
   final String targetPath;
   final String regionName;
 
+  final ({String path, String region})? diffWith;
+  final int diffContext;
+
   final List<Transform> transforms;
 
   final int? indentBy;
@@ -405,6 +466,8 @@ final class _InjectInstruction extends _Instruction {
     required this.transforms,
     this.indentBy,
     this.plasterTemplate,
+    this.diffWith,
+    this.diffContext = 3,
   });
 
   factory _InjectInstruction.fromArgs({
@@ -415,6 +478,8 @@ final class _InjectInstruction extends _Instruction {
   }) {
     String? indentByString;
     String? plasterTemplate;
+    String? diffWithString;
+    String? diffContextString;
 
     final transforms = <Transform>[];
 
@@ -436,6 +501,22 @@ final class _InjectInstruction extends _Instruction {
             );
           }
           plasterTemplate = argValue;
+        case 'diff-with':
+          if (diffWithString != null) {
+            reportError(
+              'The `diff-with` argument can only be '
+              'specified once per instruction.',
+            );
+          }
+          diffWithString = argValue;
+        case 'diff-u':
+          if (diffContextString != null) {
+            reportError(
+              'The `diff-u` argument can only be '
+              'specified once per instruction.',
+            );
+          }
+          diffContextString = argValue;
         case 'skip':
           transforms.add(SkipTransform(int.parse(argValue)));
         case 'take':
@@ -458,17 +539,45 @@ final class _InjectInstruction extends _Instruction {
       }
     }
 
-    final indentBy = indentByString == null ? null : int.parse(indentByString);
-
-    if (indentBy != null && indentBy < 0) {
+    final indentBy =
+        indentByString == null ? null : int.tryParse(indentByString);
+    if (indentBy != null && indentBy < 1) {
       reportError(
         'The `indent-by` argument must be positive.',
+      );
+    }
+
+    final diffContext =
+        diffContextString == null ? null : int.tryParse(diffContextString);
+    if (diffContext != null && diffContext < 1) {
+      reportError(
+        'The `diff-u` argument must be an integer greater than 1.',
+      );
+    }
+
+    ({String path, String region})? diffWith;
+
+    if (diffWithString != null) {
+      final pathAndRegion = _diffWithPattern.firstMatch(diffWithString);
+      if (pathAndRegion == null) {
+        reportError('Invalid syntax for `diff-with` argument.');
+      }
+
+      diffWith = (
+        path: pathAndRegion.namedGroup('path') ?? '',
+        region: pathAndRegion.namedGroup('region') ?? '',
+      );
+    } else if (diffContext != null) {
+      reportError(
+        'The `diff-u` argument must be specified with a `diff-with` argument.',
       );
     }
 
     return _InjectInstruction(
       targetPath: targetPath,
       regionName: regionName,
+      diffWith: diffWith,
+      diffContext: diffContext ?? 3,
       indentBy: indentBy,
       plasterTemplate: plasterTemplate,
       transforms: transforms,
