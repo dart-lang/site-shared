@@ -39,16 +39,16 @@ jobs:
       - name: mono_repo self validate
         run: dart pub global run mono_repo generate --validate
   job_002:
-    name: "analyzer_and_format; Dart 3.4.0; PKGS: packages/code_excerpt_updater, packages/code_excerpter, packages/excerpter, packages/inject_dartpad; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
+    name: "analyzer_and_format; Dart 3.4.0; PKGS: packages/excerpter, packages/inject_dartpad; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:3.4.0;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter-packages/inject_dartpad;commands:format-analyze"
+          key: "os:ubuntu-latest;pub-cache-hosted;sdk:3.4.0;packages:packages/excerpter-packages/inject_dartpad;commands:format-analyze"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:3.4.0;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter-packages/inject_dartpad
+            os:ubuntu-latest;pub-cache-hosted;sdk:3.4.0;packages:packages/excerpter-packages/inject_dartpad
             os:ubuntu-latest;pub-cache-hosted;sdk:3.4.0
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -59,32 +59,6 @@ jobs:
       - id: checkout
         name: Checkout repository
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
-      - id: packages_code_excerpt_updater_pub_upgrade
-        name: packages/code_excerpt_updater; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: packages/code_excerpt_updater
-      - name: "packages/code_excerpt_updater; dart format --output=none --set-exit-if-changed ."
-        run: "dart format --output=none --set-exit-if-changed ."
-        if: "always() && steps.packages_code_excerpt_updater_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpt_updater
-      - name: "packages/code_excerpt_updater; dart analyze --fatal-infos ."
-        run: dart analyze --fatal-infos .
-        if: "always() && steps.packages_code_excerpt_updater_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpt_updater
-      - id: packages_code_excerpter_pub_upgrade
-        name: packages/code_excerpter; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: packages/code_excerpter
-      - name: "packages/code_excerpter; dart format --output=none --set-exit-if-changed ."
-        run: "dart format --output=none --set-exit-if-changed ."
-        if: "always() && steps.packages_code_excerpter_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpter
-      - name: "packages/code_excerpter; dart analyze --fatal-infos ."
-        run: dart analyze --fatal-infos .
-        if: "always() && steps.packages_code_excerpter_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpter
       - id: packages_excerpter_pub_upgrade
         name: packages/excerpter; dart pub upgrade
         run: dart pub upgrade
@@ -112,16 +86,16 @@ jobs:
         if: "always() && steps.packages_inject_dartpad_pub_upgrade.conclusion == 'success'"
         working-directory: packages/inject_dartpad
   job_003:
-    name: "analyzer_and_format; Dart dev; PKGS: packages/code_excerpt_updater, packages/code_excerpter, packages/excerpter, packages/inject_dartpad; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
+    name: "analyzer_and_format; Dart dev; PKGS: packages/excerpter, packages/inject_dartpad; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter-packages/inject_dartpad;commands:format-analyze"
+          key: "os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/excerpter-packages/inject_dartpad;commands:format-analyze"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter-packages/inject_dartpad
+            os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/excerpter-packages/inject_dartpad
             os:ubuntu-latest;pub-cache-hosted;sdk:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -132,32 +106,6 @@ jobs:
       - id: checkout
         name: Checkout repository
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
-      - id: packages_code_excerpt_updater_pub_upgrade
-        name: packages/code_excerpt_updater; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: packages/code_excerpt_updater
-      - name: "packages/code_excerpt_updater; dart format --output=none --set-exit-if-changed ."
-        run: "dart format --output=none --set-exit-if-changed ."
-        if: "always() && steps.packages_code_excerpt_updater_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpt_updater
-      - name: "packages/code_excerpt_updater; dart analyze --fatal-infos ."
-        run: dart analyze --fatal-infos .
-        if: "always() && steps.packages_code_excerpt_updater_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpt_updater
-      - id: packages_code_excerpter_pub_upgrade
-        name: packages/code_excerpter; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: packages/code_excerpter
-      - name: "packages/code_excerpter; dart format --output=none --set-exit-if-changed ."
-        run: "dart format --output=none --set-exit-if-changed ."
-        if: "always() && steps.packages_code_excerpter_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpter
-      - name: "packages/code_excerpter; dart analyze --fatal-infos ."
-        run: dart analyze --fatal-infos .
-        if: "always() && steps.packages_code_excerpter_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpter
       - id: packages_excerpter_pub_upgrade
         name: packages/excerpter; dart pub upgrade
         run: dart pub upgrade
@@ -185,16 +133,16 @@ jobs:
         if: "always() && steps.packages_inject_dartpad_pub_upgrade.conclusion == 'success'"
         working-directory: packages/inject_dartpad
   job_004:
-    name: "unit_test; Dart 3.4.0; PKGS: packages/code_excerpt_updater, packages/code_excerpter, packages/excerpter; `dart test`"
+    name: "unit_test; Dart 3.4.0; PKG: packages/excerpter; `dart test`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:3.4.0;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter;commands:test"
+          key: "os:ubuntu-latest;pub-cache-hosted;sdk:3.4.0;packages:packages/excerpter;commands:test"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:3.4.0;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter
+            os:ubuntu-latest;pub-cache-hosted;sdk:3.4.0;packages:packages/excerpter
             os:ubuntu-latest;pub-cache-hosted;sdk:3.4.0
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -205,24 +153,6 @@ jobs:
       - id: checkout
         name: Checkout repository
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
-      - id: packages_code_excerpt_updater_pub_upgrade
-        name: packages/code_excerpt_updater; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: packages/code_excerpt_updater
-      - name: packages/code_excerpt_updater; dart test
-        run: dart test
-        if: "always() && steps.packages_code_excerpt_updater_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpt_updater
-      - id: packages_code_excerpter_pub_upgrade
-        name: packages/code_excerpter; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: packages/code_excerpter
-      - name: packages/code_excerpter; dart test
-        run: dart test
-        if: "always() && steps.packages_code_excerpter_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpter
       - id: packages_excerpter_pub_upgrade
         name: packages/excerpter; dart pub upgrade
         run: dart pub upgrade
@@ -237,16 +167,16 @@ jobs:
       - job_002
       - job_003
   job_005:
-    name: "unit_test; Dart dev; PKGS: packages/code_excerpt_updater, packages/code_excerpter, packages/excerpter; `dart test`"
+    name: "unit_test; Dart dev; PKG: packages/excerpter; `dart test`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter;commands:test"
+          key: "os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/excerpter;commands:test"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/code_excerpt_updater-packages/code_excerpter-packages/excerpter
+            os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:packages/excerpter
             os:ubuntu-latest;pub-cache-hosted;sdk:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -257,24 +187,6 @@ jobs:
       - id: checkout
         name: Checkout repository
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
-      - id: packages_code_excerpt_updater_pub_upgrade
-        name: packages/code_excerpt_updater; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: packages/code_excerpt_updater
-      - name: packages/code_excerpt_updater; dart test
-        run: dart test
-        if: "always() && steps.packages_code_excerpt_updater_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpt_updater
-      - id: packages_code_excerpter_pub_upgrade
-        name: packages/code_excerpter; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: packages/code_excerpter
-      - name: packages/code_excerpter; dart test
-        run: dart test
-        if: "always() && steps.packages_code_excerpter_pub_upgrade.conclusion == 'success'"
-        working-directory: packages/code_excerpter
       - id: packages_excerpter_pub_upgrade
         name: packages/excerpter; dart pub upgrade
         run: dart pub upgrade
