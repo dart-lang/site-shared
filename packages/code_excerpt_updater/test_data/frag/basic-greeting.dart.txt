@@ -1,2 +1,0 @@
-var greeting = 'hello';
-var scope = 'world';
