@@ -7,3 +7,15 @@
 build/
 
 build
+
+# We want to ignore our StylesPath *except* for our local
+# `vocabularies/Base` directory.
+
+tool/vale/styles/*
+!tool/vale/styles/config/
+
+tool/vale/styles/config/*
+!tool/vale/styles/config/vocabularies/
+
+tool/vale/styles/config/vocabularies/*
+!tool/vale/styles/config/vocabularies/Base
