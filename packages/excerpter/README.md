@@ -138,6 +138,18 @@ they follow the Dart VM's supported syntax,
 and must be wrapped in forward slashes, such as `/<regexp>/`.
 If you're passing a normal string, the forward slashes are unnecessary.
 
+### Diff parameters
+
+**Experimental:** Output might change in future updates.
+
+Inject instructions also support injecting the unified diff between two files.
+This is supported through specifying a target with a `diff-with` argument, which
+accepts a path and an optional region name just like the source file.
+
+You can also specify a `diff-u` argument to change
+the surrounding shared context of the diff.
+By default, a context of 3 lines is used.
+
 ### Replacement syntax
 
 The `replace` argument accepts one or more semicolon separated

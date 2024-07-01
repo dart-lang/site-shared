@@ -50,8 +50,8 @@ void _defaultBehavior() {
     expect(results.errors, hasLength(0));
     expect(results.excerptsNeedingUpdates, equals(0));
     expect(results.excerptsVisited, greaterThan(0));
-    expect(results.totalFilesToVisit, equals(4));
-    expect(results.filesVisited, equals(4));
+    expect(results.totalFilesToVisit, equals(5));
+    expect(results.filesVisited, equals(5));
     expect(results.madeUpdates, isFalse);
   });
 
