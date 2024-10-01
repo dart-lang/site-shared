@@ -33,7 +33,7 @@ jobs:
           sdk: stable
       - id: checkout
         name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
       - name: mono_repo self validate
         run: dart pub global activate mono_repo 6.6.2
       - name: mono_repo self validate
@@ -58,7 +58,7 @@ jobs:
           sdk: "3.5.0"
       - id: checkout
         name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
       - id: packages_excerpter_pub_upgrade
         name: packages/excerpter; dart pub upgrade
         run: dart pub upgrade
@@ -105,7 +105,7 @@ jobs:
           sdk: dev
       - id: checkout
         name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
       - id: packages_excerpter_pub_upgrade
         name: packages/excerpter; dart pub upgrade
         run: dart pub upgrade
@@ -152,7 +152,7 @@ jobs:
           sdk: "3.5.0"
       - id: checkout
         name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
       - id: packages_excerpter_pub_upgrade
         name: packages/excerpter; dart pub upgrade
         run: dart pub upgrade
@@ -186,7 +186,7 @@ jobs:
           sdk: dev
       - id: checkout
         name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
       - id: packages_excerpter_pub_upgrade
         name: packages/excerpter; dart pub upgrade
         run: dart pub upgrade
