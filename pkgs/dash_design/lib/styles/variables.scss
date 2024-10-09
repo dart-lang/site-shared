@@ -1,0 +1,44 @@
+// Copyright (c) 2024, the Dart project authors. Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
+/// CSS custom properties (variables) to be used across all themes.
+@mixin shared {
+  // Shared typography style variables.
+
+  /// Used for body text and smaller UI elements, like labels.
+  --dash-default-font-family: 'Roboto', sans-serif;
+
+  /// Used for headlines, titles, and larger UI elements.
+  --dash-display-font-family: 'Roboto', sans-serif;
+
+  /// Used for monospace text, such as code blocks.
+  --dash-mono-font-family: 'Roboto Mono', 'Source Code Pro', 'Cascadia Mono', 'JetBrains Mono', monospace;
+
+  /// Used for icons, such as the magnifying glass for search.
+  --dash-symbol-font-family: 'Material Symbols', 'Material Symbols Outlined';
+}
+
+/// CSS custom properties (variables) to be used for a light theme.
+@mixin light-theme {
+  /// The default text color, used for body text.
+  --dash-on-background-text-color: #212121;
+}
+
+/// CSS custom properties (variables) to be used for a dark theme.
+@mixin dark-theme {
+  --dash-on-background-text-color: #e0e0e0;
+}
+
+/// Styles that can only be used by Google sites,
+/// such as enabling the Google Sans font families.
+///
+/// These overrides should be included after all other variables are defined.
+@mixin google-overrides() {
+  // Non-Google sites, such as self-hosted API docs,
+  // can't use Google Sans or Google Symbols.
+  --dash-default-font-family: 'Google Sans Text', 'Google Sans', 'Roboto', sans-serif;
+  --dash-display-font-family: 'Google Sans', 'Google Sans Text', 'Roboto', sans-serif;
+  --dash-mono-font-family: 'Google Sans Mono', 'Roboto Mono', 'Source Code Pro', 'Cascadia Mono', 'JetBrains Mono', monospace;
+  --dash-symbol-font-family: 'Google Symbols', 'Material Symbols', 'Material Symbols Outlined';
+}
