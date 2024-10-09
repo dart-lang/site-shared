@@ -1,12 +1,16 @@
+# Dart-related files
+.dart_tool
+build
+doc/api/
+pubspec.lock
+
+# IDE-related files
 *.iml
 .idea
 .vscode
+
+# Platform-related files
 .DS_Store
-
-.dart_tool
-build/
-
-build
 
 # We want to ignore our StylesPath *except* for our local
 # `vocabularies/Base` directory.
