@@ -2,6 +2,11 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+/// styles/variables.scss:
+///
+/// Mixins that can be included to load CSS custom properties (variables)
+/// into any desired scope.
+
 /// CSS custom properties (variables) to be used across all themes.
 @mixin shared {
   // Shared typography style variables.
@@ -34,7 +39,7 @@
 /// such as enabling the Google Sans font families.
 ///
 /// These overrides should be included after all other variables are defined.
-@mixin google-overrides() {
+@mixin google-overrides {
   // Non-Google sites, such as self-hosted API docs,
   // can't use Google Sans or Google Symbols.
   --dash-default-font-family: 'Google Sans Text', 'Google Sans', 'Roboto', sans-serif;
