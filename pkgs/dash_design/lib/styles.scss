@@ -1,0 +1,30 @@
+// Copyright (c) 2024, the Dart project authors. Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
+/// styles.scss:
+///
+/// Incorporates all styles and CSS custom properties (variables)
+/// from the dash_design package.
+///
+/// Variables are added at the `:root` (the `html` element),
+/// and dark mode variables are set if `data-theme=dark`
+/// is added to the `html` element.
+
+@use 'styles/variables';
+
+$google-site: false !default;
+
+:root {
+  @include variables.shared;
+
+  @include variables.light-theme;
+
+  &[data-theme=dark] {
+    @include variables.dark-theme;
+  }
+
+  @if $google-site {
+    @include variables.google-overrides;
+  }
+}
