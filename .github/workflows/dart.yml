@@ -159,16 +159,16 @@ jobs:
         if: "always() && steps.pkgs_inject_dartpad_pub_upgrade.conclusion == 'success'"
         working-directory: pkgs/inject_dartpad
   job_004:
-    name: "unit_test; Dart 3.5.0; PKGS: pkgs/analysis_defaults, pkgs/excerpter; `dart test`"
+    name: "unit_test; Dart 3.5.0; PKG: pkgs/excerpter; `dart test`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:3.5.0;packages:pkgs/analysis_defaults-pkgs/excerpter;commands:test"
+          key: "os:ubuntu-latest;pub-cache-hosted;sdk:3.5.0;packages:pkgs/excerpter;commands:test"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:3.5.0;packages:pkgs/analysis_defaults-pkgs/excerpter
+            os:ubuntu-latest;pub-cache-hosted;sdk:3.5.0;packages:pkgs/excerpter
             os:ubuntu-latest;pub-cache-hosted;sdk:3.5.0
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -179,15 +179,6 @@ jobs:
       - id: checkout
         name: Checkout repository
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
-      - id: pkgs_analysis_defaults_pub_upgrade
-        name: pkgs/analysis_defaults; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: pkgs/analysis_defaults
-      - name: pkgs/analysis_defaults; dart test
-        run: dart test
-        if: "always() && steps.pkgs_analysis_defaults_pub_upgrade.conclusion == 'success'"
-        working-directory: pkgs/analysis_defaults
       - id: pkgs_excerpter_pub_upgrade
         name: pkgs/excerpter; dart pub upgrade
         run: dart pub upgrade
@@ -202,16 +193,16 @@ jobs:
       - job_002
       - job_003
   job_005:
-    name: "unit_test; Dart dev; PKGS: pkgs/analysis_defaults, pkgs/excerpter; `dart test`"
+    name: "unit_test; Dart dev; PKG: pkgs/excerpter; `dart test`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:pkgs/analysis_defaults-pkgs/excerpter;commands:test"
+          key: "os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:pkgs/excerpter;commands:test"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:pkgs/analysis_defaults-pkgs/excerpter
+            os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:pkgs/excerpter
             os:ubuntu-latest;pub-cache-hosted;sdk:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -222,15 +213,6 @@ jobs:
       - id: checkout
         name: Checkout repository
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
-      - id: pkgs_analysis_defaults_pub_upgrade
-        name: pkgs/analysis_defaults; dart pub upgrade
-        run: dart pub upgrade
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: pkgs/analysis_defaults
-      - name: pkgs/analysis_defaults; dart test
-        run: dart test
-        if: "always() && steps.pkgs_analysis_defaults_pub_upgrade.conclusion == 'success'"
-        working-directory: pkgs/analysis_defaults
       - id: pkgs_excerpter_pub_upgrade
         name: pkgs/excerpter; dart pub upgrade
         run: dart pub upgrade
