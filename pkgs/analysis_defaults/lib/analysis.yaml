@@ -17,7 +17,6 @@ linter:
     - missing_code_block_language_in_doc_comment
     - no_literal_bool_comparisons
     - no_self_assignments
-    - package_api_docs
     - prefer_final_fields
     - prefer_final_in_for_each
     - prefer_final_locals
