@@ -7,9 +7,9 @@
 /// Incorporates all styles and CSS custom properties (variables)
 /// from the dash_design package.
 ///
-/// Variables are added at the `:root` (the `html` element),
-/// and dark mode variables are set if `data-theme=dark`
-/// is added to the `html` element.
+/// Most variables are added at the `:root` (the `html` element),
+/// but dark mode variable overrides are added to the `body` element if
+/// the class `dark-theme` is added to it.
 
 @use 'styles/variables';
 
@@ -17,16 +17,17 @@ $google-site: false !default;
 
 :root {
   @include variables.typography;
-
   @include variables.shared-colors;
 
   @include variables.light-theme;
 
-  &[data-theme=dark] {
-    @include variables.dark-theme;
-  }
-
   @if $google-site {
     @include variables.google-overrides;
+  }
+}
+
+body {
+  &.dark-theme {
+    @include variables.dark-theme;
   }
 }
