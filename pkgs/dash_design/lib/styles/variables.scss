@@ -10,16 +10,16 @@
 /// Shared typography CSS variables.
 @mixin typography {
   /// Used for body text and smaller UI elements, like labels.
-  --dash-default-font-family: 'Roboto', sans-serif;
+  --dash-default-fontFamily: 'Roboto', sans-serif;
 
   /// Used for headlines, titles, and larger UI elements.
-  --dash-display-font-family: 'Roboto', sans-serif;
+  --dash-display-fontFamily: 'Roboto', sans-serif;
 
   /// Used for monospace text, such as code blocks.
-  --dash-mono-font-family: 'Roboto Mono', 'Source Code Pro', 'Cascadia Mono', 'JetBrains Mono', monospace;
+  --dash-mono-fontFamily: 'Roboto Mono', 'Source Code Pro', 'Cascadia Mono', 'JetBrains Mono', monospace;
 
   /// Used for icons, such as the magnifying glass for search.
-  --dash-symbol-font-family: 'Material Symbols', 'Material Symbols Outlined';
+  --dash-symbol-fontFamily: 'Material Symbols', 'Material Symbols Outlined';
 }
 
 /// Color-related, theme-agnostic CSS variables.
@@ -30,12 +30,12 @@
 /// Light-theme specific CSS variables.
 @mixin light-theme {
   /// The default text color, used for body text.
-  --dash-on-background-text-color: #212121;
+  --dash-surface-fgColor: #212121;
 }
 
 /// Dark-theme specific CSS variables.
 @mixin dark-theme {
-  --dash-on-background-text-color: #e0e0e0;
+  --dash-surface-fgColor: #e0e0e0;
 }
 
 /// CSS variables that specify values that can only be used by Google sites,
@@ -45,8 +45,8 @@
 @mixin google-overrides {
   // Non-Google sites, such as self-hosted API docs,
   // can't use Google Sans or Google Symbols.
-  --dash-default-font-family: 'Google Sans Text', 'Google Sans', 'Roboto', sans-serif;
-  --dash-display-font-family: 'Google Sans', 'Google Sans Text', 'Roboto', sans-serif;
-  --dash-mono-font-family: 'Google Sans Mono', 'Roboto Mono', 'Source Code Pro', 'Cascadia Mono', 'JetBrains Mono', monospace;
-  --dash-symbol-font-family: 'Google Symbols', 'Material Symbols', 'Material Symbols Outlined';
+  --dash-default-fontFamily: 'Google Sans Text', 'Google Sans', 'Roboto', sans-serif;
+  --dash-display-fontFamily: 'Google Sans', 'Google Sans Text', 'Roboto', sans-serif;
+  --dash-mono-fontFamily: 'Google Sans Mono', 'Roboto Mono', 'Source Code Pro', 'Cascadia Mono', 'JetBrains Mono', monospace;
+  --dash-symbol-fontFamily: 'Google Symbols', 'Material Symbols', 'Material Symbols Outlined';
 }
