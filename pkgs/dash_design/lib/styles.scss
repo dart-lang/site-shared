@@ -16,7 +16,9 @@
 $google-site: false !default;
 
 :root {
-  @include variables.shared;
+  @include variables.typography;
+
+  @include variables.shared-colors;
 
   @include variables.light-theme;
 

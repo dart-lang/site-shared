@@ -7,10 +7,8 @@
 /// Mixins that can be included to load CSS custom properties (variables)
 /// into any desired scope.
 
-/// CSS custom properties (variables) to be used across all themes.
-@mixin shared {
-  // Shared typography style variables.
-
+/// Shared typography CSS variables.
+@mixin typography {
   /// Used for body text and smaller UI elements, like labels.
   --dash-default-font-family: 'Roboto', sans-serif;
 
@@ -24,18 +22,23 @@
   --dash-symbol-font-family: 'Material Symbols', 'Material Symbols Outlined';
 }
 
-/// CSS custom properties (variables) to be used for a light theme.
+/// Color-related, theme-agnostic CSS variables.
+@mixin shared-colors {
+
+}
+
+/// Light-theme specific CSS variables.
 @mixin light-theme {
   /// The default text color, used for body text.
   --dash-on-background-text-color: #212121;
 }
 
-/// CSS custom properties (variables) to be used for a dark theme.
+/// Dark-theme specific CSS variables.
 @mixin dark-theme {
   --dash-on-background-text-color: #e0e0e0;
 }
 
-/// Styles that can only be used by Google sites,
+/// CSS variables that specify values that can only be used by Google sites,
 /// such as enabling the Google Sans font families.
 ///
 /// These overrides should be included after all other variables are defined.
