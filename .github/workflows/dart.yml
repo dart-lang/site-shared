@@ -39,16 +39,16 @@ jobs:
       - name: mono_repo self validate
         run: dart pub global run mono_repo generate --validate
   job_002:
-    name: "analyzer_and_format; Dart 3.5.0; PKGS: pkgs/analysis_defaults, pkgs/excerpter, pkgs/inject_dartpad; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
+    name: "analyzer_and_format; Dart 3.5.0; PKGS: pkgs/analysis_defaults, pkgs/dash_design, pkgs/excerpter, pkgs/inject_dartpad; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:3.5.0;packages:pkgs/analysis_defaults-pkgs/excerpter-pkgs/inject_dartpad;commands:format-analyze"
+          key: "os:ubuntu-latest;pub-cache-hosted;sdk:3.5.0;packages:pkgs/analysis_defaults-pkgs/dash_design-pkgs/excerpter-pkgs/inject_dartpad;commands:format-analyze"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:3.5.0;packages:pkgs/analysis_defaults-pkgs/excerpter-pkgs/inject_dartpad
+            os:ubuntu-latest;pub-cache-hosted;sdk:3.5.0;packages:pkgs/analysis_defaults-pkgs/dash_design-pkgs/excerpter-pkgs/inject_dartpad
             os:ubuntu-latest;pub-cache-hosted;sdk:3.5.0
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -72,6 +72,19 @@ jobs:
         run: dart analyze --fatal-infos .
         if: "always() && steps.pkgs_analysis_defaults_pub_upgrade.conclusion == 'success'"
         working-directory: pkgs/analysis_defaults
+      - id: pkgs_dash_design_pub_upgrade
+        name: pkgs/dash_design; dart pub upgrade
+        run: dart pub upgrade
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: pkgs/dash_design
+      - name: "pkgs/dash_design; dart format --output=none --set-exit-if-changed ."
+        run: "dart format --output=none --set-exit-if-changed ."
+        if: "always() && steps.pkgs_dash_design_pub_upgrade.conclusion == 'success'"
+        working-directory: pkgs/dash_design
+      - name: "pkgs/dash_design; dart analyze --fatal-infos ."
+        run: dart analyze --fatal-infos .
+        if: "always() && steps.pkgs_dash_design_pub_upgrade.conclusion == 'success'"
+        working-directory: pkgs/dash_design
       - id: pkgs_excerpter_pub_upgrade
         name: pkgs/excerpter; dart pub upgrade
         run: dart pub upgrade
@@ -99,16 +112,16 @@ jobs:
         if: "always() && steps.pkgs_inject_dartpad_pub_upgrade.conclusion == 'success'"
         working-directory: pkgs/inject_dartpad
   job_003:
-    name: "analyzer_and_format; Dart dev; PKGS: pkgs/analysis_defaults, pkgs/excerpter, pkgs/inject_dartpad; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
+    name: "analyzer_and_format; Dart dev; PKGS: pkgs/analysis_defaults, pkgs/dash_design, pkgs/excerpter, pkgs/inject_dartpad; `dart format --output=none --set-exit-if-changed .`, `dart analyze --fatal-infos .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:pkgs/analysis_defaults-pkgs/excerpter-pkgs/inject_dartpad;commands:format-analyze"
+          key: "os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:pkgs/analysis_defaults-pkgs/dash_design-pkgs/excerpter-pkgs/inject_dartpad;commands:format-analyze"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:pkgs/analysis_defaults-pkgs/excerpter-pkgs/inject_dartpad
+            os:ubuntu-latest;pub-cache-hosted;sdk:dev;packages:pkgs/analysis_defaults-pkgs/dash_design-pkgs/excerpter-pkgs/inject_dartpad
             os:ubuntu-latest;pub-cache-hosted;sdk:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -132,6 +145,19 @@ jobs:
         run: dart analyze --fatal-infos .
         if: "always() && steps.pkgs_analysis_defaults_pub_upgrade.conclusion == 'success'"
         working-directory: pkgs/analysis_defaults
+      - id: pkgs_dash_design_pub_upgrade
+        name: pkgs/dash_design; dart pub upgrade
+        run: dart pub upgrade
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: pkgs/dash_design
+      - name: "pkgs/dash_design; dart format --output=none --set-exit-if-changed ."
+        run: "dart format --output=none --set-exit-if-changed ."
+        if: "always() && steps.pkgs_dash_design_pub_upgrade.conclusion == 'success'"
+        working-directory: pkgs/dash_design
+      - name: "pkgs/dash_design; dart analyze --fatal-infos ."
+        run: dart analyze --fatal-infos .
+        if: "always() && steps.pkgs_dash_design_pub_upgrade.conclusion == 'success'"
+        working-directory: pkgs/dash_design
       - id: pkgs_excerpter_pub_upgrade
         name: pkgs/excerpter; dart pub upgrade
         run: dart pub upgrade
