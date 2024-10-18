@@ -30,12 +30,12 @@
 /// Light-theme specific CSS variables.
 @mixin light-theme {
   /// The default text color, used for body text.
-  --dash-surface-fgColor: #212121;
+  --dash-surface-fgColor: #4a4a4a;
 }
 
 /// Dark-theme specific CSS variables.
 @mixin dark-theme {
-  --dash-surface-fgColor: #e0e0e0;
+  --dash-surface-fgColor: #dcdcdc;
 }
 
 /// CSS variables that specify values that can only be used by Google sites,
