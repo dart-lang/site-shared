@@ -1,0 +1,15 @@
+name: dash_design
+description: Shared styles for Dart and Flutter websites.
+version: 0.0.1-wip
+publish_to: none
+repository: https://github.com/dart-lang/site-shared/tree/main/pkgs/dash_design
+
+environment:
+  sdk: ^3.5.0
+
+dev_dependencies:
+  analysis_defaults:
+    path: ../analysis_defaults
+  path: ^1.9.0
+  sass: ^1.79.4
+  test: ^1.25.8
