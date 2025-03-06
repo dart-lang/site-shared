@@ -14,10 +14,7 @@ void main() {
 void _patternTransforms() {
   test('retain all', () {
     final all = ['aaa', 'aabb', 'abc', 'aacc'];
-    expect(
-      RetainTransform('a').transform(all),
-      orderedEquals(all),
-    );
+    expect(RetainTransform('a').transform(all), orderedEquals(all));
   });
 
   test('retain some', () {
@@ -36,10 +33,7 @@ void _patternTransforms() {
 
   test('remove all', () {
     final all = ['aaa', 'aabb', 'abc', 'aacc'];
-    expect(
-      RemoveTransform('a').transform(all),
-      orderedEquals([]),
-    );
+    expect(RemoveTransform('a').transform(all), orderedEquals([]));
   });
 
   test('remove some', () {
@@ -51,18 +45,12 @@ void _patternTransforms() {
 
   test('remove none', () {
     final all = ['aaa', 'aabb', 'abc', 'cccc'];
-    expect(
-      RemoveTransform('d').transform(all),
-      orderedEquals(all),
-    );
+    expect(RemoveTransform('d').transform(all), orderedEquals(all));
   });
 
   test('from all', () {
     final all = ['aaa', 'aabb', 'abc', 'aacc'];
-    expect(
-      FromTransform('aaa').transform(all),
-      orderedEquals(all),
-    );
+    expect(FromTransform('aaa').transform(all), orderedEquals(all));
   });
 
   test('from some', () {
@@ -81,10 +69,7 @@ void _patternTransforms() {
 
   test('to all', () {
     final all = ['aaa', 'aabb', 'abc', 'aacc'];
-    expect(
-      ToTransform('aacc').transform(all),
-      orderedEquals(all),
-    );
+    expect(ToTransform('aacc').transform(all), orderedEquals(all));
   });
 
   test('to some', () {
@@ -96,10 +81,7 @@ void _patternTransforms() {
 
   test('to none', () {
     final all = ['aaa', 'aabb', 'abc', 'cccc'];
-    expect(
-      ToTransform('d').transform(all),
-      orderedEquals(all),
-    );
+    expect(ToTransform('d').transform(all), orderedEquals(all));
   });
 }
 
@@ -113,10 +95,7 @@ void _amountTransforms() {
 
   test('skip zero', () {
     final all = ['aaa', 'aabb', 'abc', 'cccc'];
-    expect(
-      SkipTransform(0).transform(all),
-      orderedEquals(all),
-    );
+    expect(SkipTransform(0).transform(all), orderedEquals(all));
   });
 
   test('skip positive', () {
@@ -156,10 +135,7 @@ void _amountTransforms() {
 
   test('take all', () {
     final all = ['aaa', 'aabb', 'abc', 'cccc'];
-    expect(
-      TakeTransform(4).transform(all),
-      orderedEquals(all),
-    );
+    expect(TakeTransform(4).transform(all), orderedEquals(all));
   });
 
   test('indent negative', () {
@@ -168,10 +144,7 @@ void _amountTransforms() {
 
   test('indent zero', () {
     final all = ['a', ' b', '  c'];
-    expect(
-      IndentTransform(0).transform(all),
-      orderedEquals(all),
-    );
+    expect(IndentTransform(0).transform(all), orderedEquals(all));
   });
 
   test('indent positive', () {
@@ -185,32 +158,40 @@ void _amountTransforms() {
 void _replaceTransforms() {
   test('replace simple some', () {
     expect(
-      SimpleReplaceTransform(RegExp('Hello'), 'Halo')
-          .transform(['Hello world!!', 'Bye!']),
+      SimpleReplaceTransform(
+        RegExp('Hello'),
+        'Halo',
+      ).transform(['Hello world!!', 'Bye!']),
       orderedEquals(['Halo world!!', 'Bye!']),
     );
   });
 
   test('replace simple split', () {
     expect(
-      SimpleReplaceTransform(RegExp('Hi\nDash'), 'Bye\nFriends')
-          .transform(['Hi', 'Dash!']),
+      SimpleReplaceTransform(
+        RegExp('Hi\nDash'),
+        'Bye\nFriends',
+      ).transform(['Hi', 'Dash!']),
       orderedEquals(['Bye', 'Friends!']),
     );
   });
 
   test('replace backreferences single capture group', () {
     expect(
-      BackReferenceReplaceTransform(RegExp('(Hello )Dash'), r'$1World')
-          .transform(['Hello Dash']),
+      BackReferenceReplaceTransform(
+        RegExp('(Hello )Dash'),
+        r'$1World',
+      ).transform(['Hello Dash']),
       orderedEquals(['Hello World']),
     );
   });
 
   test('replace backreferences entire captured', () {
     expect(
-      BackReferenceReplaceTransform(RegExp('Hello Dash'), r'[!$&!]')
-          .transform(['Hello Dash, you are very blue.']),
+      BackReferenceReplaceTransform(
+        RegExp('Hello Dash'),
+        r'[!$&!]',
+      ).transform(['Hello Dash, you are very blue.']),
       orderedEquals(['[!Hello Dash!], you are very blue.']),
     );
   });
@@ -226,18 +207,24 @@ void _stringToReplaceTransforms() {
   }
 
   test('empty', () {
-    expect(() => stringToReplaceTransforms('', errorExpected),
-        throwsA(isA<_ExpectedException>()));
+    expect(
+      () => stringToReplaceTransforms('', errorExpected),
+      throwsA(isA<_ExpectedException>()),
+    );
   });
 
   test('missing ending', () {
-    expect(() => stringToReplaceTransforms('/Hello/Halo/', errorExpected),
-        throwsA(isA<_ExpectedException>()));
+    expect(
+      () => stringToReplaceTransforms('/Hello/Halo/', errorExpected),
+      throwsA(isA<_ExpectedException>()),
+    );
   });
 
   test('single replace', () {
-    final simpleReplace =
-        stringToReplaceTransforms('/Hello/Hi/g;', errorNotExpected);
+    final simpleReplace = stringToReplaceTransforms(
+      '/Hello/Hi/g;',
+      errorNotExpected,
+    );
     expect(simpleReplace.length, equals(1));
     expect(simpleReplace.first.from, equals(RegExp('Hello', multiLine: true)));
     expect(simpleReplace.first.to, equals('Hi'));
@@ -245,7 +232,9 @@ void _stringToReplaceTransforms() {
 
   test('multiple replace', () {
     final multipleReplace = stringToReplaceTransforms(
-        '/Hello/Hi/g;/World/Dash/g;', errorNotExpected);
+      '/Hello/Hi/g;/World/Dash/g;',
+      errorNotExpected,
+    );
     expect(multipleReplace.length, equals(2));
   });
 }

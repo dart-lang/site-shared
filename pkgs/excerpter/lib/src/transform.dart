@@ -177,15 +177,19 @@ Iterable<ReplaceTransform> stringToReplaceTransforms(
     final encodedReplaceWith = _encodeSlashChar(replaceWith);
 
     if (!encodedReplaceWith.contains(_matchDollarNumRE)) {
-      transforms.add(SimpleReplaceTransform(
-        RegExp(originalPattern, multiLine: true),
-        encodedReplaceWith,
-      ));
+      transforms.add(
+        SimpleReplaceTransform(
+          RegExp(originalPattern, multiLine: true),
+          encodedReplaceWith,
+        ),
+      );
     } else {
-      transforms.add(BackReferenceReplaceTransform(
-        RegExp(originalPattern, multiLine: true),
-        encodedReplaceWith,
-      ));
+      transforms.add(
+        BackReferenceReplaceTransform(
+          RegExp(originalPattern, multiLine: true),
+          encodedReplaceWith,
+        ),
+      );
     }
   }
 
@@ -243,45 +247,42 @@ final class BackReferenceReplaceTransform extends ReplaceTransform {
         .join('\n')
         .replaceAllMapped(
           from,
-          (match) => to.replaceAllMapped(
-            _matchDollarNumRE,
-            (replaceMatch) {
-              // The following works to match JS `replace` semantics.
-              // $$ becomes $ in a replacement string.
+          (match) => to.replaceAllMapped(_matchDollarNumRE, (replaceMatch) {
+            // The following works to match JS `replace` semantics.
+            // $$ becomes $ in a replacement string.
 
-              final dollarSignCount = replaceMatch[1]!.length;
+            final dollarSignCount = replaceMatch[1]!.length;
 
-              // The escaped dollar sign characters present (if any).
-              final escapedDollarSigns = r'$' * (dollarSignCount ~/ 2);
+            // The escaped dollar sign characters present (if any).
+            final escapedDollarSigns = r'$' * (dollarSignCount ~/ 2);
 
-              // Potentially a reference to a captured group,
-              // otherwise the content after the escaped dollar signs.
-              final potentialGroupReference = replaceMatch[2];
+            // Potentially a reference to a captured group,
+            // otherwise the content after the escaped dollar signs.
+            final potentialGroupReference = replaceMatch[2];
 
-              if (potentialGroupReference == null ||
-                  potentialGroupReference.isEmpty) {
-                return escapedDollarSigns;
-              }
+            if (potentialGroupReference == null ||
+                potentialGroupReference.isEmpty) {
+              return escapedDollarSigns;
+            }
 
-              if (dollarSignCount.isEven) {
-                return '$escapedDollarSigns$potentialGroupReference';
-              }
+            if (dollarSignCount.isEven) {
+              return '$escapedDollarSigns$potentialGroupReference';
+            }
 
-              // $& references the entire matched substring.
-              if (potentialGroupReference == '&') {
-                return '$escapedDollarSigns${match[0]}';
-              }
+            // $& references the entire matched substring.
+            if (potentialGroupReference == '&') {
+              return '$escapedDollarSigns${match[0]}';
+            }
 
-              final groupNumber = int.tryParse(potentialGroupReference);
-              if (groupNumber == null || groupNumber > match.groupCount) {
-                // If there is no corresponding capture group,
-                // just output the reference itself.
-                return '$escapedDollarSigns\$$potentialGroupReference';
-              }
+            final groupNumber = int.tryParse(potentialGroupReference);
+            if (groupNumber == null || groupNumber > match.groupCount) {
+              // If there is no corresponding capture group,
+              // just output the reference itself.
+              return '$escapedDollarSigns\$$potentialGroupReference';
+            }
 
-              return '$escapedDollarSigns${match[groupNumber]}';
-            },
-          ),
+            return '$escapedDollarSigns${match[groupNumber]}';
+          }),
         )
         .split('\n');
   }
@@ -310,10 +311,10 @@ String _hexToChar(String? hexDigits, {required String errorValue}) {
 }
 
 String _slashCharToChar(String? char) => switch (char) {
-      'n' => '\n',
-      't' => '\t',
-      '\\' => _placeholderString,
-      _ => '\\$char'
-    };
+  'n' => '\n',
+  't' => '\t',
+  '\\' => _placeholderString,
+  _ => '\\$char',
+};
 
 final RegExp _endReplacePattern = RegExp(r'^g;?\s*$');
