@@ -56,9 +56,9 @@ final class Updater {
     Iterable<RegExp> excludePaths = const [],
     bool withDefaultExclusions = true,
   }) : excludePaths = [
-          if (withDefaultExclusions) _ignoreHiddenPathsPattern,
-          ...excludePaths,
-        ];
+         if (withDefaultExclusions) _ignoreHiddenPathsPattern,
+         ...excludePaths,
+       ];
 
   /// Use the configuration of this [Updater] to process the
   /// file at the [pathToUpdate], optionally making updates
@@ -122,9 +122,10 @@ final class Updater {
     final entityType = await FileSystemEntity.type(pathToEntity);
     if (entityType == FileSystemEntityType.directory) {
       return [
-        await for (final entity
-            in Directory(pathToEntity).list(followLinks: false))
-          ...await _findTargetFiles(entity.path)
+        await for (final entity in Directory(
+          pathToEntity,
+        ).list(followLinks: false))
+          ...await _findTargetFiles(entity.path),
       ];
     } else if (entityType == FileSystemEntityType.file &&
         validTargetExtensions.contains(path.extension(pathToEntity))) {

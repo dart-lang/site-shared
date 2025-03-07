@@ -42,4 +42,5 @@ void custom() {
 void template() {
   /* ... */
 }
+
 ```

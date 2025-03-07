@@ -210,5 +210,6 @@ final class ExtractException implements Exception {
 
 const String _entireFileRegionName = '';
 
-final RegExp _docRegionDirective =
-    RegExp(r'^.*?#(?<end>end)?docregion\s(?<regions>[a-zA-Z0-9,_\-\s]+).*?$');
+final RegExp _docRegionDirective = RegExp(
+  r'^.*?#(?<end>end)?docregion\s(?<regions>[a-zA-Z0-9,_\-\s]+).*?$',
+);

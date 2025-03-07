@@ -67,8 +67,10 @@ void _defaultBehavior() {
 
     for (final expectedFile in Directory(expectedPath).listSync()) {
       if (expectedFile is File) {
-        final updatedPath =
-            path.join(srcCopyPath, path.basename(expectedFile.path));
+        final updatedPath = path.join(
+          srcCopyPath,
+          path.basename(expectedFile.path),
+        );
         final updatedFile = File(updatedPath);
         expect(updatedFile.existsSync(), isTrue);
 

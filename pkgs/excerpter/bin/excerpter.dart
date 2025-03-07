@@ -26,8 +26,9 @@ Future<void> runExcerpter(final List<String> arguments) async {
   final excludePaths = results[_excludeOption] as List<String>? ?? const [];
   final plasterContent = results[_plasterContentOption] as String? ?? '...';
   final replaceInstructions = results[_replaceOption] as String?;
-  final baseSourcePath =
-      path.absolute(results[_baseSourcePathOption] as String? ?? path.current);
+  final baseSourcePath = path.absolute(
+    results[_baseSourcePathOption] as String? ?? path.current,
+  );
 
   if (results.rest.length != 1) {
     _printUsageAndExit(
@@ -36,12 +37,13 @@ Future<void> runExcerpter(final List<String> arguments) async {
   }
   final updatePath = path.absolute(results.rest.first);
 
-  final replaceTransforms = replaceInstructions == null
-      ? const <ReplaceTransform>[]
-      : stringToReplaceTransforms(
-          replaceInstructions,
-          (e) => _printUsageAndExit(message: e),
-        );
+  final replaceTransforms =
+      replaceInstructions == null
+          ? const <ReplaceTransform>[]
+          : stringToReplaceTransforms(
+            replaceInstructions,
+            (e) => _printUsageAndExit(message: e),
+          );
 
   final updater = Updater(
     baseSourcePath: baseSourcePath,
@@ -68,11 +70,13 @@ Future<void> runExcerpter(final List<String> arguments) async {
     print('');
   }
 
-  print('Processed ${result.filesVisited} out of '
-      '${result.totalFilesToVisit} files: '
-      '${result.excerptsNeedingUpdates} out of '
-      '${result.excerptsVisited} excerpts visited '
-      '${result.madeUpdates ? 'were updated' : 'need to be updated'}.');
+  print(
+    'Processed ${result.filesVisited} out of '
+    '${result.totalFilesToVisit} files: '
+    '${result.excerptsNeedingUpdates} out of '
+    '${result.excerptsVisited} excerpts visited '
+    '${result.madeUpdates ? 'were updated' : 'need to be updated'}.',
+  );
 
   if (result.errors.length case final amountOfErrors when amountOfErrors > 0) {
     io.exitCode = amountOfErrors;
@@ -81,38 +85,44 @@ Future<void> runExcerpter(final List<String> arguments) async {
   }
 }
 
-final _argParser = ArgParser()
-  ..addFlag(
-    _dryRunFlag,
-    negatable: false,
-    help: 'If the updater should only report if excerpts need to be updated.',
-  )
-  ..addFlag(
-    _failOnUpdateFlag,
-    negatable: false,
-    help:
-        'Report a non-zero exit code if an excerpt is or needs to be updated.',
-  )
-  ..addMultiOption(
-    _excludeOption,
-    help: 'Regular expressions of paths to exclude when '
-        'processing a directory recursively.\n'
-        'Dot files and directories are always excluded.',
-  )
-  ..addOption(
-    _baseSourcePathOption,
-    help: 'The path to the directory containing the source files that '
-        'excerpt regions should be retrieved from.',
-  )
-  ..addOption(
-    _plasterContentOption,
-    help: 'The default plaster content, such as "..." or "···".',
-  )
-  ..addOption(
-    _replaceOption,
-    help: 'A replacement to run on every excerpt.\n'
-        'Refer to the package docs for syntax help.',
-  );
+final _argParser =
+    ArgParser()
+      ..addFlag(
+        _dryRunFlag,
+        negatable: false,
+        help:
+            'If the updater should only report if excerpts need to be updated.',
+      )
+      ..addFlag(
+        _failOnUpdateFlag,
+        negatable: false,
+        help:
+            'Report a non-zero exit code if '
+            'an excerpt is or needs to be updated.',
+      )
+      ..addMultiOption(
+        _excludeOption,
+        help:
+            'Regular expressions of paths to exclude when '
+            'processing a directory recursively.\n'
+            'Dot files and directories are always excluded.',
+      )
+      ..addOption(
+        _baseSourcePathOption,
+        help:
+            'The path to the directory containing the source files that '
+            'excerpt regions should be retrieved from.',
+      )
+      ..addOption(
+        _plasterContentOption,
+        help: 'The default plaster content, such as "..." or "···".',
+      )
+      ..addOption(
+        _replaceOption,
+        help:
+            'A replacement to run on every excerpt.\n'
+            'Refer to the package docs for syntax help.',
+      );
 
 /// Print the usage information for this command,
 /// optionally with the specified error [message] and [exitCode],

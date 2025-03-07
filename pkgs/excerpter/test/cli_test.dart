@@ -10,15 +10,20 @@ void main() {
   final excerpterPath = path.join('bin', 'excerpter.dart');
 
   test('no args', () {
-    final process =
-        Process.runSync(Platform.executable, ['run', excerpterPath]);
+    final process = Process.runSync(Platform.executable, [
+      'run',
+      excerpterPath,
+    ]);
 
     expect(process.exitCode, equals(1));
   });
 
   test('invalid format', () {
-    final process = Process.runSync(
-        Platform.executable, ['run', excerpterPath, '-f-23-423-4']);
+    final process = Process.runSync(Platform.executable, [
+      'run',
+      excerpterPath,
+      '-f-23-423-4',
+    ]);
 
     expect(process.exitCode, equals(1));
   });

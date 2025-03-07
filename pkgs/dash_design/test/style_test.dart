@@ -10,8 +10,10 @@ import 'package:test/test.dart';
 
 void main() {
   test('Can build styles.scss file', () {
-    final compileResult = sass.compileToResult(_stylesPath!,
-        fatalDeprecations: sass.Deprecation.values.where((d) => !d.isFuture));
+    final compileResult = sass.compileToResult(
+      _stylesPath!,
+      fatalDeprecations: sass.Deprecation.values.where((d) => !d.isFuture),
+    );
     expect(compileResult.css, contains('--dash-default-font-family'));
   });
 }

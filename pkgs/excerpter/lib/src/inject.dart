@@ -111,8 +111,9 @@ final class FileUpdater {
         }
 
         final lineAfterInstruction = originalLines[lineIndex];
-        final fencedCodeBlock =
-            _codeBlockStart.firstMatch(lineAfterInstruction);
+        final fencedCodeBlock = _codeBlockStart.firstMatch(
+          lineAfterInstruction,
+        );
         if (fencedCodeBlock == null) {
           reportError(
             'An inject instruction must be followed by a code block '
@@ -206,13 +207,15 @@ final class FileUpdater {
         }
 
         // Add back the indentation from the file and any from the instruction.
-        updatedLines =
-            IndentTransform(instructionIndent + (instruction.indentBy ?? 0))
-                .transform(updatedLines);
+        updatedLines = IndentTransform(
+          instructionIndent + (instruction.indentBy ?? 0),
+        ).transform(updatedLines);
 
         final updatedExcerpt = updatedLines.join('\n');
-        if (!(const IterableEquality<String>()
-            .equals(oldLines, updatedLines))) {
+        if (!(const IterableEquality<String>().equals(
+          oldLines,
+          updatedLines,
+        ))) {
           excerptsUpdated.add((
             instructionLine: instructionLineNumber,
             updated: updatedExcerpt,
@@ -308,11 +311,13 @@ final RegExp _instructionPattern = RegExp(
 
 final RegExp _instructionStart = RegExp(r'^<\?code-excerpt');
 
-final RegExp _codeBlockStart =
-    RegExp(r'^\s*(?<backticks>`{3,})(?<language>\S+).*?$');
+final RegExp _codeBlockStart = RegExp(
+  r'^\s*(?<backticks>`{3,})(?<language>\S+).*?$',
+);
 
-final RegExp _splitArgs =
-    RegExp(r'(?<arg>[-\w]+)\s*(=\s*"(?<value>.*?)"\s*)\s*');
+final RegExp _splitArgs = RegExp(
+  r'(?<arg>[-\w]+)\s*(=\s*"(?<value>.*?)"\s*)\s*',
+);
 
 /// A code excerpt set or injection instruction
 /// found in a file being processed.
@@ -340,9 +345,7 @@ sealed class _Instruction {
 
     if (path == null) {
       if (argumentPairs.length != 1) {
-        reportError(
-          'A set instruction must have only one argument specified.',
-        );
+        reportError('A set instruction must have only one argument specified.');
       }
       final argName = argumentPairs.first.arg;
       final argValue = argumentPairs.first.value;
@@ -350,11 +353,12 @@ sealed class _Instruction {
         'path-base' => _SetPathBaseInstruction(argValue),
         'plaster' => _SetPlasterInstruction(argValue),
         'replace' => _SetFileReplaceInstruction(
-            stringToReplaceTransforms(argValue, reportError)),
+          stringToReplaceTransforms(argValue, reportError),
+        ),
         _ => reportError(
-            'A set instruction can only specify the '
-            '`path-base`, `plaster`, and `replace` arguments.',
-          ),
+          'A set instruction can only specify the '
+          '`path-base`, `plaster`, and `replace` arguments.',
+        ),
       };
     }
 
@@ -461,9 +465,7 @@ final class _InjectInstruction extends _Instruction {
     final indentBy = indentByString == null ? null : int.parse(indentByString);
 
     if (indentBy != null && indentBy < 0) {
-      reportError(
-        'The `indent-by` argument must be positive.',
-      );
+      reportError('The `indent-by` argument must be positive.');
     }
 
     return _InjectInstruction(
