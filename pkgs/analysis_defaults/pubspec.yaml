@@ -3,9 +3,9 @@ description: Analysis defaults for Dart/Flutter site tools.
 publish_to: none
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.8.0
 
-# NOTE: Code is not allowed in this package.
-# Do not add dependencies besides the underlying lints package.
+# NOTE: Code isn't allowed in this package.
+# Don't add dependencies besides the underlying lints package.
 dependencies:
-  dart_flutter_team_lints: ^3.4.0
+  dart_flutter_team_lints: ^3.5.2
