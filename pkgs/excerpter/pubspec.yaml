@@ -5,21 +5,21 @@ publish_to: none
 repository: https://github.com/dart-lang/site-shared/tree/main/pkgs/excerpter
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.8.0
 
 dependencies:
-  args: ^2.4.2
-  collection: ^1.18.0
+  args: ^2.6.0
+  collection: ^1.19.0
   file: ^7.0.0
   glob: ^2.1.2
-  meta: ^1.14.0
+  meta: ^1.15.0
   path: ^1.9.0
 
 dev_dependencies:
   analysis_defaults:
     path: ../analysis_defaults
-  io: ^1.0.4
-  test: ^1.25.2
+  io: ^1.0.5
+  test: ^1.25.9
 
 executables:
   excerpter: excerpter
