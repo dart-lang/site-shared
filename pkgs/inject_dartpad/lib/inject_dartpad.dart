@@ -114,15 +114,20 @@ final class EmbeddedDartPad {
   }) async {
     if (_initialized) return;
 
+    // Start listening for the 'ready' message from the embedded DartPad.
     late final JSExportedDartFunction readyHandler;
     readyHandler = (web.MessageEvent event) {
       if (event.data case _EmbedReadyMessage(type: 'ready', :final sender?)) {
+        // Verify the message is sent from the corresponding iframe,
+        // in case there are multiple DartPads being embedded at the same time.
         if (sender != iframeId) {
           return;
         }
 
         web.window.removeEventListener('message', readyHandler);
         if (!_initialized) {
+          // Signal to the caller that the DartPad is ready
+          // for Dart code to be injected.
           _initializedCompleter.complete();
         }
       }
@@ -136,6 +141,9 @@ final class EmbeddedDartPad {
       ..name = iframeId
       ..loading = 'lazy'
       ..allow = 'clipboard-write';
+
+    // Give the caller a chance to modify other attributes of the iframe and
+    // attach it to their desired location in the document.
     addToDocument(iframe);
 
     await _initializedCompleter.future;

@@ -1585,6 +1585,7 @@ try{r=s
 r.a=A.H(r.a,a,", ")}finally{$.p.pop()}s.a+=c
 r=s.a
 return r.charCodeAt(0)==0?r:r},
+mp(a){A.qw(a)},
 Hh(a,b,c){var s,r,q,p,o,n,m="IPv4 address should contain exactly 4 parts",l="each part must be in the range 0..255",k=new A.cS(a),j=new Uint8Array(4)
 for(s=b,r=s,q=0;s<c;++s){p=a.charCodeAt(s)
 if(p!==46){if((p^48)>9)k.$2("invalid character",s)}else{if(q===3)k.$2(m,s)
@@ -1866,7 +1867,8 @@ var $async$E=A.l(function(a,b){if(a===1)return A.x(b,r)
 while(true)switch(s){case 0:o=v.G.document.querySelectorAll("pre > code[data-dartpad]:only-child")
 n=A.J([],t.F)
 for(q=0;q<o.length;++q){p=o.item(q)
-n.push(A.f(p==null?A.A(p):p,q))}s=2
+if(p==null)p=A.A(p)
+n.push(A.f(p,"embedded-dartpad-"+q))}s=2
 return A.j(A.v(n,t.U),$async$E)
 case 2:return A.y(null,r)}})
 return A.D($async$E,r)},
@@ -1912,7 +1914,7 @@ a1=new A.Dn(h,g,m&&B.xB.nC(a0,"//")?"":f,c,a0,e,d).gnD()
 k=new A.vs($.X3,t.D)
 a2=new A.NG(o,a1,new A.Zf(k,t.h))
 s=3
-return A.j(a2.qw(new A.i6(a5,a4)),$async$f)
+return A.j(a2.qw(new A.i6(a5,a4,p)),$async$f)
 case 3:if((k.a&30)===0)A.vh(A.PV("EmbeddedDartPad.initialize must be called and awaited before updating the embedded source code."))
 a3=v.G.document.getElementById(o)
 if(a3==null)A.vh(A.PV("Failed to find iframe with an id of "+o+" in the document. Have you added the iframe to the document?"))
@@ -1924,8 +1926,9 @@ s=1
 break
 case 1:return A.y(q,r)}})
 return A.D($async$f,r)},
-i6:function i6(a,b){this.a=a
-this.b=b},
+i6:function i6(a,b,c){this.a=a
+this.b=b
+this.c=c},
 qw(a){if(typeof dartPrint=="function"){dartPrint(a)
 return}if(typeof console=="object"&&typeof console.log!="undefined"){console.log(a)
 return}if(typeof print=="function"){print(a)
@@ -2853,7 +2856,8 @@ k.appendChild(a)
 s=this.b
 s.replaceWith(k)
 if(a.contentWindow==null){k.replaceWith(s)
-A.qw("Failed to inject embedded DartPad with content:\n")}},
+A.mp("Failed to inject embedded DartPad with content:\n")
+A.mp(this.c)}},
 $S:20};(function aliases(){var s=J.zh.prototype
 s.u=s["["]})();(function installTearOffs(){var s=hunkHelpers._static_1,r=hunkHelpers._static_0
 s(A,"EX","ZV",1)

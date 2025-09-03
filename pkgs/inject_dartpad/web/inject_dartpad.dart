@@ -15,13 +15,21 @@ void main() async {
 
   await [
     for (var index = 0; index < codeElements.length; index += 1)
-      _injectEmbed(codeElements.item(index) as web.HTMLElement, index),
+      _injectEmbed(
+        codeElements.item(index) as web.HTMLElement,
+        'embedded-dartpad-$index',
+      ),
   ].wait;
 }
 
+/// Extract the code from the element,
+/// replace it with an embedded DartPad iframe,
+/// and inject the extracted code.
+///
+/// Each embed on a single should have a unique [iframeId].
 Future<EmbeddedDartPad?> _injectEmbed(
   web.HTMLElement codeElement,
-  int embedNumber,
+  String iframeId,
 ) async {
   final parent = codeElement.parentElement;
   if (parent == null) return null;
@@ -32,7 +40,7 @@ Future<EmbeddedDartPad?> _injectEmbed(
   if (content.isEmpty) return null;
 
   final embeddedDartPad = EmbeddedDartPad.create(
-    iframeId: 'embedded-dartpad-$embedNumber',
+    iframeId: 'embedded-dartpad-$iframeId',
     host: switch (codeElement.getAttribute('data-url')) {
       final specifiedHost? when specifiedHost.isNotEmpty => specifiedHost,
       _ => null,
@@ -46,6 +54,9 @@ Future<EmbeddedDartPad?> _injectEmbed(
   await embeddedDartPad.initialize(
     addToDocument: (iframe) {
       iframe.classList.add('embedded-dartpad');
+
+      // Extract the configuration options specified on
+      // the sites embedding DartPad (dart.dev and docs.flutter.dev).
       if (codeElement.getAttribute('title') case final title?
           when title.isNotEmpty) {
         iframe.setAttribute('title', title);
@@ -63,16 +74,22 @@ Future<EmbeddedDartPad?> _injectEmbed(
 
       final host = web.HTMLDivElement();
       host.appendChild(iframe);
+      // Add the iframe to the DOM so it has a chance to load.
       parent.replaceWith(host);
 
       final contentWindow = iframe.contentWindow;
       if (contentWindow == null) {
+        // If the iframe wasn't initialized correctly,
+        // fall back to the original code block.
         host.replaceWith(parent);
+
         print('Failed to inject embedded DartPad with content:\n');
+        print(content);
       }
     },
   );
 
+  // Now that the embedded DartPad is initialized, inject the extracted code.
   embeddedDartPad.updateCode(content);
 
   return embeddedDartPad;
