@@ -52,7 +52,7 @@ Future<EmbeddedDartPad?> _injectEmbed(
   );
 
   await embeddedDartPad.initialize(
-    addToDocument: (iframe) {
+    onElementCreated: (iframe) {
       iframe.classList.add('embedded-dartpad');
 
       // Extract the configuration options specified on

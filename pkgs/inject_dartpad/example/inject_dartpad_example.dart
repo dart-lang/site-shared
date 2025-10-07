@@ -10,7 +10,7 @@ void main() async {
 
   // Initialize the embedded DartPad.
   await dartPad.initialize(
-    addToDocument: (iframe) {
+    onElementCreated: (iframe) {
       // Add any extra styles or attributes to the created iframe.
       iframe.style.height = '560';
 

@@ -23,7 +23,7 @@ import 'package:web/web.dart' as web;
 ///   );
 ///
 ///   await dartPad.initialize(
-///     addToDocument: (iframe) {
+///     onElementCreated: (iframe) {
 ///       iframe.style.height = '560';
 ///
 ///       web.document.body!.append(iframe);
@@ -95,7 +95,7 @@ final class EmbeddedDartPad {
   /// Must be called and awaited before interacting with this instance,
   /// such as updating the DartPad editor's current source code.
   ///
-  /// The created iframe is passed to the [addToDocument] callback,
+  /// The created iframe is passed to the [onElementCreated] callback,
   /// which should be used to add the iframe to the document and
   /// further configure its attributes, such as classes and size.
   ///
@@ -104,13 +104,13 @@ final class EmbeddedDartPad {
   ///
   /// ```dart
   /// await dartPad.initialize(
-  ///   addToDocument: (iframe) {
+  ///   onElementCreated: (iframe) {
   ///     document.getElementById('dartpad-container')!.append(iframe);
   ///   },
   /// );
   /// ```
   Future<void> initialize({
-    required void Function(web.HTMLIFrameElement iframe) addToDocument,
+    required void Function(web.HTMLIFrameElement iframe) onElementCreated,
   }) async {
     if (_initialized) return;
 
@@ -144,7 +144,7 @@ final class EmbeddedDartPad {
 
     // Give the caller a chance to modify other attributes of the iframe and
     // attach it to their desired location in the document.
-    addToDocument(iframe);
+    onElementCreated(iframe);
 
     await _initializedCompleter.future;
   }
