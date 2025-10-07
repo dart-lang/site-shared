@@ -4,7 +4,7 @@
 
 import 'package:html_unescape/html_unescape_small.dart';
 import 'package:inject_dartpad/inject_dartpad.dart';
-import 'package:web/web.dart' as web;
+import 'package:universal_web/web.dart' as web;
 
 void main() async {
   // Select all `code` elements with the `dartpad` attribute that are
