@@ -5,7 +5,7 @@
 import 'dart:async';
 import 'dart:js_interop';
 
-import 'package:web/web.dart' as web;
+import 'package:universal_web/web.dart' as web;
 
 /// An iframe-embedded DartPad that can be injected into a web page,
 /// then have its source code updated.

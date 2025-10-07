@@ -1,5 +1,5 @@
 import 'package:inject_dartpad/inject_dartpad.dart';
-import 'package:web/web.dart' as web;
+import 'package:universal_web/web.dart' as web;
 
 void main() async {
   // Create the embedded DartPad instance manager.
