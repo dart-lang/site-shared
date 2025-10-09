@@ -1,0 +1,17 @@
+name: site_shared
+publish_to: none
+repository: https://github.com/dart-lang/site-shared
+description: >-
+  Workspace for packages used by the Dart and Flutter documentation sites.
+
+environment:
+  sdk: ^3.9.0
+
+workspace:
+  - pkgs/analysis_defaults
+  - pkgs/dash_design
+  - pkgs/excerpter
+  - pkgs/inject_dartpad
+
+dev_dependencies:
+  melos: ^7.1.1

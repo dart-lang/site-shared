@@ -2,6 +2,7 @@ name: analysis_defaults
 description: Analysis defaults for Dart/Flutter site tools.
 publish_to: none
 
+resolution: workspace
 environment:
   sdk: ^3.9.0
 

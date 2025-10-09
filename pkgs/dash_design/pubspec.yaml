@@ -4,6 +4,7 @@ version: 0.0.1-wip
 publish_to: none
 repository: https://github.com/dart-lang/site-shared/tree/main/pkgs/dash_design
 
+resolution: workspace
 environment:
   sdk: ^3.9.0
 

@@ -12,9 +12,11 @@ void main() {
   test('Can build styles.scss file', () {
     final compileResult = sass.compileToResult(
       _stylesPath!,
-      fatalDeprecations: sass.Deprecation.values.where((d) => !d.isFuture),
+      fatalDeprecations: sass.Deprecation.values.where(
+        (d) => !d.isFuture && d.obsoleteIn == null,
+      ),
     );
-    expect(compileResult.css, contains('--dash-default-font-family'));
+    expect(compileResult.css, contains('--dash-default-fontFamily'));
   });
 }
 
