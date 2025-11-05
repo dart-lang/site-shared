@@ -14,4 +14,4 @@ workspace:
   - pkgs/inject_dartpad
 
 dev_dependencies:
-  melos: ^7.1.1
+  melos: ^7.3.0
