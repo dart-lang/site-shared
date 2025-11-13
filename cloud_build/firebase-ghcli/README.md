@@ -1,7 +1,7 @@
 ## Summary
 
 This directory contains a Dockerfile that provides access to
-Dart, Node/NPM, Firebase CLI tools, and the GitHub CLI.
+Dart, Firebase CLI tools, and the GitHub CLI.
 This image is used to deploy various Dart/Flutter websites to
 Firebase in both production and staging, and is
 also used to comment staging links on GitHub PRs.
@@ -10,7 +10,6 @@ also used to comment staging links on GitHub PRs.
 
 * Dart SDK
 * GitHub CLI
-* Node/NPM
 * Firebase Tools
 
 ## Additional information
