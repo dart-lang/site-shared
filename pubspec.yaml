@@ -5,7 +5,7 @@ description: >-
   Workspace for packages used by the Dart and Flutter documentation sites.
 
 environment:
-  sdk: ^3.9.0
+  sdk: ^3.11.0
 
 workspace:
   - pkgs/analysis_defaults
@@ -14,4 +14,4 @@ workspace:
   - pkgs/inject_dartpad
 
 dev_dependencies:
-  melos: ^7.3.0
+  melos: ^7.4.0

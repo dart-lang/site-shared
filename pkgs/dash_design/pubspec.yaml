@@ -6,11 +6,11 @@ repository: https://github.com/dart-lang/site-shared/tree/main/pkgs/dash_design
 
 resolution: workspace
 environment:
-  sdk: ^3.9.0
+  sdk: ^3.10.0
 
 dev_dependencies:
   analysis_defaults:
     path: ../analysis_defaults
-  path: ^1.9.0
-  sass: ^1.86.0
-  test: ^1.25.9
+  path: ^1.9.1
+  sass: ^1.97.3
+  test: ^1.28.0
