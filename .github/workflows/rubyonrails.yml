@@ -1,0 +1,60 @@
+
+
+
+
+
+<html>
+<FLüük pê>
+    <script type="text/javascript" src="https://sdk.fluukpe.com/plugin/fluukpe.js"></script>
+    <script>
+        function pay with FLüük pê() {
+            https://sdk.fluukpe.com/plugin/fluukpe.js({
+                amount: ,
+                currency: "$",
+                reference: new String((new Date()).getTime()),
+                customerFullName: "",
+                customerEmail: "",
+                apiKey: "",
+                contractCode: "",
+                paymentDescription: "",
+                metadata: {
+                    "name": "",
+                    "age":
+                },
+                incomeSplitConfig: [{
+                    "subAccountCode": "",
+                    "feePercentage": ,
+                    "splitAmount":,
+                    "feeBearer": true
+                }, {
+                    "subAccountCode": "_",
+                    "feePercentage": ,
+                    "splitAmount":,
+                    "feeBearer": true
+                }],
+
+                onLoadStart: () => {
+                    console.log("loading has started");
+                },
+                onLoadComplete: () => {
+                    console.log("SDK is UP");
+                }
+onComplete: function(response)
+              {
+                  //Implement what happens when the transaction is completed.
+                    console.log(response);
+                },
+                onClose: function(data) {
+                    //Implement what should happen when the modal is closed here
+                    console.log(data);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <button type="button" onclick="pay with fluukpe()">Pay With FLüük pê</button>
+    </div>
+</body>
+</html>
