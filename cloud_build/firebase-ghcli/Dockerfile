@@ -1,4 +1,4 @@
-FROM dart:3.11.0
+FROM dart:3.12.0-327.4.beta
 
 # Install prerequisite dependencies.
 RUN apt-get update && apt-get install -y curl gpg
