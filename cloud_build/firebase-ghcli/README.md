@@ -1,3 +1,9 @@
+> [!WARNING]
+> This repository has been archived.
+>
+> This directory has moved to the `flutter/website` repository:
+> <https://github.com/flutter/website/tree/main/cloud_build/firebase-ghcli>.
+
 ## Summary
 
 This directory contains a Dockerfile that provides access to

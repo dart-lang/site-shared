@@ -1,3 +1,9 @@
+> [!WARNING]
+> This repository has been archived.
+>
+> For up-to-date guidance on contributing to the Dart and Flutter docs,
+> check out [Contribute to the docs](https://docs.flutter.dev/contribute/docs).
+
 Ensuring that a page is mobile friendly can take a little more effort
 than ensuring that images are responsive.
 Here are some points to consider:

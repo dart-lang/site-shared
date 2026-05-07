@@ -1,3 +1,7 @@
+> [!WARNING]
+> This repository has been archived. These assets remain for archival reference
+> only and shouldn't be depended on by active sites or packages.
+
 ## Setup
 
 ```console

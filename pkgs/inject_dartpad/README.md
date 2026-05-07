@@ -1,3 +1,8 @@
+> [!WARNING]
+> This repository has been archived.
+>
+> This package is no longer maintained.
+
 ## DartPad injection
 
 To embed a DartPad with arbitrary Dart in to your web page, add the
