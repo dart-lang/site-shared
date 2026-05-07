@@ -1,3 +1,10 @@
+> [!WARNING]
+> This repository has been archived.
+>
+> This package has been deprecated.
+> Its goals might be revisited later as a shared package in the
+> [`flutter/website`](https://github.com/flutter/website) repository.
+
 ## Shared styles for Dart and Flutter websites
 
 > [!CAUTION]

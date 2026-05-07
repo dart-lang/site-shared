@@ -1,3 +1,9 @@
+> [!WARNING]
+> This repository has been archived.
+>
+> This package has moved to the `flutter/website` repository:
+> <https://github.com/flutter/website/tree/main/packages/excerpter>.
+
 # Markdown code-block excerpt updater
 
 Tooling to update code excerpts in Markdown documentation
